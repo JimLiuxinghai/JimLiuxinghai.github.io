@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述. | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述. | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述. | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/10/29/js-how-to-work/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class="social fa fa-weibo"></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class="social fa fa-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class="social fa fa-facebook"></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class="social fa fa-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-10-29T00:05:02.000Z" class="post-list__meta--date date">2018-10-29</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述.</h1>
+  </header>
+
+  <section class="post">
+    <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原文地址: https:<span class="regexp">//</span>juejin.im<span class="regexp">/post/</span><span class="number">5</span>a05b4576fb9a04519690d42<span class="comment">#comment</span></span><br></pre></td></tr></table></figure>
+<p>随着JavaScript越来越流行，越来越多的团队广泛的把JavaScript应用到前端、后台、hybrid 应用、嵌入式等等领域。</p>
+<p>这篇文章旨在深入挖掘JavaScript，以及向大家解释JavaScript是如何工作的。我们通过了解它的底层构建以及它是怎么发挥作用的，可以帮助我们写出更好的代码与应用。据 GitHut 统计显示，JavaScript 长期占据GitHub中 Active Repositories 和 Total Pushes 的榜首，并且在其他的类别中也不会落后太多。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/10/085110914b3ecfb71282e39d75dbc77c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="图片1"></p>
+<p>如果一个项目越来越依赖 JavaScript，这就意味着开发人员必须利用这些语言和生态系统提供更深层次的核心内容去构建一个令人振奋的应用。然而，事实证明，有很多的开发者每天都在使用 JavaScript，但是却不知道在底层 JavaScript 是怎么运作的。</p>
+<p></p><h2 class="heading" data-id="heading-0">概述</h2><p></p>
+<p>  几乎每个人听说过 V8 引擎的概念，而且，大多数人都知道 JavaScript 是单线程的，或者是它是使用回调队列的。</p><br><p>  在这篇文章中，我们将详细的介绍这些概念，并解释 JavaScript 是怎么工作的。通过了解这些细节，你就能利用这些提供的 API 来写出更好的，非阻塞的应用来。如果你对 JavaScript 比较陌生，那么这篇文章将帮助您理解为什么 JavaScript 相较于其他语言显得如此“怪异”。如果您是一位经验丰富的 JavaScript 开发人员，希望它能给你带来一些新的见解，说明 JavaScript 的运行时，尽管你可能每天都会用到它。</p><br><h2 class="heading" data-id="heading-1">JavaScript 引擎</h2><br><p>  JavaScript 引擎说起来最流行的当然是谷歌的 V8 引擎了， V8 引擎使用在 Chrome 以及 Node 中，下面有个简单的图能说明他们的关系：</p><br><p></p><figure><img class="lazyload" src="https://user-gold-cdn.xitu.io/2017/11/11/5d0653fff3ec904dbe210161f3ec9196?imageView2/0/w/1280/h/960/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  这个引擎主要由两部分组成:</p><br><ul><br><li>内存堆：这是内存分配发生的地方</li><br><li>调用栈：这是你的代码执行时的地方</li><br></ul><br><h2 class="heading" data-id="heading-2">运行时</h2><br><p>  有些浏览器的 API 经常被使用到(比如说：setTimeout)，但是，这些 API 却不是引擎提供的。那么，他们是从哪儿来的呢？事实上这里面实际情况有点复杂。</p><br><p></p><figure><img class="lazyload" src="https://user-gold-cdn.xitu.io/2017/11/11/ceb8f35afdeaee60e60053fa73a5cc01?imageView2/0/w/1280/h/960/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  所以说我们还有很多引擎之外的 API，我们把这些称为浏览器提供的 Web API，比如说 DOM、AJAX、setTimeout等等。</p><br><p>  然后我们还拥有如此流行的事件循环和回调队列。</p><br><h2 class="heading" data-id="heading-3">调用栈</h2><br><p>  JavaScript 是一门单线程的语言，这意味着它只有一个调用栈，因此，它同一时间只能做一件事。</p><br><p>  调用栈是一种数据结构，它记录了我们在程序中的位置。如果我们运行到一个函数，它就会将其放置到栈顶。当从这个函数返回的时候，就会将这个函数从栈顶弹出，这就是调用栈做的事情。</p><br><p>  让我们来看一看下面的例子：</p><br><pre><code class="hljs js copyable" lang="js">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">multiply</span>(<span class="hljs-params">x, y</span>) </span>{<br>      <span class="hljs-keyword">return</span> x * y;<br>    }<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printSquare</span>(<span class="hljs-params">x</span>) </span>{<br>      <span class="hljs-keyword">var</span> s = multiply(x, x);<br>      <span class="hljs-built_in">console</span>.log(s);<br>    }<br>    printSquare(<span class="hljs-number">5</span>);<br><span class="copy-code-btn"> </span></code></pre><p>  当程序开始执行的时候，调用栈是空的，然后，步骤如下：</p><br><p></p><figure><img class="lazyload" src="https://user-gold-cdn.xitu.io/2017/11/11/bc37a6231fca3b0aa3cd36369e866837?imageView2/0/w/1280/h/960/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  每一个进入调用栈的都称为<strong>调用帧</strong>。</p><br><p>  这能清楚的知道当异常发生的时候堆栈追踪是怎么被构造的，堆栈的状态是如何的。让我们看一下下面的代码：</p><br><pre><code class="hljs js copyable" lang="js">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>{<br>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">‘SessionStack will help you resolve crashes :)’</span>);<br>    }<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span>(<span class="hljs-params"></span>) </span>{<br>      foo();<br>    }<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">start</span>(<span class="hljs-params"></span>) </span>{<br>      bar();<br>    }<br>    start();<br><span class="copy-code-btn"></span></code></pre><p>  如果这发生在 Chrome 里(假设这段代码实在一个名为 foo.js 的文件中)，那么将会生成以下的堆栈追踪：</p><br><p></p><figure><img src="https://user-gold-cdn.xitu.io/2017/11/11/f6e50bf394efe82889e3a53b788a46fc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  “<strong>堆栈溢出</strong>“，当你达到调用栈最大的大小的时候就会发生这种情况，而且这相当容易发生，特别是在你写递归的时候却没有全方位的测试它。我们来看看下面的代码：</p><br><pre><code class="hljs js copyable" lang="js">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>{<br>      foo();<br>    }<br>    foo();<br><span class="copy-code-btn"></span></code></pre><p>  当我们的引擎开始执行这段代码的时候，它从 foo 函数开始。然后这是个递归的函数，并且在没有任何的终止条件的情况下开始调用自己。因此，每执行一步，就会把这个相同的函数一次又一次地添加到调用堆栈中。然后它看起来就像是这样的：</p><br><p></p><figure><img class="lazyload" src="https://user-gold-cdn.xitu.io/2017/11/11/3925f8363d7a763e6474709ccddf7d96?imageView2/0/w/1280/h/960/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  然后，在某一时刻，调用栈中的函数调用的数量超过了调用栈的实际大小，浏览器决定干掉它，抛出一个错误，它看起来就像是这样:</p><br><p></p><figure><img class="lazyload" src="https://user-gold-cdn.xitu.io/2017/11/11/dd22fb2bbec4be37367155083e61773a?imageView2/0/w/1280/h/960/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  在单个线程上运行代码很容易，因为你不必处理在多线程环境中出现的复杂场景——例如死锁。但是在一个线程上运行也非常有限制。由于 JavaScript 只有一个调用堆栈，当某段代码运行变慢时会发生什么?</p><br><h2 class="heading" data-id="heading-4">并发与事件循环</h2><br><p>  调用栈中的函数调用需要大量的时间来处理，那么这会发生什么情况呢?例如，假设你想在浏览器中使用 JavaScript 进行一些复杂的图片转码。</p><br><p>  你可能会问？这算什么问题？事实上，问题是当调用栈有函数要执行，浏览器就不能做任何事，它会被堵塞住。这意味着浏览器不能渲染，不能运行其他的代码，它被卡住了。如果你想在应用里让 UI 很流畅的话，这就会产生问题。</p><br><p>  而且这不是唯一的问题，一旦你的浏览器开始处理调用栈中的众多任务，它可能会停止响应相当长一段时间。大多数浏览器都会这么做，报一个错误，询问你是否想终止 web 页面。</p><br><p></p><figure><img class="lazyload" src="https://user-gold-cdn.xitu.io/2017/11/11/4bb4fad58264a60cc6c7d9b1219dde10?imageView2/0/w/1280/h/960/ignore-error/1" data-width="800" data-height="600"><figcaption></figcaption></figure><p></p><br><p>  这样看来，这并不是最好的用户体验，不是吗？</p><br><p>  那么，如何在不阻塞 UI 的情况下执行复杂的代码，让浏览器不会不响应?解决方案就是异步回调。这将在“ JavaScript 如何工作”教程的第2部分中详细解释:“在V8引擎中，如何编写优化代码”。</p>
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/10/30/js-how-to-work-2/" title="JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧">JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧</a></h2>
+                <p class="excerpt">
+                
+                原文地址
+几周之前，我们开始了一系列旨在深入挖掘JavaScript及其实际工作原理的系列：我们认为通过了解JavaScript的构建块以及它们如何共同发挥作用，您将能够编写更好的代码和应用程序。
+本系列的第一篇文章重点介绍了引擎，运行时和调用堆栈的概述。 第二篇文章将深入探讨谷歌V8 JavaSc
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-10-30T03:35:47.000Z" class="post-list__meta--date date">2018-10-30</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+</span><a class="btn-border-small" href="/2018/10/30/js-how-to-work-2/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/23/commit/" title="编写良好的git commit(译)">编写良好的git commit(译)</a></h2>
+                <p class="excerpt">
+                
+                原文地址 Writing good commit messages
+好的commit信息至少有三个目的:
+
+加快代码review过程
+帮助我们编写好的release
+为了帮助Erlang / OTP的未来维护者（可能是你！），未来五年，找出为什么对代码进行特定更改或为什么添加了特定功能。
+
+像这样构
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-22T23:50:51.000Z" class="post-list__meta--date date">2018-03-23</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/git/">git</a>
+</span><a class="btn-border-small" href="/2018/03/23/commit/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2018/10/29/js-how-to-work/" data-title="[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述." data-url="http://yoursite.com/2018/10/29/js-how-to-work/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+    <script type='text/javascript'>
+        var _vds = _vds || [];
+        window._vds = _vds;
+        (function(){
+          _vds.push(['setAccountId', 'be22e67a732c4bdf']);
+          (function() {
+            var vds = document.createElement('script');
+            vds.type='text/javascript';
+            vds.async = true;
+            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(vds, s);
+          })();
+        })();
+    </script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>window.location 获取url各项参数详解 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="window.location 获取url各项参数详解 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="window.location 获取url各项参数详解 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017/02/16/window-location/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class="social fa fa-weibo"></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class="social fa fa-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class="social fa fa-facebook"></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class="social fa fa-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-02-16T08:58:00.000Z" class="post-list__meta--date date">2017-02-16</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">window.location 获取url各项参数详解</h1>
+  </header>
+
+  <section class="post">
+    <p>近期在写一些广告投放页时，遇到了一点小问题。在此记录一下：</p>
+<p>现在有这样一个 URL</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>//blog.jimliu.xyz:<span class="number">80</span>/window.location.html?ver=<span class="number">1.0</span>&amp;id=<span class="number">6</span><span class="meta">#imhere</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-window-location-href-地址栏所有内容"><a href="#1-window-location-href-地址栏所有内容" class="headerlink" title="1. window.location.href  地址栏所有内容"></a>1. window.location.href  地址栏所有内容</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>blog.jimliu.xyz:<span class="number">80</span><span class="regexp">/aaa/</span>window.location.html?ver=<span class="number">1.0</span>&amp;id=<span class="number">6</span><span class="comment">#imhere</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-window-location-protocol-URL-的协议部分"><a href="#2-window-location-protocol-URL-的协议部分" class="headerlink" title="2. window.location.protocol   URL 的协议部分"></a>2. window.location.protocol   URL 的协议部分</h2><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-window-location-host-URL的主机的部分"><a href="#3-window-location-host-URL的主机的部分" class="headerlink" title="3. window.location.host  URL的主机的部分"></a>3. window.location.host  URL的主机的部分</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blog<span class="selector-class">.jimliu</span><span class="selector-class">.xyz</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-window-location-port-URL中的端口号"><a href="#4-window-location-port-URL中的端口号" class="headerlink" title="4. window.location.port URL中的端口号"></a>4. window.location.port URL中的端口号</h2><p>(如果采用默认的80端口(update:即使添加了:80)，那么返回值并不是默认的80而是空字符<br>本例返回值:”)</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">""</span></span><br></pre></td></tr></table></figure>
+<h2 id="5-window-location-pathname-URL-的路径部分-就是文件地址"><a href="#5-window-location-pathname-URL-的路径部分-就是文件地址" class="headerlink" title="5. window.location.pathname   URL 的路径部分(就是文件地址)"></a>5. window.location.pathname   URL 的路径部分(就是文件地址)</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/aaa/window<span class="selector-class">.location</span><span class="selector-class">.html</span></span><br></pre></td></tr></table></figure>
+<h2 id="6-window-location-search-查询-参数-部分"><a href="#6-window-location-search-查询-参数-部分" class="headerlink" title="6. window.location.search  查询(参数)部分"></a>6. window.location.search  查询(参数)部分</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ver=<span class="number">1.0</span>&amp;id=<span class="number">6</span></span><br></pre></td></tr></table></figure>
+<h2 id="7-window-location-hash-获取锚点"><a href="#7-window-location-hash-获取锚点" class="headerlink" title="7. window.location.hash 获取锚点"></a>7. window.location.hash 获取锚点</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#imhere</span></span><br></pre></td></tr></table></figure>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/20/cookie-session/" title="cookie和session">cookie和session</a></h2>
+                <p class="excerpt">
+                
+                众所周知，HTTP 是一个无状态协议，所以客户端每次发出请求时，下一次请求无法得知上一次请求所包含的状态数据.
+cookie首先产生了 cookie 这门技术来解决这个问题，cookie 是 http 协议的一部分，它的处理分为如下几步：
+
+服务器向客户端发送 cookie。
+通常使用 HTTP 协
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-20T07:16:13.000Z" class="post-list__meta--date date">2017-02-20</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/服务端/">服务端</a>
+</span><a class="btn-border-small" href="/2017/02/20/cookie-session/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/02/16/foundation/" title="基础知识">基础知识</a></h2>
+                <p class="excerpt">
+                
+                1.浏览器渲染机制2.js添加1000个div3.js给1000个li绑定方法4.react 单向数据流的优缺点5.script标签有style标签放在不同地方的区别6.Io操作是什么7.session与cookie详解8.express-session中有什么bug9.js跨域
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-02-16T01:55:03.000Z" class="post-list__meta--date date">2017-02-16</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/浏览器/">浏览器</a>
+</span><a class="btn-border-small" href="/2017/02/16/foundation/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2017/02/16/window-location/" data-title="window.location 获取url各项参数详解" data-url="http://yoursite.com/2017/02/16/window-location/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+    <script type='text/javascript'>
+        var _vds = _vds || [];
+        window._vds = _vds;
+        (function(){
+          _vds.push(['setAccountId', 'be22e67a732c4bdf']);
+          (function() {
+            var vds = document.createElement('script');
+            vds.type='text/javascript';
+            vds.async = true;
+            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(vds, s);
+          })();
+        })();
+    </script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

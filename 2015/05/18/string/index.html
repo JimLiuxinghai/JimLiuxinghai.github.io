@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>string字符串方法 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="string字符串方法 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="string字符串方法 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2015/05/18/string/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class="social fa fa-weibo"></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class="social fa fa-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class="social fa fa-facebook"></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class="social fa fa-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-05-18T09:00:37.000Z" class="post-list__meta--date date">2015-05-18</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/基础/">基础</a>, <a class="tag-link" href="/tags/学习笔记/">学习笔记</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">string字符串方法</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="来自《javascript高级程序设计》的学习笔记"><a href="#来自《javascript高级程序设计》的学习笔记" class="headerlink" title="来自《javascript高级程序设计》的学习笔记"></a>来自《javascript高级程序设计》的学习笔记</h1><h4 id="1-访问字符串中特定字符的方法-charAt-和charCodeAt"><a href="#1-访问字符串中特定字符的方法-charAt-和charCodeAt" class="headerlink" title="1.访问字符串中特定字符的方法 charAt()和charCodeAt()"></a>1.访问字符串中特定字符的方法 charAt()和charCodeAt()</h4><pre><code>var string = &quot;hello javascript&quot;
+console.log(string.charAt(1))  //&apos;e&apos;
+console.log(string.charCodeAt(1)) //&apos;101&apos;
+</code></pre><p>charCodeAt方法返回的是字母”e”的字符编码，与前两种方法有一种类似的方法是stringValue[1]访问第一个字符。<br><a id="more"></a></p>
+<h4 id="2-字符串连接方法concat-concat-方法可接受多个参数"><a href="#2-字符串连接方法concat-concat-方法可接受多个参数" class="headerlink" title="2.字符串连接方法concat(),concat()方法可接受多个参数"></a>2.字符串连接方法concat(),concat()方法可接受多个参数</h4><pre><code>var string = &quot;hello&quot;
+var result = string.concat(&quot;world&quot;);
+console.log(result)  // hello world
+</code></pre><h4 id="3-三个基于子字符串创建新字符串的方法-slice-substr-substring"><a href="#3-三个基于子字符串创建新字符串的方法-slice-substr-substring" class="headerlink" title="3.三个基于子字符串创建新字符串的方法 slice(),substr(),substring()"></a>3.三个基于子字符串创建新字符串的方法 slice(),substr(),substring()</h4><p>这三个方法都会返回被操作字符串的子字符串，而且都接受一到两个参数</p>
+<h5 id="3-1：当他们都接受一个参数的时候返回值是一样的。"><a href="#3-1：当他们都接受一个参数的时候返回值是一样的。" class="headerlink" title="3.1：当他们都接受一个参数的时候返回值是一样的。"></a>3.1：当他们都接受一个参数的时候返回值是一样的。</h5><pre><code>var string = &quot;hello,world&quot;;
+console.log(string.slice(3));   // &quot;lo,world&quot;
+console.log(string.substr(3));  // &quot;lo,world&quot;
+console.log(string.substring(3)); // &quot;lo,world&quot;
+</code></pre><h5 id="3-2：当他们接受两个参数时，情况就不太一样了slice和substring的两个参数是”开始位置”，”结束位置”而substr的两个参数是”开始位置”，”截取长度”。"><a href="#3-2：当他们接受两个参数时，情况就不太一样了slice和substring的两个参数是”开始位置”，”结束位置”而substr的两个参数是”开始位置”，”截取长度”。" class="headerlink" title="3.2：当他们接受两个参数时，情况就不太一样了slice和substring的两个参数是”开始位置”，”结束位置”而substr的两个参数是”开始位置”，”截取长度”。"></a>3.2：当他们接受两个参数时，情况就不太一样了slice和substring的两个参数是”开始位置”，”结束位置”而substr的两个参数是”开始位置”，”截取长度”。</h5><pre><code>var string = &quot;hello,world&quot;;
+console.log(string.slice(3,7));   // &quot;lo,w&quot;
+console.log(string.substr(3,7));  // &quot;lo,w&quot;
+console.log(string.substring(3,7)); // &quot;lo,worl&quot;
+</code></pre><p>因为参数为负的情况现阶段用不到，所以暂且不考虑。</p>
+<h4 id="4-trim-方法：去除字符串前缀及后置的空格，刚好在百度ife的任务中看到了这个题，第一步很简单，就直接使用trim方法。"><a href="#4-trim-方法：去除字符串前缀及后置的空格，刚好在百度ife的任务中看到了这个题，第一步很简单，就直接使用trim方法。" class="headerlink" title="4.trim()方法：去除字符串前缀及后置的空格，刚好在百度ife的任务中看到了这个题，第一步很简单，就直接使用trim方法。"></a>4.trim()方法：去除字符串前缀及后置的空格，刚好在百度ife的任务中看到了这个题，第一步很简单，就直接使用trim方法。</h4><pre><code>var string = &quot;    hello,world   &quot;;
+var newString = string.trim();
+console.log(newString)   //&quot;hello,world&quot;
+</code></pre><p>字符串方法暂时先介绍到这里，欢迎大家指正。</p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/05/21/plan1/" title="学习计划">学习计划</a></h2>
+                <p class="excerpt">
+                
+                五月最后一周学习计划
+学习baidu-ife task0003中的”JavaScript深度学习”
+JavaScript作用域学习笔记JavaScript原型学习笔记JavaScript闭包学习笔记JavaScript构造函数学习笔记JavaScript面向对象编程学习笔记JavaScript设计模
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-05-21T08:40:47.000Z" class="post-list__meta--date date">2015-05-21</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/学习/">学习</a>, <a class="tag-link" href="/tags/计划/">计划</a>
+</span><a class="btn-border-small" href="/2015/05/21/plan1/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/05/18/javascript1/" title="javascript学习笔记1————作用域">javascript学习笔记1————作用域</a></h2>
+                <p class="excerpt">
+                
+                javascript学习笔记1————执行环境及作用域在javascript中每一段代码都有执行环境，全局变量和函数都是作为window对象那个的属性和方法创建的。某个执行环境中的所有代码被执行完毕后，该环境就会被销毁，包括其中的变量及函数定义。
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-05-18T05:46:30.000Z" class="post-list__meta--date date">2015-05-18</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/前端/">前端</a>
+</span><a class="btn-border-small" href="/2015/05/18/javascript1/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2015/05/18/string/" data-title="string字符串方法" data-url="http://yoursite.com/2015/05/18/string/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+    <script type='text/javascript'>
+        var _vds = _vds || [];
+        window._vds = _vds;
+        (function(){
+          _vds.push(['setAccountId', 'be22e67a732c4bdf']);
+          (function() {
+            var vds = document.createElement('script');
+            vds.type='text/javascript';
+            vds.async = true;
+            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(vds, s);
+          })();
+        })();
+    </script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>

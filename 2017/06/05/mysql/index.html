@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>sql 语法 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="sql 语法 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="sql 语法 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017/06/05/mysql/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class="social fa fa-weibo"></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class="social fa fa-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class="social fa fa-facebook"></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class="social fa fa-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-06-05T09:12:27.000Z" class="post-list__meta--date date">2017-06-05</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/db/">db</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">sql 语法</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><ul>
+<li>SELECT语句  </li>
+<li>SELECT DISTINCT语句: (SELECT DISTINCT 语句用于返回唯一不同的值)在表中，一个列可能会包含多个重复值，有时您也许希望仅仅列出不同（distinct）的值。DISTINCT 关键词用于返回唯一不同的值。</li>
+<li>WHERE子句: WHERE 子句用于提取那些满足指定标准的记录。</li>
+<li>AND &amp; OR运算符: AND &amp; OR 运算符用于基于一个以上的条件对记录进行过滤。</li>
+<li>ORDER BY 关键字: ORDER BY 关键字用于对结果集进行排序。</li>
+<li>INSERT INTO 语句: INSERT INTO 语句用于向表中插入新记录  <code>INSERT INTO table_name (column1,column2,column3,...) VALUES (value1,value2,value3,...);</code></li>
+<li>UPDATE 语句: UPDATE 语句用于更新表中的记录。<code>UPDATE table_name SET column1=value1,column2=value2,... WHERE some_column=some_value;</code></li>
+<li>DELETE 语句: DELETE 语句用于删除表中的行 <code>DELETE FROM table_name WHERE some_column=some_value;</code></li>
+</ul>
+<h2 id="高级语法"><a href="#高级语法" class="headerlink" title="高级语法"></a>高级语法</h2><ul>
+<li>SELECT LIMIT 子句：SELECT LIMIT 子句用于规定要返回的记录的数目  <code>SELECT column_name(s) FROM table_name LIMIT number;</code></li>
+<li>LIKE 操作符：LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。<code>SELECT column_name(s) FROM table_name WHERE column_name LIKE pattern;</code></li>
+<li>通配符: 在 SQL 中，通配符与 SQL LIKE 操作符一起使用。SQL 通配符用于搜索表中的数据。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%</td>
+<td style="text-align:center">替代 0 个或多个字符</td>
+</tr>
+<tr>
+<td>_</td>
+<td style="text-align:center">替代一个字符</td>
+</tr>
+<tr>
+<td>[charlist]</td>
+<td style="text-align:center">字符列中的任何单一字符</td>
+</tr>
+<tr>
+<td>[^charlist] 或 [!charlist]</td>
+<td style="text-align:center">不在字符列中的任何单一字符</td>
+</tr>
+</tbody>
+</table>
+<p><code>SELECT * FROM Websites WHERE url LIKE &#39;https%&#39;;</code></p>
+<ul>
+<li>IN 操作符: IN 操作符允许在 WHERE 子句中规定多个值。 <code>SELECT column_name(s) FROM table_name WHERE column_name IN (value1,value2,...);</code></li>
+<li>BETWEEN 操作符: BETWEEN 操作符用于选取介于两个值之间的数据范围内的值。 <code>SELECT column_name(s) FROM table_name WHERE column_name BETWEEN value1 AND value2;</code></li>
+<li><p>别名: 通过使用 SQL，可以为表名称或列名称指定别名 <code>SELECT column_name AS alias_name FROM table_name;</code></p>
+</li>
+<li><p>连接(JOIN): SQL join 用于把来自两个或多个表的行结合起来。 </p>
+<p>  INNER JOIN：如果表中有至少一个匹配，则返回行<br>  LEFT JOIN：即使右表中没有匹配，也从左表返回所有的行<br>  RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行<br>  FULL JOIN：只要其中一个表中存在匹配，则返回行<br><code>SELECT Websites.id, Websites.name, access_log.count, access_log.date FROM Websites INNER JOIN access_log ON Websites.id=access_log.site_id;</code></p>
+</li>
+<li><p>INNER JOIN 关键字 <code>SELECT column_name(s) FROM table1 INNER JOIN table2 ON table1.column_name=table2.column_name;</code><br><img src="http://7xp1lq.com1.z0.glb.clouddn.com/img_innerjoin.gif" alt="img"></p>
+</li>
+<li>LEFT JOIN 关键字: LEFT JOIN 关键字从左表（table1）返回所有的行，即使右表（table2）中没有匹配。如果右表中没有匹配，则结果为 NULL。<br><code>SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.column_name=table2.column_name;</code><br><img src="http://7xp1lq.com1.z0.glb.clouddn.com/img_leftjoin.gif" alt="img"></li>
+<li>RIGHT JOIN 关键字: RIGHT JOIN 关键字从右表（table2）返回所有的行，即使左表（table1）中没有匹配。如果左表中没有匹配，则结果为 NULL。<br><code>SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.column_name=table2.column_name;</code><br><img src="http://7xp1lq.com1.z0.glb.clouddn.com/img_rightjoin.gif" alt="img"></li>
+<li>FULL OUTER JOIN 关键字: FULL OUTER JOIN 关键字只要左表（table1）和右表（table2）其中一个表中存在匹配，则返回行.<br>FULL OUTER JOIN 关键字结合了 LEFT JOIN 和 RIGHT JOIN 的结果。<br><code>SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column_name=table2.column_name;</code><br><img src="http://7xp1lq.com1.z0.glb.clouddn.com/img_fulljoin.gif" alt="img"></li>
+<li>UNION 操作符: UNION 操作符合并两个或多个 SELECT 语句的结果。<br><code>SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;</code></li>
+<li>SELECT INTO 语句: SELECT INTO 语句从一个表复制数据，然后把数据插入到另一个新表中.<br><code>SELECT column_name(s) INTO newtable [IN externaldb] FROM table1;</code></li>
+<li>CREATE INDEX 语句: CREATE INDEX 语句用于在表中创建索引。在不读取整个表的情况下，索引使数据库应用程序可以更快地查找数据。</li>
+<li><p>ALTER TABLE 语句： ALTER TABLE 语句用于在已有的表中添加、删除或修改列。</p>
+<p>  1.如需在表中添加列，请使用下面的语法:<br>  <code>ALTER TABLE table_name ADD column_name datatype</code><br>  2.如需删除表中的列，请使用下面的语法:<br>  <code>ALTER TABLE table_name DROP COLUMN column_name</code><br>  3.要改变表中列的数据类型，请使用下面的语法：<br>  <code>ALTER TABLE table_name MODIFY COLUMN column_name datatype</code></p>
+</li>
+</ul>
+<h2 id="SQL-函数"><a href="#SQL-函数" class="headerlink" title="SQL 函数"></a>SQL 函数</h2><ul>
+<li>AVG() 函数: AVG() 函数返回数值列的平均值。 <code>SELECT AVG(column_name) FROM table_name</code></li>
+<li><p>COUNT() 函数: COUNT() 函数返回匹配指定条件的行数。 </p>
+<p>  1.计算列的和：<code>SELECT COUNT(column_name) FROM table_name;</code><br>  2.返回表中的记录数录：<code>SELECT COUNT(*) FROM table_name;</code><br>  3.返回指定列的不同值的数目: <code>SELECT COUNT(DISTINCT column_name) FROM table_name;</code></p>
+</li>
+<li><p>FIRST() 函数: FIRST() 函数返回指定的列中第一个记录的值.(只有 MS Access 支持 FIRST() 函数。)</p>
+</li>
+<li>LAST() 函数: LAST() 函数返回指定的列中最后一个记录的值. (只有 MS Access 支持 FIRST() 函数。)</li>
+<li>MAX() 函数: MAX() 函数返回指定列的最大值。  <code>SELECT MAX(column_name) FROM table_name;</code></li>
+<li>MIN() 函数: MIN() 函数返回指定列的最小值。 <code>SELECT MIN(column_name) FROM table_name;</code></li>
+<li>SUM() 函数:　SUM() 函数返回数值列的总数。　<code>SELECT SUM(column_name) FROM table_name;</code></li>
+<li>GROUP BY 语句： GROUP BY 语句可结合一些聚合函数来使用。 <code>SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name;</code></li>
+<li>HAVING 子句: HAVING 子句可以让我们筛选分组后的各组数据。</li>
+</ul>
+<pre><code>SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+HAVING aggregate_function(column_name) operator value;
+</code></pre><ul>
+<li>UCASE() 函数: UCASE() 函数把字段的值转换为大写。 <code>SELECT UCASE(column_name) FROM table_name;</code></li>
+<li>LCASE() 函数: LCASE() 函数把字段的值转换为小写。 <code>SELECT LCASE(column_name) FROM table_name;</code></li>
+<li>MID() 函数: MID() 函数用于从文本字段中提取字符。 <code>SELECT MID(column_name,start[,length]) FROM table_name;</code> <code>SELECT MID(name,1,4) AS ShortTitle FROM Websites;</code></li>
+<li>LENGTH() 函数: 返回文本字段中值的长度。 <code>SELECT LENGTH(column_name) FROM table_name;</code></li>
+<li>ROUND() 函数: ROUND() 函数用于把数值字段舍入为指定的小数位数。 <code>SELECT ROUND(column_name,decimals) FROM table_name;</code></li>
+<li>NOW() 函数: NOW() 函数返回当前系统的日期和时间。</li>
+<li>FORMAT() 函数: FORMAT() 函数用于对字段的显示进行格式化。 <code>SELECT FORMAT(column_name,format) FROM table_name;</code>  <code>SELECT name, url, DATE_FORMAT(Now(),&#39;%Y-%m-%d&#39;) AS date FROM Websites;</code></li>
+</ul>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/06/07/mysql-index/" title="mysql索引">mysql索引</a></h2>
+                <p class="excerpt">
+                
+                概述先写标题，待填坑 ):
+
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-06-07T13:54:27.000Z" class="post-list__meta--date date">2017-06-07</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/db/">db</a>
+</span><a class="btn-border-small" href="/2017/06/07/mysql-index/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/14/nba2017/" title="这个赛季将来我们会记得什么">这个赛季将来我们会记得什么</a></h2>
+                <p class="excerpt">
+                
+                
+昨天赛季结束，今天刚好周五，回顾一下这个赛季。
+记得赛季开始之前，有美记说这会是一个无聊的赛季，其他29支球队都是陪勇(tai)士(zi)读书。
+第一场马刺啪啪啪打了勇士的脸，29分大胜。杜兰特相当郁闷。本赛季大换血的马刺又是61胜。
+然而这个赛季是精彩的：
+123456789库里终于拿到了一定会
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-14T14:47:39.000Z" class="post-list__meta--date date">2017-04-14</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/篮球/">篮球</a>, <a class="tag-link" href="/tags/随笔/">随笔</a>
+</span><a class="btn-border-small" href="/2017/04/14/nba2017/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2017/06/05/mysql/" data-title="sql 语法" data-url="http://yoursite.com/2017/06/05/mysql/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+    <script type='text/javascript'>
+        var _vds = _vds || [];
+        window._vds = _vds;
+        (function(){
+          _vds.push(['setAccountId', 'be22e67a732c4bdf']);
+          (function() {
+            var vds = document.createElement('script');
+            vds.type='text/javascript';
+            vds.async = true;
+            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(vds, s);
+          })();
+        })();
+    </script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
