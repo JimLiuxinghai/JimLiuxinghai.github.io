@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>再谈跨域 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="再谈跨域 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="再谈跨域 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2019/11/26/cross-domain/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class="social fa fa-weibo"></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class="social fa fa-github"></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class="social fa fa-facebook"></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class="social fa fa-twitter"></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-11-26T05:46:50.000Z" class="post-list__meta--date date">2019-11-26</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">再谈跨域</h1>
+  </header>
+
+  <section class="post">
+    <p>之前有写过什么样情况下是跨域和一般跨域的解决方案。</p>
+<h3 id="之前状态"><a href="#之前状态" class="headerlink" title="之前状态"></a>之前状态</h3><p>我在工作中 一般遇到跨域会通过jsonp或者同域代理来解决。一般情况下不需要使用其他的技术方案。</p>
+<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><p>前端：</p>
+<p>各个独立域名的系统需要统一公共头及导航。对接统一的用户中心及导航权限。</p>
+<p>后端：</p>
+<p>使用node个前端下发，需要当前用户权限。</p>
+<h3 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h3><p>我开始按照正常开发接口来进行开发，调试，ok接口没问题。<br>交给同组负责前端同事。</p>
+<p>他一调，接口报错。看一眼日志 后台报错没有session，主域下的cookie并没有发送过来。</p>
+<p>由于浏览器的安全策略，跨域不允许携带cookie，jsonp也不允许携带cookie。<br><img src="https://i.loli.net/2019/12/01/5SA7Ytea8cxinlD.png" alt="domain.png"></p>
+<p>那就需要前端ajax设置</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">withCredentials</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>服务端设置</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-<span class="string">Credentials:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">Access-Control-Allow-<span class="string">Origin:</span> <span class="string">"http://a.example.com"</span> <span class="comment">//这里必须是调用方域名，不可以为*</span></span><br><span class="line"></span><br><span class="line">Access-Control-Allow-<span class="string">Methods:</span> [<span class="string">"GET"</span>,<span class="string">"POST"</span>,<span class="string">"DELETE"</span>, <span class="string">"PUT"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Access-Control-Allow-<span class="string">Headers:</span> [<span class="string">"Content-Type"</span>, <span class="string">"Authorization"</span>, <span class="string">"Accept"</span>]</span><br></pre></td></tr></table></figure>
+<p>因为我们多个系统，需要多个域名，所以我做了一个操作</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="built_in">url</span> = req.headers.origin || req.headers.host;</span><br><span class="line"><span class="keyword">if</span>(hostVerify(<span class="built_in">url</span>)) &#123;</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="built_in">url</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Credentials"</span>, <span class="literal">true</span>)</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Origin, X-Requested-With, Content-Type, Accept"</span>);</span><br><span class="line">            res.header(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"PUT,POST,GET,DELETE,OPTIONS"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"><span class="comment">//验证域名是否符合</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hostVerify</span> (<span class="params">host</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> hostArr = host.split(<span class="string">'.'</span>);</span><br><span class="line">    <span class="keyword">let</span> length = hostArr.length;</span><br><span class="line">    <span class="keyword">return</span> hostArr[length - <span class="number">2</span>] == <span class="string">'example'</span> <span class="comment">//你的主域名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哪个个域名来调用 Access-Control-Allow-Origin 就返回它当前的域名，并且做了相对应的安全性校验，必须是我们的系统的域名才允许通过。</p>
+<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p>经过上面的操作get请求成功拿到cookie，并且获取到对应的session。</p>
+<p>接下来POST请求出现了另一个问题，请求又被浏览器block。google一番发现问题所在</p>
+<p>具体的原因嘛，是因为预请求没有通过控制访问检查，更具体的原因是预请求不允许重定向。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关键词 <span class="keyword">preflight </span>request</span><br></pre></td></tr></table></figure>
+<p>关于预检 <a href="https://www.jianshu.com/p/b55086cbd9af" target="_blank" rel="noopener">前端 | 浅谈preflight request </a></p>
+<h4 id="为什么要发预检请求"><a href="#为什么要发预检请求" class="headerlink" title="为什么要发预检请求"></a>为什么要发预检请求</h4><blockquote>
+<p>preflight request是为确保服务器是否允许发起对服务器数据产生副作用的HTTP请求方法，<br>而预先由浏览器发起OPTIONS方法的一个预检请求，<br>如果允许就发送真实的请求，如果不允许则直接拒绝发起真实请求。</p>
+</blockquote>
+<h4 id="首先介绍不会触发预检请求的方法"><a href="#首先介绍不会触发预检请求的方法" class="headerlink" title="首先介绍不会触发预检请求的方法"></a>首先介绍不会触发预检请求的方法</h4><ul>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+</ul>
+<blockquote>
+<p>仅当POST方法的Content-Type值等于下列之一才算做简单需求</p>
+</blockquote>
+<ul>
+<li>text/plain</li>
+<li>multipart/form-data</li>
+<li>application/x-www-form-urlencoded</li>
+</ul>
+<p>因为我们这里使用了axios，而axios的post方法Content-Type默认是application/json; charset=utf-8;所以如何避免post触发预检请求的关键就是使用上述Content-Type的三个任一值，application/x-www-form-urlencoded才是最大淫家。</p>
+<p>接口层面也对应接收 application/x-www-form-urlencoded 。</p>
+<p>问题解决。</p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2019/06/27/react-native/" title="纯react-native开发App的心酸😭">纯react-native开发App的心酸😭</a></h2>
+                <p class="excerpt">
+                
+                📱背景公司主要做toB的酒店业务，大量的业务是桌面web，当前一共有七名前端，大家都没有Native App的相关经验。有一个15年上线的只是用来展示数据的APP，那当时也是交给外包团队做的。
+📱起因从用户使用系统的便利性出发，公司层面决定将当前产品部分模块移动化。
+📱开始移动化我们会有好几个
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2019-06-27T14:14:16.000Z" class="post-list__meta--date date">2019-06-27</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/react-native/">react-native</a>
+</span><a class="btn-border-small" href="/2019/06/27/react-native/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2019/11/26/cross-domain/" data-title="再谈跨域" data-url="http://yoursite.com/2019/11/26/cross-domain/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+    <script type='text/javascript'>
+        var _vds = _vds || [];
+        window._vds = _vds;
+        (function(){
+          _vds.push(['setAccountId', 'be22e67a732c4bdf']);
+          (function() {
+            var vds = document.createElement('script');
+            vds.type='text/javascript';
+            vds.async = true;
+            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(vds, s);
+          })();
+        })();
+    </script>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
