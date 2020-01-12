@@ -158,10 +158,10 @@
   </header>
 
   <section class="post">
-    <h2 id="React-Native-移动APP架构升级"><a href="#React-Native-移动APP架构升级" class="headerlink" title="React Native 移动APP架构升级"></a>React Native 移动APP架构升级</h2><p>之前一篇文章总结了关于APP的技术选型及开发过程中遇到的各种坑点。由于时间紧迫，所以开发第一期以做完需求和熟悉React Native为目标。</p>
+    <p>之前一篇文章总结了关于APP的技术选型及开发过程中遇到的各种坑点。由于时间紧迫，所以开发第一期以做完需求和熟悉React Native为目标。</p>
 <p>APP上线后我进行总结思考，开发APP过程中需要有哪些点需要优化。</p>
 <p>这是画的架构图</p>
-<p><img src="../images/block.png" alt="img"></p>
+<p><img src="/images/block.png" alt="img"></p>
 <ul>
 <li><p>移动端组件</p>
 </li>
@@ -173,7 +173,7 @@
 </li>
 </ul>
 <h3 id="一、移动端组件"><a href="#一、移动端组件" class="headerlink" title="一、移动端组件"></a>一、移动端组件</h3><p>在和产品经理及UI沟通后，设计一套移动端组件，以便可以更快速的开发并完成需求。</p>
-<p><img src="../images/component.png" alt="img"></p>
+<p><img src="/images/component.png" alt="img"></p>
 <h3 id="二、埋点"><a href="#二、埋点" class="headerlink" title="二、埋点"></a>二、埋点</h3><p>之前的目标是做一个无痕埋点，收集APP所有点击事件，但是发现必须要在Native端做文章，但是要掌握Android和ios两端 时间成本太高，无奈只好改用别的方式。</p>
 <ul>
 <li><p>改写组件，给组件添加click方法，利用ref方式记录所点击的组件，配合之前做的web端无痕埋点分析工具来进行统计分析。</p>
@@ -181,18 +181,18 @@
 <li><p>增加layout组件记录页面加载。</p>
 </li>
 </ul>
-<p><img src="../images/point.png" alt="bundle"></p>
+<p><img src="/images/point.png" alt="bundle"></p>
 <h3 id="三、Bundle文件拆分"><a href="#三、Bundle文件拆分" class="headerlink" title="三、Bundle文件拆分"></a>三、Bundle文件拆分</h3><p>按照业务线来拆分文件夹</p>
-<p><img src="../images/bundle.png" alt="bundle"></p>
+<p><img src="/images/bundle.png" alt="bundle"></p>
 <p>React Native 官方提供了一个打包工具Metro</p>
-<p><img src="../images/metro.png" alt="bundle"></p>
+<p><img src="/images/metro.png" alt="bundle"></p>
 <p>我们使用Metro打包工具，按照业务线拆分bundle为 base.bundle、review.bundle、otb.bundle 等。在Android和ios端控制先加载基础bundle在按需加载业务bundle逻辑。实现bundle按需加载。</p>
 <h3 id="四、codepush热更新服务"><a href="#四、codepush热更新服务" class="headerlink" title="四、codepush热更新服务"></a>四、codepush热更新服务</h3><p>第一期需求上线前，我发现APP中忘记加更新策略了，所以当时就使用接口 + 弹窗下载链接的方式进行更新。如果有更新必须经过苹果商店审核，不能及时有效进行bug修复。所以需要进行热更新的接入。</p>
 <p>第一步我们先使用codepush服务来进行热更新。</p>
 <p>搭建私有的codepush服务 <a href="https://github.com/lisong/code-push-server" target="_blank" rel="noopener">仓库</a></p>
 <p>Native APP中接入codepush。</p>
 <p>接下来我会搭建bundle管理平台来进行基于用户的灰度发布。</p>
-<p><img src="../images/codepush.png" alt="codepush"></p>
+<p><img src="/images/codepush.png" alt="codepush"></p>
 <p>完！</p>
 
   </section>
@@ -272,21 +272,5 @@
      
     
 
-    <script type='text/javascript'>
-        var _vds = _vds || [];
-        window._vds = _vds;
-        (function(){
-          _vds.push(['setAccountId', 'be22e67a732c4bdf']);
-          (function() {
-            var vds = document.createElement('script');
-            vds.type='text/javascript';
-            vds.async = true;
-            vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(vds, s);
-          })();
-        })();
-    </script>
-    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
