@@ -168,14 +168,17 @@
 <h3 id="📱坑点"><a href="#📱坑点" class="headerlink" title="📱坑点"></a>📱坑点</h3><h4 id="1-Android-Studio升级"><a href="#1-Android-Studio升级" class="headerlink" title="1.Android Studio升级"></a>1.Android Studio升级</h4><p>我们基础工程是基于React Native 0.59.4 init出来的。ios开发使用Xcode 10。android开发使用 Android Studio使用3.0</p>
 <p>刚一开始的时候团队另外两位小伙伴使用ios模拟器进行预览开发，我个人使用android模拟器进行预览开发。各自相安无事。</p>
 <p>开发到中期的时候，团队新入职小伙伴，公司给新员工配的windows电脑，所以他只能来使用Android Studio进行预览开发。然后他开发一天，提交代码。我更新完代码后发现，我跑不起来了。。好尴尬。然后我提交代码后 他也跑不起来了。。更尴尬。我就开始找问题，通过报错信息搜索解决方案（报错信息没有留存，没办法贴出来），然后也去问其他部门安卓开发的同事，他们看报错信息去解决jcenter的问题，后来发现问题是升级Android Studio的问题，Android Stutio 推荐使用 androidx 替换android support v4 所以安装的node modules里面安卓包里的以来的android support v4报错,所以将所有的依赖都换成androidx，问题解决。</p>
-<h4 id="没事不要升级Android-Studio！！"><a href="#没事不要升级Android-Studio！！" class="headerlink" title="没事不要升级Android Studio！！"></a>没事不要升级Android Studio！！</h4><h3 id="2-Android-HTTPS请求失败"><a href="#2-Android-HTTPS请求失败" class="headerlink" title="2.Android HTTPS请求失败"></a>2.Android HTTPS请求失败</h3><p>使用node写了一套api提供给App使用，测试环境正常运行。交给运维部署。运维部署了只开443端口 使用HTTPS访问。然后我们将配置文件中的链接改为线上链接。Android fetch报错 XHR requst failed。ios没有问题。</p>
+<h4 id="没事不要升级Android-Studio！！"><a href="#没事不要升级Android-Studio！！" class="headerlink" title="没事不要升级Android Studio！！"></a>没事不要升级Android Studio！！</h4><h3 id="2-Android-日期NaN"><a href="#2-Android-日期NaN" class="headerlink" title="2.Android 日期NaN"></a>2.Android 日期NaN</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> startTimeStr = <span class="string">'2020-01-01 10:00:08'</span>;</span><br><span class="line"><span class="keyword">let</span> startTime = <span class="keyword">new</span> <span class="built_in">Date</span>(startTimeStr);</span><br></pre></td></tr></table></figure>
+<p>在release模式下 日期计算出问题，并不能得到正确的日期</p>
+<p>原因是：不同系统的时间格式支持问题。 yyyy/mm/dd hh:mm 最通用</p>
+<h3 id="3-Android-HTTPS请求失败"><a href="#3-Android-HTTPS请求失败" class="headerlink" title="3.Android HTTPS请求失败"></a>3.Android HTTPS请求失败</h3><p>使用node写了一套api提供给App使用，测试环境正常运行。交给运维部署。运维部署了只开443端口 使用HTTPS访问。然后我们将配置文件中的链接改为线上链接。Android fetch报错 XHR requst failed。ios没有问题。</p>
 <p>然后就开始搜索为什么RN Andorid使用HTTPS报错，得到的答案是需要去改android okhttp包。</p>
 <p><img src="http://5b0988e595225.cdn.sohucs.com/images/20181020/84d176465ef34eed965988568efe13b6.jpeg" alt="img"></p>
 <p>但之前我们请求其他后台服务的HTTPS接口是正常的，所以我就在测试环境部署了一套HTTPS服务，然后也正常。看起来这个锅一定是运维的了。让运维把他们的nginx配置文件发给我。逐一排查，找到了问题</p>
 <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssl_stapling on;</span><br><span class="line">ssl_stapling_verify on;</span><br><span class="line">resolver <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span> <span class="number">8.8</span><span class="number">.4</span><span class="number">.4</span> <span class="number">223.5</span><span class="number">.5</span><span class="number">.5</span> valid=<span class="number">300</span>s;</span><br><span class="line">resolver_timeout <span class="number">5</span>s;</span><br></pre></td></tr></table></figure>
 <p>OCSP Stapling在验证ssl时出现问题。<br>在屈屈的博客找到答案</p>
 <p><a href="https://imququ.com/post/why-can-not-turn-on-ocsp-stapling.html" target="_blank" rel="noopener">从无法开启 OCSP Stapling 说起</a></p>
-<p>开发到现在能记得的问题暂时只有这两个。。</p>
+<p>开发到现在能记得的问题暂时只有这三个。。</p>
 <p>接下来会记录一下 关于RN 纯前端怎么来升级init出来的项目架构。</p>
 
   </section>
