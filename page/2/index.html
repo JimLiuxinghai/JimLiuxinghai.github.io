@@ -147,6 +147,30 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/02/02/debounce/" title="link to post.title">函数节流与函数防抖</a></h2>
+      <p class="excerpt">
+    
+      概念函数防抖（debounce）
+
+当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间
+
+函数节流（throttle）
+
+预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期
+
+区别
+函数防抖：如果有人进电梯（触发事件），那电梯将在10秒钟后出发（执行事件监听器），这时如果又有人进电梯了（在10秒内再次触发该事件），我们又得等1
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-02-01T23:20:15.000Z" class="post-list__meta--date date">2018-02-02</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/javascript/">javascript</a>
+</span><a class="btn-border-small" href="/2018/02/02/debounce/">继续阅读</a></div>
+      <hr class="post-list__divider">
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/12/12/cors/" title="link to post.title">用于在node.js中设计灵活体系结构的模式（CQRS / ES / Onion）(译)</a></h2>
       <p class="excerpt">
     
@@ -303,27 +327,6 @@ Error构造函数接受一个参数，表示错误提示，可以从实例的mes
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>
 </span><a class="btn-border-small" href="/2017/06/12/error-type/">继续阅读</a></div>
-      <hr class="post-list__divider">
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/06/08/feerr/" title="link to post.title">前端代码错误收集（一）</a></h2>
-      <p class="excerpt">
-    
-      前端的异常收集常用的两种方式：
-1.try catch使用一个webpack的loader babel_try_catch_loader对js代码进行包裹。打包完成后，所有的函数块会被加上try catch 我们只需在全局空间定义catch的函数，然后进行收集。使用try catch 我们可以捕获到 
-1.错误信息
-2.文件名
-3.函数块行号
-4.函数名称
-当然其他的一些信息我们可以在catch的
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-06-08T02:17:04.000Z" class="post-list__meta--date date">2017-06-08</time>
- &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/js/">js</a>
-</span><a class="btn-border-small" href="/2017/06/08/feerr/">继续阅读</a></div>
       <hr class="post-list__divider">
     </li>
   
