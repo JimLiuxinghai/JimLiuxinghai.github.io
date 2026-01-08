@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>服务器安装ELK | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="服务器安装ELK | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="服务器安装ELK | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017/07/28/install-elk/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-07-28T11:04:08.000Z" class="post-list__meta--date date">2017-07-28</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/ELK/">ELK</a>, <a class="tag-link" href="/tags/linux/">linux</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">服务器安装ELK</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="一-安装java环境"><a href="#一-安装java环境" class="headerlink" title="一.安装java环境"></a>一.安装java环境</h2><p>由于Elasticsearch和Logstash的要求，在服务器首先安装jdk 1.8<br><a id="more"></a></p>
+<h3 id="1-下载"><a href="#1-下载" class="headerlink" title="1.下载"></a>1.下载</h3><p>Linux环境下的jdk1.8，请去（<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">官网</a>）中下载你服务器对应jdk的安装文件</p>
+<h3 id="2-创建目录"><a href="#2-创建目录" class="headerlink" title="2.创建目录"></a>2.创建目录</h3><p>创建/usr/java目录 将jdk文件粘贴至该目录下，并且在该目录下解压。</p>
+<h3 id="3-配置java环境变量"><a href="#3-配置java环境变量" class="headerlink" title="3.配置java环境变量"></a>3.配置java环境变量</h3><p>编辑 /etc/profile 文件 添加java环境变量</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=<span class="regexp">/usr/java</span><span class="regexp">/jdk1.8.0_25 </span></span><br><span class="line"><span class="regexp">export CLASSPATH=.:$JAVA_HOME/jre</span><span class="regexp">/lib/rt</span>.<span class="symbol">jar:</span>$JAVA_HOME/<span class="class"><span class="keyword">lib</span>/<span class="title">dt</span>.<span class="title">jar</span>:$<span class="title">JAVA_HOME</span>/<span class="title">lib</span>/<span class="title">tools</span>.<span class="title">jar</span></span></span><br><span class="line">export PATH=$<span class="symbol">PATH:</span>$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+<pre><code>注意jdk必须是你下载的版本。
+</code></pre><h2 id="二-安装并运行ELasticsearch"><a href="#二-安装并运行ELasticsearch" class="headerlink" title="二.安装并运行ELasticsearch"></a>二.安装并运行ELasticsearch</h2><h3 id="1-下载-1"><a href="#1-下载-1" class="headerlink" title="1.下载"></a>1.下载</h3><p>去<a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">Elastic官网</a>下载tar安装包</p>
+<h3 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">-xzvf</span> <span class="selector-tag">elasticsearch-5</span><span class="selector-class">.5</span><span class="selector-class">.1</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-运行"><a href="#3-运行" class="headerlink" title="3.运行"></a>3.运行</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> elasticsearch-5.5.1</span><br><span class="line"></span><br><span class="line"><span class="string">./bin/elasticsearch</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-验证"><a href="#4-验证" class="headerlink" title="4.验证"></a>4.验证</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crul <span class="string">http:</span><span class="comment">//localhost:9200</span></span><br></pre></td></tr></table></figure>
+<p>得到<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="symbol">    name:</span> <span class="string">"oN3cxGg"</span>,</span><br><span class="line"><span class="symbol">    cluster_name:</span> <span class="string">"elasticsearch"</span>,</span><br><span class="line"><span class="symbol">    cluster_uuid:</span> <span class="string">"VMLohqVCQNClek3iPa000A"</span>,</span><br><span class="line"><span class="symbol">    version:</span> &#123;</span><br><span class="line"><span class="symbol">        number:</span> <span class="string">"5.5.1"</span>,</span><br><span class="line"><span class="symbol">        build_hash:</span> <span class="string">"19c13d0"</span>,</span><br><span class="line"><span class="symbol">        build_date:</span> <span class="string">"2017-07-18T20:44:24.823Z"</span>,</span><br><span class="line"><span class="symbol">        build_snapshot:</span> false,</span><br><span class="line"><span class="symbol">        lucene_version:</span> <span class="string">"6.6.0"</span></span><br><span class="line">    &#125;,</span><br><span class="line"><span class="symbol">    tagline:</span> <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样表明已经安装和启动成功了！</p>
+<h3 id="5-问题"><a href="#5-问题" class="headerlink" title="5.问题"></a>5.问题</h3><p>a.启动后无法通过服务器所在ip访问：</p>
+<pre><code>修改config/elasticsearch.yml 中network.host: &apos;你的服务器ip&apos;
+</code></pre><p>b.修改成ip后无法启动：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ./elasticsearch</span><br><span class="line">...</span><br><span class="line">ERROR: bootstrap checks failed</span><br><span class="line">max file descriptors [4096] for elasticsearch process likely too low, increase to at least [65536]</span><br><span class="line">max virtual memory areas vm.max<span class="emphasis">_map_</span>count [65530] likely too low, increase to at least [262144]</span><br><span class="line">[<span class="string">2016-10-31T04:55:45,240</span>][<span class="symbol">INFO </span>][<span class="string">o.e.n.Node               </span>] [vJDcSkt] stopping ...</span><br><span class="line">[<span class="string">2016-10-31T04:55:45,249</span>][<span class="symbol">INFO </span>][<span class="string">o.e.n.Node               </span>] [vJDcSkt] stopped</span><br><span class="line">[<span class="string">2016-10-31T04:55:45,249</span>][<span class="symbol">INFO </span>][<span class="string">o.e.n.Node               </span>] [vJDcSkt] closing ...</span><br><span class="line">[<span class="string">2016-10-31T04:55:45,257</span>][<span class="symbol">INFO </span>][<span class="string">o.e.n.Node               </span>] [vJDcSkt] closed</span><br></pre></td></tr></table></figure>
+<p>问题1：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">max</span> <span class="built_in">file</span> descriptors [<span class="number">4096</span>] <span class="keyword">for</span> elasticsearch <span class="built_in">process</span> likely too low, increase <span class="built_in">to</span> <span class="keyword">at</span> least [<span class="number">65536</span>]</span><br></pre></td></tr></table></figure></p>
+<p>解决办法： 修改/etc/security/limits.conf文件，添加或修改如下行：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>soft nofile 65536</span><br><span class="line"><span class="bullet">* </span>hard nofile 131072</span><br><span class="line"><span class="bullet">* </span>soft nproc 2048</span><br><span class="line"><span class="bullet">* </span>hard nproc 4096</span><br></pre></td></tr></table></figure></p>
+<p>问题2：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">max</span> <span class="selector-tag">virtual</span> <span class="selector-tag">memory</span> <span class="selector-tag">areas</span> <span class="selector-tag">vm</span><span class="selector-class">.max_map_count</span> <span class="selector-attr">[65530]</span> <span class="selector-tag">likely</span> <span class="selector-tag">too</span> <span class="selector-tag">low</span>, <span class="selector-tag">increase</span> <span class="selector-tag">to</span> <span class="selector-tag">at</span> <span class="selector-tag">least</span> <span class="selector-attr">[262144]</span></span><br></pre></td></tr></table></figure></p>
+<p>解决办法：修改 /etc/sysctl.conf 文件，添加 “vm.max_map_count”设置<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">vm.max_map_count</span> = <span class="number">262144</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就可以成功启动了。</p>
+<h2 id="安装logstash"><a href="#安装logstash" class="headerlink" title="安装logstash"></a>安装logstash</h2><p>安装步骤与Elasticsearch 基本相同，下载软件包，解压.</p>
+<h3 id="1-启动"><a href="#1-启动" class="headerlink" title="1. 启动"></a>1. 启动</h3><p>a. 新建配置文件  yourname.conf</p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">    file &#123;</span><br><span class="line">        <span class="attr">path</span> =&gt; <span class="string">"你的日志文件"</span></span><br><span class="line">        <span class="attr">start_position</span> =&gt; end</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">filter</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> ([<span class="literal">message</span>] =~ <span class="string">"^debug"</span>) &#123;</span><br><span class="line">             drop &#123;&#125;</span><br><span class="line">          &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">    stdout &#123; <span class="attr">codec</span> =&gt; json&#125;</span><br><span class="line">         <span class="keyword">elasticsearch</span> &#123; <span class="attr">hosts</span> =&gt;[<span class="string">"http://127.0.0.1:9200"</span>] &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b. 执行命令<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./<span class="keyword">bin/logstash </span>-f yourname.conf</span><br></pre></td></tr></table></figure></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/08/01/logstash解析nginx日志/" title="logstash解析nginx日志">logstash解析nginx日志</a></h2>
+                <p class="excerpt">
+                
+                配置好ELK后，使用logstash读取nginx日志，但是logstash没有默认的nginx日志格式解析插件，需要自己使用正则匹配。这里有一个简便的配置方案：
+1.配置nginx日志log format12345678910111213log_format json &#39;&amp;#123;&#34;@times
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-08-01T11:00:31.000Z" class="post-list__meta--date date">2017-08-01</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/ELK/">ELK</a>, <a class="tag-link" href="/tags/linux/">linux</a>
+</span><a class="btn-border-small" href="/2017/08/01/logstash解析nginx日志/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/06/12/error-type/" title="JavaScript错误类型">JavaScript错误类型</a></h2>
+                <p class="excerpt">
+                
+                1.Error对象JavaScript解析或执行时，一旦发生错误，引擎就会抛出一个错误对象。JavaScript原生提供一个Error构造函数，所有抛出的错误都是这个构造函数的实例。12var err = new Error(&#39;出错了&#39;);err.message // &#34;出错了&#34;
+Error构造函数
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-06-12T15:07:25.000Z" class="post-list__meta--date date">2017-06-12</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>
+</span><a class="btn-border-small" href="/2017/06/12/error-type/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2017/07/28/install-elk/" data-title="服务器安装ELK" data-url="http://yoursite.com/2017/07/28/install-elk/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>用于在node.js中设计灵活体系结构的模式（CQRS / ES / Onion）(译) | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="用于在node.js中设计灵活体系结构的模式（CQRS / ES / Onion）(译) | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="用于在node.js中设计灵活体系结构的模式（CQRS / ES / Onion）(译) | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2017/12/12/cors/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-12-12T07:41:19.000Z" class="post-list__meta--date date">2017-12-12</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/node/">node</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">用于在node.js中设计灵活体系结构的模式（CQRS / ES / Onion）(译)</h1>
+  </header>
+
+  <section class="post">
+    <p>原文地址<a href="https://medium.com/@domagojk/patterns-for-designing-flexible-architecture-in-node-js-cqrs-es-onion-7eb10bbefe17" target="_blank" rel="noopener">Patterns for designing flexible architecture in node.js (CQRS/ES/Onion)</a></p>
+<p>在这篇文章中，我介绍了一个使用CQRS和Event Sourcing模式的项目。 它使用洋葱式架构编写，并使用TypeScript编写。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*M7kTVIifVn6tnFO-tBf_Kg.png"></p>
+<h2 id="“flexible”-how"><a href="#“flexible”-how" class="headerlink" title="“flexible” how?"></a>“flexible” how?</h2><p>我使用“flexible”这个术语来推广能够适应不同环境的架构。 更确切地说，我试图：</p>
+<ul>
+<li>将核心业务逻辑与实现细节分开</li>
+<li>独立于任何数据库，框架或服务</li>
+<li>尽可能试用简单的纯函数</li>
+<li>使项目易于“水平”扩展</li>
+<li>使项目便于测试</li>
+<li>使用类型系统（type systerm）主要是为了传达核心领域的“普及语言” (use type system primarily to communicate the “ubiquitous language” of the core domain)</li>
+</ul>
+<p><b>谨记：</b>项目的某些部分可能过度设计！</p>
+<p>CQRS模式可以在没有事件源的情况下使用，您不必遵循“洋葱式架构”或使用类型系统（type systerm）。<br>不过，我把所有这些东西结合在一起主要是为了测试和了解它们，所以我希望你能挑出对你有用的技术。</p>
+<h2 id="Project-details"><a href="#Project-details" class="headerlink" title="Project details"></a>Project details</h2><p>我正在构建的这个项目可以被描述为一个平台，它可以帮助作者（开发者，艺术家，作家等）尽早得到反馈，并且不管他们的受欢迎程度如何，但是可以使观众了解他们的正在干什么。<br>这是一个科学期刊出版和同行评审的在线改编。（？）</p>
+<p>有关更多详细信息，请参阅项目<a href="https://github.com/domagojk/beenion" target="_blank" rel="noopener">readme</a>。<br>但是，对于这篇文章来说，了解有三个主要实体构建应用程序的模型就足够了：</p>
+<ul>
+<li>文章 - 作者正在提交的提交（如博客文章或YouTube视频）</li>
+<li>杂志 - 只有在杂志定义的一套规则得到满足的情况下才能被接受的文章集合</li>
+<li>用户 - 作者或同行审稿人与授予他们一些特权的排名（类似于StackOverflow的排名系统）</li>
+</ul>
+<h2 id="Every-action-causes-a-reaction"><a href="#Every-action-causes-a-reaction" class="headerlink" title="Every action causes a reaction"></a>Every action causes a reaction</h2><p>我将尝试以我的项目为例来说明 Event sourcing 模式。 但是，如果这是你第一次听到这个消息，我建议你也看看这个话题。</p>
+<blockquote>
+<p>在事件采购（ES）中，我们可以看一个系统，并说有行动，每一个行动引起的反应。 在这种情况下，这个动作可以作为命令和作为事件的反应来实现。 （资源）</p>
+</blockquote>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*BvcT7M74zWYalJCOxwG73g.jpeg"></p>
+<p>然而，反过来展示这个项目要容易得多 - 从 reactions 到 actions.</p>
+<p>所以，这里是项目当前使用的事件列表：<br><img src="https://cdn-images-1.medium.com/max/1600/1*fJXpbUF9nmKcd82Rva2PmA.png"></p>
+<p>注意：“杂志”，“文章”和“用户”是分开的单位，我将其称为聚合（即使其“面向对象的定义”不完全符合我的模型，其通用目的是相同的）</p>
+<p>在对事件列表感到满意后，我更详细地定义了每种类型（使用TypeScript）：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ABl5ntZPitXagKL9Fxf6Kw.png"></p>
+<p>注意：在当前版本的项目中，事件不再以这种方式定义，而是使用io-ts（后面会详细介绍）转换为TypeScript类型。</p>
+<p>根据这些事件是用于捕获系统变化还是作为报告数据的来源，应用程序分为两个部分：</p>
+<ul>
+<li>write side – 解决事件存储问题，确保业务规则和处理命令</li>
+<li>read side – 写入由写入方产生的事件，并使用它们来构建和维护适合于回答客户查询的模型</li>
+</ul>
+<p>简而言之，这是一个典型的CQRS应用程序，我们将命令（写入请求）和查询（读取请求）之间的责任分开：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ImKIeMbgTAKa9MPJUcYK-g.png"></p>
+<h2 id="Mental-model-for-storing-events"><a href="#Mental-model-for-storing-events" class="headerlink" title="Mental model for storing events"></a>Mental model for storing events</h2><p>在Event Sourcing系统中存储事件的心智模式非常简单 - 新事件被附加到列表中，稍后可以从列表中检索。 另外，存储时，事件不会被删除或更新。</p>
+<p>所以，它基本上是从CRUD模型（创建，读取，更新，删除）切换到CR模型（创建，读取）。</p>
+<p>216/5000<br>当我第一次开始学习Event Sourcing时，我总是想象一个巨大的事件清单，每次我必须做出改变（我认为我应该使用所有的事件来补充一个集合）。</p>
+<p>但这种方法存在问题，导致在数据库级别阻塞问题或导致更新失败（由于 pessimistic 并发）。</p>
+<p>注：<i>关于“一致性边界”的更详细的解释，我建议阅读“DDD的模式，原则和实践”（第19章 - 总结）。</i></p>
+<p>长话短说，考虑事件存储的一个更好的方法是：</p>
+<blockquote>
+<p>有多个事件列表（事件流），每个事件列表包含与不同聚合对应的事件</p>
+</blockquote>
+<p>例如，对于看起来像这样的<code>期刊</code>：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*wDs111exqVPtxhm16aoswQ.png"></p>
+<p>注：<i>有关事件如何在SQL或NoSQL数据库中实际存在的确切细节，或者如何执行pessimistic或optimistic锁定，不在本博文的范围之内。</i></p>
+<h2 id="The-big-picture"><a href="#The-big-picture" class="headerlink" title="The big picture"></a>The big picture</h2><p>尽管“action触发reaction”的说法是正确的，但是并没有真正地告诉你如何创建，捕获或验证一个命令，如何确保不变量（业务规则）或如何处理关注（concerns）的耦合和分离。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*_nqEYX2VHvoB51DQbiwcpA.jpeg"></p>
+<p>为了解释这一点，首先意识到“big picture”是有用的：</p>
+<p>这就是为什么在解释每个组件做什么之前，我将首先提出一个架构，其主要目标是将技术复杂性与领域(domain)的复杂性分开。</p>
+<p>这就是所谓的“洋葱建筑(onion architecture)”：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*cQeFwaWtymSDIVzGLiSkjQ.jpeg"></p>
+<p>该体系结构使用一个简单的规则将软件划分为多个层：外层可以依赖于较低层，但下层的代码不能依赖于外层的任何代码。</p>
+<ul>
+<li>架构的核心是一个<br>（包含业务规则），只使用纯函数（容易测试）</li>
+<li>命令处理程序可以使用一个领域模型，并通过使用注入的存储库实现存储库接口（易于模拟）与外部进行通信</li>
+<li>最外层可以访问所有的内层。 它提供了存储库接口，系统入口点（REST API），数据库连接（Event store）以及类似的实现。</li>
+</ul>
+<blockquote>
+<p>应用程序的呈现，持久性和领域逻辑关注会以不同的速率和不同的原因发生变化; 分离这些问题的体系结构可以适应变化，而不会对代码库的不相关域产生不良影响。 （DDD的模式，原则和实践）</p>
+</blockquote>
+<p>这种架构的另一个很好的特点是它倾向于定义你的<a href="https://github.com/domagojk/beenion" target="_blank" rel="noopener">目录结构</a>：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*-xDuR3tUGd-HSzRW-_FwLA.png"></p>
+<p>注：<i>在洋葱架构的大多数例子中，“commandHandlers”通常是“应用程序”层的一部分。 但是，因为在我的情况下，处理命令是这个层目前唯一正在做的事情，所以我决定把它叫做什么（如果将来我需要更多的东西，我可能会重命名为“应用程序”）<br>如果您听说过“clean architecture”或“hexagonal architecture”（端口和适配器），请注意它们几乎与“onion architecture”相同。</i></p>
+<h2 id="Authentication-amp-formation-of-a-command"><a href="#Authentication-amp-formation-of-a-command" class="headerlink" title="Authentication &amp; formation of a command"></a>Authentication &amp; formation of a command</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*CDeC9_fwishjO0RfLHag2Q.png"></p>
+<p>命令是用户请求进行更改的一个对象。<br>它通常与结果事件“一对一”映射：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CreateJournal =&gt; <span class="keyword">JournalCreated</span></span><br><span class="line"><span class="keyword">AddJournalEditor </span>=&gt; <span class="keyword">JournalEditorAdded</span></span><br><span class="line"><span class="keyword">ConfirmJournalEditor </span>=&gt; <span class="keyword">JournalEdditorConfirmed</span></span><br><span class="line"><span class="keyword">...</span></span><br></pre></td></tr></table></figure>
+<p>但是它有时会触发多个事件：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ReviewArticle</span> =&gt; [ArticleReviewed, ArticlePromoted, ArticleAccepted]</span><br><span class="line"><span class="attr">ReviewArticle</span> =&gt; [ArticleReviewed, ArticleRejected]</span><br></pre></td></tr></table></figure>
+<p>有很多方法可以生成和处理命令，但是对于这个项目，我使用了一个接受JSON对象的REST端点（/ command）：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attribute">name</span>: <span class="string">'AddJournalEditor'</span>,</span><br><span class="line">  <span class="attribute">payload</span>: &#123;</span><br><span class="line">    <span class="attribute">journalId</span>: <span class="string">'journal-1'</span>,</span><br><span class="line">    <span class="attribute">editorInfo</span>: &#123;</span><br><span class="line">      <span class="attribute">email</span>: <span class="string">'editor@gmail.com'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attribute">timestamp</span>: <span class="number">1511865224832</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该对象作为POST请求的参数，然后转换为：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attribute">userId</span>: <span class="string">'xyz'</span>,</span><br><span class="line">  <span class="attribute">payload</span>: &#123;</span><br><span class="line">    <span class="attribute">journalId</span>: <span class="string">'journal-1'</span>,</span><br><span class="line">    <span class="attribute">editorInfo</span>: &#123;</span><br><span class="line">      <span class="attribute">email</span>: <span class="string">'editor@gmail.com'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attribute">timestamp</span>: <span class="number">1511865224832</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注：“后面”userId属性是整个身份验证过程，这是一个大任务。 为此，我决定使用<a href="https://auth0.com/" target="_blank" rel="noopener">Auth0</a>服务（类似于“<a href="https://firebase.google.com/docs/auth/" target="_blank" rel="noopener">Firebase Authentication</a>”或“<a href="https://aws.amazon.com/cn/cognito/" target="_blank" rel="noopener">Amazon Cognito</a>”），当然，您可以自己实现。<br>这里重要的一点是命令处理程序不会因为身份验证的复杂性而臃肿，并且假设从这个服务发送的userId是受信的。</p>
+<p>然后将命令对象（包含userId）传递给相应的命令处理程序（通过命令名称找到）。</p>
+<p>这是这个过程的简单例子：</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*p5gfx1hnFDtLf9TD5E_xpw.png"></p>
+<h2 id="Command-handler-—-validating-the-input-data"><a href="#Command-handler-—-validating-the-input-data" class="headerlink" title="Command handler — validating the input data"></a>Command handler — validating the input data</h2><p><img src="https://cdn-images-1.medium.com/max/800/1*WU9HfgqIgjyFTc4Fj-SH8w.png"></p>
+<p>正如<a href="http://cqrs.nu/Faq" target="_blank" rel="noopener">CQRS的这个常见问题</a>一样，下面是命令处理程序遵循的一些常见步骤（从原来的略有改变）：</p>
+<p>1.根据自身的优点验证命令<br>2.验证聚合的当前状态的命令<br>3.如果验证成功，则尝试坚持新的事件。 如果在此步骤中发生并发冲突，请放弃或重试</p>
+<p>在第一步（“根据自己的优点验证命令”）中，命令处理程序会检查命令对象是否有任何缺少的属性，无效的电子邮件，URL和类似信息。</p>
+<p>为此，我使用<a href="https://github.com/gcanti/io-ts" target="_blank" rel="noopener">io-ts</a> - 一种运行时类型的系统进行IO验证，它与TypeScript兼容（当然也可以不使用它）。</p>
+<p>它通过结合简单的类型来工作<a href="https://github.com/domagojk/beenion/blob/master/beenion-core/domain/types/input.ts" target="_blank" rel="noopener">（完整的例子）</a>：</p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*2FmahTtjgWSgsIbGCBefSg.png"></p>
+<p>变成更复杂的命令类型<a href="https://github.com/domagojk/beenion/blob/master/beenion-core/domain/types/journal/commands.ts" target="_blank" rel="noopener">（完整的例子）</a></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*J-BwuYZ8E-dD7SfnYzvtjg.png"></p>
+<p>然后用它来验证REST API发送的输入数据。</p>
+<p>注：如果验证成功，TypeScript将判断命令的类型：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*v4bMFdtzBBI98bu-LVrHhg.png"></p>
+<p>此时，命令处理程序必须执行第二个步骤：“根据聚合的当前状态验证命令”。</p>
+<p>换句话说，它必须决定应该存储哪个事件，或者是否应该通过抛出一个错误（如果一些业务规则被破坏）来拒绝一个命令。</p>
+<p>这个决定是在一个domain model(领域模型)的帮助下完成的。</p>
+<h2 id="使用领域模型来检查业务规则"><a href="#使用领域模型来检查业务规则" class="headerlink" title="使用领域模型来检查业务规则"></a>使用领域模型来检查业务规则</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*jyR4h_EhPpoekpiS-5Dgqg.png" alt></p>
+<p>领域模型是定义业务规则的应用程序的一部分。 它的实现应该尽可能简单（即使是非程序员也可以理解），并与系统的其余部分（这是洋葱架构模式的要点）隔离。</p>
+<p>继续“addEditor”的例子，下面是一个命令处理程序（带有一个突出显示的部分，其中使用了来自领域模型的函数）：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*AJubgEjQr0b1d2yEdfql9Q.png" alt></p>
+<p>addEditor属于日志聚合，它被实现为一个简单的纯函数，它返回结果事件或抛出一个错误（如果任何业务规则被破坏）：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*KSoK80XTzsA0jv6ElOQOVA.png" alt></p>
+<p>参数userInfo和timestamp 源于命令对象。 “聚集的当前状态”由用户和日志对象表示，这些用户和日志对象使用系统中的另一个组件 - 一个Repository进行检索。</p>
+<p>注：如果你不喜欢看到硬编码的字符串，请记住，我正在使用TypeScript，如果没有以正确的方式使用你将抓狂：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ho-1oX7gVLgonYBu-3ySGw.png" alt></p>
+<p>除了编译时错误之外，使用“重命名符号特性”重命名任何属性或字符串，都可以在项目中的所有文件中使用（在vs code中进行测试）。</p>
+<h2 id="Retrieving-the-current-state-of-the-aggregate-with-a-repository"><a href="#Retrieving-the-current-state-of-the-aggregate-with-a-repository" class="headerlink" title="Retrieving the current state of the aggregate with a repository"></a>Retrieving the current state of the aggregate with a repository</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*xcygjRhIao5Tlp64GNgx_A.png" alt></p>
+<p>userState和journalState使用注入的依赖关系检索：userRepository和journalRepository：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*B0TbOK3BBzu2et4tQEqM4g.png" alt="AddJournalEditor command handler using user and journal repositories"></p>
+<p>这些存储库通常包含一个名为getById的方法。</p>
+<p>这个方法的工作是，你已经猜到了，通过它的id获得一个聚合状态。</p>
+<p>所以，在日志聚合的情况下，它应该返回这种类型的对象：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*35xpCwYE47WG6wcTx0xl7A.png" alt="Type of Journal aggregate state"></p>
+<p>但是，Event store对日志聚合的格式一无所知，如前面所示，它只存储事件：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*wDs111exqVPtxhm16aoswQ.png" alt></p>
+<p>这就是为什么我必须将这些事件转换为所需的状态，使用 - reducer。</p>
+<p>注意：请记住，为了获得当前的汇总状态，您不必使用事件采购。 有时更适合检索一个完整的对象（使用MongoDB或类似的），并跳过部分减少和保存事件。<br>但是，如果你和我一样，而且你希望你的模型是“灵活的”（所以你可以随时轻易地改变聚合状态的格式），你必须处理“reducer”。</p>
+<p>reducer只是一个（纯）功能（类似于Redux reducer），也是在领域模型中定义的：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*gT4wkkDDFSkUXAQyFV8-6g.png" alt></p>
+<p>注：同样，对于TypeScript，您可以安全地使用硬编码的字符串，对于每种情况，应该推断出事件类型：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*JsjjKflR8AnIS5dTM5VIpQ.png" alt></p>
+<h2 id="Saving-events-in-the-Event-Store"><a href="#Saving-events-in-the-Event-Store" class="headerlink" title="Saving events in the Event Store"></a>Saving events in the Event Store</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*vil0nldaQ_4w1J7uh6VDoQ.png" alt></p>
+<p>命令处理程序的最后一步是：如果验证成功，则尝试保留新事件。 如果在此步骤中发生并发冲突，请放弃或重试。</p>
+<p>除了聚合状态之外，存储库还将返回用于保存事件的保存功能：</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*t-dSuhEM2JMfA1L-doD0Ow.png" alt></p>
+<p>在hood下，使用optimistic concurrency 来保持事件以确保一致性（类似于mongoDB方法，但没有“自动重试”）。</p>
+<p>注意：我正在使用基于在写入端而不是读取端检索的事件版本的optimistic concurrency。 这是我为我的domain 做出的一个有意识的决定，如果您尝试为自己使用这个解决方案，请确保您了解权衡（这篇博客文章已经足够长了，我不会解释）<br>但是，如果您决定使用在读取端获取的版本，则可以传递如下版本号：save（events，expectedVersion）</p>
+<h2 id="Summary-of-the-application-flow-on-the-write-side"><a href="#Summary-of-the-application-flow-on-the-write-side" class="headerlink" title="Summary of the application flow on the write side"></a>Summary of the application flow on the write side</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*_nqEYX2VHvoB51DQbiwcpA.jpeg" alt></p>
+<ol>
+<li>Commond是用户发送的对象（来自UI）</li>
+<li>REST API接收一个Commond并处理用户认证</li>
+<li>然后“authenticated command”被发送到command handler</li>
+<li>Command handler向聚合状态的repository 发出请求</li>
+<li>Repository从事件存储中检索事件，并使用领域模型中定义的reducer将其转换为聚合状态</li>
+<li>Command handler 使用以响应结果事件的领域模型验证集合当前状态的命令</li>
+<li>Command handler将结果事件发送到repository</li>
+<li>Repository 尝试在事件存储中保存接收到的数据，同时使用 optimistic locking确保一致性</li>
+</ol>
+<h2 id="The-Read-Side"><a href="#The-Read-Side" class="headerlink" title="The Read Side"></a>The Read Side</h2><p>使用事件重建聚合状态不是很复杂也不昂贵。</p>
+<p>但是，事件存储不适合在集合中运行查询。 例如，像“选择所有以xyz开头的所有期刊”这样的查询将需要重新构建所有聚合成本太高的成本（更不用说更复杂的查询，这是单块CRUD应用程序中的“资金流失”的主要来源）。</p>
+<p>这是读取方面解决的一个问题。</p>
+<p>简而言之，读取方将监听从写入方发布的事件，将这些事件作为本地模型的更改进行投影，并允许在该模型（源）上进行查询。</p>
+<p>通过构建维护专门用于任何类型查询的数据库的模型（或多个模型），您可以节省大量的处理能力。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果你的托管账单是不合理的<span class="params">&lt;a href="https://www.forexfactory.com/attachment.php?attachmentid=<span class="number">2253285</span><span class="variable">&amp;stc</span>=<span class="number">1</span><span class="variable">&amp;d</span>=<span class="number">1490980308</span>"&gt;</span>YUGE<span class="params">&lt;/a&gt;</span>！ 主要是由于复杂的查询 - 你应该考虑CQRS / ES架构。</span><br></pre></td></tr></table></figure>
+<p>由于读取方总是“落在”写入方（即使是几分之一秒），应用程序变得“最终一致”。 这就是为什么它更便宜和易于扩展的主要原因，而且这也是写单面与单片CRUD应用相比更复杂的原因。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>我喜欢在事件中思考。 它使我专注于一个领域，而不是一个数据库模式，你甚至不必是一个程序员来理解他们。 这个事实使你更容易与域名专家沟通（<a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank" rel="noopener">DDD</a>的一大部分）。</p>
+<p>而且，这种架构的本质迫使我不要把一致性看作是理所当然的，从而更多地了解它（当使用微服务时这是非常有益的）。</p>
+<p>但是，作为一切，这些模式都有其成本。 如果你不想把它们全部用在一起，也许你可以使用它的一部分。</p>
+<p>正如我已经提到的， CQRS模式可以在没有事件源的情况下使用，您不必遵循“洋葱体系结构”或使用类型系统。 例如，您可以：</p>
+<ul>
+<li>使用一个类似的模型，其中的事件被保存在NoSQL数据库中的对象替代（没有事件源）</li>
+<li>从客户查询的写模型中使用reducer（无CQRS）</li>
+<li>使用洋葱体系结构更容易地构建无服务器应用程序（使用“lamdas”或“云功能”）（在“开发阶段”模拟基础架构层）</li>
+<li>以类似的方式使用类型，其中域以细粒度，自我记录的方式呈现（类型优先的开发）</li>
+<li>使用运行时类型系统进行IO验证（如io-ts）</li>
+</ul>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/02/02/debounce/" title="函数节流与函数防抖">函数节流与函数防抖</a></h2>
+                <p class="excerpt">
+                
+                概念函数防抖（debounce）
+
+当调用动作过n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间
+
+函数节流（throttle）
+
+预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期
+
+区别
+函数防抖：如果有人进电梯（触发事件），那电梯将
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-02-02T07:20:15.000Z" class="post-list__meta--date date">2018-02-02</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/javascript/">javascript</a>
+</span><a class="btn-border-small" href="/2018/02/02/debounce/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/12/08/wxapp/" title="微信小程序开发工具报错">微信小程序开发工具报错</a></h2>
+                <p class="excerpt">
+                
+                问题描述今天更新了一下工具，就一直编译不过，报.wxss无法找到.用开发工具新建快速开始模版也报错。。
+解决办法在控制台输入openVendor()， 在打开的目录中清除wcsc.exe，再重启工具，就搞定了！
+神坑！！！
+
+
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-12-08T02:51:31.000Z" class="post-list__meta--date date">2017-12-08</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/前端/">前端</a>
+</span><a class="btn-border-small" href="/2017/12/08/wxapp/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2017/12/12/cors/" data-title="用于在node.js中设计灵活体系结构的模式（CQRS / ES / Onion）(译)" data-url="http://yoursite.com/2017/12/12/cors/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>

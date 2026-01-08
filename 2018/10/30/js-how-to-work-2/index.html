@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2018/10/30/js-how-to-work-2/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-10-30T11:35:47.000Z" class="post-list__meta--date date">2018-10-30</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧</h1>
+  </header>
+
+  <section class="post">
+    <p><a href="https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e" _target="blank" target="_blank" rel="noopener">原文地址</a></p>
+<p>几周之前，我们开始了一系列旨在深入挖掘JavaScript及其实际工作原理的系列：我们认为通过了解JavaScript的构建块以及它们如何共同发挥作用，您将能够编写更好的代码和应用程序。</p>
+<p><a href="https://blog.jimliu.xyz/2018/10/29/js-how-to-work/" target="_blank" rel="noopener">本系列的第一篇文章</a>重点介绍了引擎，运行时和调用堆栈的概述。 第二篇文章将深入探讨谷歌V8 JavaScript引擎的内部部分。 我们还将提供一些关于如何编写更好的JavaScript代码的快速提示 - 在构建产品时我们的SessionStack开发团队遵循最佳实践。</p>
+<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>JavaScript引擎是执行JavaScript代码的程序或解释器。 JavaScript引擎可以实现为标准解释器，或即时编译器，它以某种形式将JavaScript编译为字节码。</p>
+<p>下面是一个实现JavaScript引擎的列表：</p>
+<ul>
+<li>V8 – 开源，由Google开发，用C ++编写</li>
+<li>Rhino – 由Mozilla Foundation管理，开源，用Java开发</li>
+<li>SpiderMonkey – 这是第一款支持Netscape Navigator的JavaScript引擎，现在由Firefox支持</li>
+<li>JavaScriptCore  – 开源，作为Nitro销售，Apple为Safari开发</li>
+<li>KJS – KDE的引擎最初是由Harri Porten为KDE项目的Konqueror Web浏览器开发的</li>
+<li>Chakra (JScript9) —- Internet Explorer</li>
+<li>Chakra (JavaScript) — Microsoft Edge</li>
+<li>Nashorn，作为OpenJDK的一部分的开源，由Oracle Java Languages and Tool Group编写</li>
+<li>JerryScript – 是物联网的轻量级引擎。</li>
+</ul>
+<h3 id="Why-was-the-V8-Engine-created"><a href="#Why-was-the-V8-Engine-created" class="headerlink" title="Why was the V8 Engine created?"></a>Why was the V8 Engine created?</h3><p>V8 由谷歌构建的V8引擎是开源的，用C ++编写。 此引擎在Google Chrome中使用。 但是，与其他引擎不同，V8也用于Node.js。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*AKKvE3QmN_ZQmEzSj16oXg.png/" alt="v8"></p>
+<p>V8最初旨在提高Web浏览器中JavaScript执行的性能。 为了获得速度，V8将JavaScript代码转换为更高效的机器代码，而不是使用解释器。 它通过实现JIT（即时）编译器将JavaScript代码编译成机器代码，像许多现代JavaScript引擎一样，如SpiderMonkey或Rhino（Mozilla）。 这里的主要区别是V8不产生字节码或任何中间代码。</p>
+<h3 id="V8-used-to-have-two-compilers"><a href="#V8-used-to-have-two-compilers" class="headerlink" title="V8 used to have two compilers"></a>V8 used to have two compilers</h3><p>在V8版本5.9出现之前，该引擎使用了两个编译器：</p>
+<ul>
+<li>full-codegen - 一个简单而快速的编译器，可以生成简单且相对较慢的机器代码。</li>
+<li>Crankshaft - 一种更复杂的（即时）优化编译器，可生成高度优化的代码。</li>
+</ul>
+<p>V8引擎还在内部使用多个线程：</p>
+<ul>
+<li>主线程完成了你期待它做的事情：获取代码，编译代码然后执行它</li>
+<li>还有一个单独的线程用于编译，因此主线程可以继续执行，而前者正在优化代码</li>
+<li>一个Profiler线程，它将告诉运行时我们花费大量时间的方法，以便Crankshaft可以优化它们</li>
+<li>一些线程来处理垃圾收集器扫描</li>
+</ul>
+<p>首次执行JavaScript代码时，V8利用全代码生成器直接将解析后的JavaScript转换为机器代码而无需任何转换。 这使它可以非常快速地开始执行机器代码。 请注意，V8不使用中间字节码表示，因此无需解释器。</p>
+<p>当代码运行一段时间后，探查器线程已经收集了足够的数据来告诉应该优化哪个方法。</p>
+<p>接下来，Crankshaft优化从另一个线程开始。 它将JavaScript抽象语法树转换为名为Hydrogen的高级静态单指派（SSA）表示，并尝试优化Hydrogen图。 大多数优化都是在这个级别完成的。</p>
+<h3 id="Inlining"><a href="#Inlining" class="headerlink" title="Inlining"></a>Inlining</h3><p>第一个优化是提前编写尽可能多的代码。 内联是用被调用函数的主体替换调用站点（调用函数的代码行）的过程。 这个简单的步骤允许以下优化更有意义。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/0*RRgTDdRfLGEhuR7U.png" alt="function"></p>
+<h3 id="Hidden-class"><a href="#Hidden-class" class="headerlink" title="Hidden class"></a>Hidden class</h3><p>JavaScript是一种基于原型的语言：没有使用克隆过程创建类和对象。 JavaScript也是一种动态编程语言，这意味着可以在实例化后轻松地在对象中添加或删除属性。</p>
+<p>大多数JavaScript解释器使用类似字典的结构（基于散列函数）来存储对象属性值在内存中的位置。这种结构使得在JavaScript中检索属性的值比在Java或C＃等非动态编程语言中的计算成本更高。<br>在Java中，所有对象属性都是在编译之前由固定对象布局确定的，并且无法在运行时动态添加或删除（好吧，C＃具有动态类型，这是另一个主题。因此，属性值（或指向这些属性的指针）可以作为连续缓冲区存储在内存中，每个属性之间具有固定偏移量。<br>可以根据属性类型轻松确定偏移的长度，而在运行时期间属性类型可以更改的JavaScript中这是不可能的。</p>
+<p>由于使用字典在内存中查找对象属性的位置效率非常低，因此V8使用不同的方法：隐藏类。 隐藏类的工作方式类似于Java等语言中使用的固定对象布局（类），除非它们是在运行时创建的。 现在，让我们看看它们实际上是什么样的：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span><span class="params">(x, y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.x = x;</span><br><span class="line">    <span class="keyword">this</span>.y = y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>一旦“new Point（1,2）”调用发生，V8将创建一个名为“C0”的隐藏类。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*pVnIrMZiB9iAz5sW28AixA.png" alt="function1"></p>
+<p>尚未为Point定义任何属性，因此“C0”为空。（预处理）</p>
+<p>一旦第一个语句“this.x = x”被执行（在“Point”函数内）,V8会基于C0创建第二个隐藏类C1，“C1”描述了可以找到属性x的存储器中的位置（相对于对象指针）。 在这种情况下，“x”存储在偏移0处，这意味着当在存储器中查看Point对象作为连续缓冲区时，第一个偏移将对应于属性“x”。<br>V8还将使用“类转换”更新“C0”，该类转换指出如果将属性“x”添加到Point对象，则隐藏类应从“C0”切换到“C1”。 下面的Point对象的隐藏类现在是“C1”。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*QsVUE3snZD9abYXccg6Sgw.png" alt="function2"></p>
+<p>执行语句“this.y = y”时重复此过程（再次，在Point函数内，在“this.x = x”语句之后）。</p>
+<p>创建一个名为“C2”的新隐藏类，将类转换添加到“C1”，声明如果将属性“y”添加到Point对象（已包含属性“x”），则隐藏类应更改为 “C2”，Point对象的隐藏类更新为“C2”。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*spJ8v7GWivxZZzTAzqVPtA.png" alt="function3"></p>
+<p>隐藏类转换取决于属性添加到对象的顺序。 看一下下面的代码片段：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span></span>(x, y) &#123;</span><br><span class="line">    <span class="built_in">this</span>.x = x;</span><br><span class="line">    <span class="built_in">this</span>.y = y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="type">Point</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">p1.a = <span class="number">5</span>;</span><br><span class="line">p1.b = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="type">Point</span>(<span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">p2.b = <span class="number">7</span>;</span><br><span class="line">p2.a = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+<p>现在，您将假设对于p1和p2，将使用相同的隐藏类和转换。 不，不是这样的。对于“p1”，首先添加属性“a”，然后添加属性“b”。 但是，对于“p2”，首先分配“b”，然后是“a”。 因此，作为不同转换路径的结果，“p1”和“p2”以不同的隐藏类结束。</p>
+<font color="red">在这种情况下，以相同的顺序初始化动态属性要好得多，以便可以重用隐藏的类。</font>
+
+
+<h3 id="Inline-caching"><a href="#Inline-caching" class="headerlink" title="Inline caching"></a>Inline caching</h3><p>V8利用另一种技术来优化动态类型语言，称为内联缓存。内联缓存依赖于观察到对相同方法的重复调用往往发生在同一类型的对象上。 可以在此处找到对内联缓存的深入解释。那么它是怎样工作的？ V8维护一个在最近的方法调用中作为参数传递的对象类型的缓存，并使用此信息来假设将来作为参数传递的对象类型。 如果V8能够对将传递给方法的对象类型做出很好的假设，它可以绕过确定如何访问对象属性的过程，而是使用先前查找到对象的存储信息的隐藏类。</p>
+<p>那么隐藏类和内联缓存的概念是如何相关的呢？ 每当在特定对象上调用方法时，V8引擎必须执行对该对象的隐藏类的查找，以确定访问特定属性的偏移量。在将同一方法成功调用两次到同一个隐藏类后，V8省略了隐藏类查找，只是将属性的偏移量添加到对象指针本身。<br>对于该方法的所有未来调用，V8引擎假定隐藏类未更改，并使用先前查找中存储的偏移直接跳转到特定属性的内存地址。这大大提高了执行速度。</p>
+<p>内联缓存也是为什么相同类型的对象共享隐藏类非常重要的原因。 如果你创建两个相同类型和不同隐藏类的对象（正如我们之前的例子中所做的那样），V8将无法使用内联缓存，因为即使这两个对象属于同一类型，它们对应的隐藏类也是如此 为其属性分配不同的偏移量。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*iHfI6MQ-YKQvWvo51J-P0w.png" alt="function4"></p>
+<p>Hydrogen曲线图优化后，Crankshaft将其降低到称为Lithium的低级别表示。 大多数Lithium实现都是特定于体系结构的。 寄存器分配发生在此级别。</p>
+<p>最后，Lithium被编译成机器代码。 然后发生了一些叫做OSR的事情：堆栈替换。在我们开始编译和优化一个明显长期运行的方法之前，我们可能正在运行它。 V8不会忘记它，只是慢慢执行以重新启动优化版本。<br>相反，它将转换我们拥有的所有上下文（堆栈，寄存器），以便我们可以在执行过程中切换到优化版本。这是一项非常复杂的任务，请记住，在其他优化中，V8最初已经内联了代码。V8并不是唯一能够做到这一点的引擎。</p>
+<p>有一种称为“去优化”的保护措施可以进行相反的转换，并在发动机制造的假设不再适用的情况下恢复到非优化代码。</p>
+<h3 id="Garbage-collection"><a href="#Garbage-collection" class="headerlink" title="Garbage collection"></a>Garbage collection</h3><p>对于垃圾收集，V8采用传统的标记和扫描方式来清理。标记阶段应该停止JavaScript执行。为了控制GC成本并使执行更稳定，V8使用增量标记：而不是遍历整个堆，试图标记每个可能的对象，它只遍历部分堆，然后恢复正常执行。<br>下一个GC停止将从上一个堆遍历停止的位置继续。这允许在正常执行期间非常短暂的暂停。 如前所述，扫描阶段由单独的线程处理。</p>
+<h3 id="Ignition-and-TurboFan"><a href="#Ignition-and-TurboFan" class="headerlink" title="Ignition and TurboFan"></a>Ignition and TurboFan</h3><p>随着2017年早些时候发布V8 5.9，引入了新的执行管道。 这个新的管道在实际的JavaScript应用程序中实现了更大的性能提升和显着的内存节省。</p>
+<p>新的执行管道建立在Ignition，V8的解释器和TurboFan（V8的最新优化编译器）之上。</p>
+<p>你可以在<a href="https://v8.dev/blog/launching-ignition-and-turbofan" target="_blank" rel="noopener">这里</a>查看V8团队关于该主题的博客文章。</p>
+<p>自从V8的5.9版本问世以来，V8已经不再使用全代码和Crankshaft（自2010年以来为V8提供服务的技术）用于JavaScript执行，因为V8团队一直在努力跟上新的JavaScript语言功能和 这些功能需要优化。</p>
+<p>这意味着整体V8将具有更简单，更易维护的架构。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/0*pohqKvj9psTPRlOv.png" alt="function5"></p>
+<p>这些改进只是一个开始。 新的Ignition和TurboFan管道为进一步优化铺平了道路，这些优化将在未来几年内提升JavaScript性能并缩小V8在Chrome和Node.js中的占用空间。</p>
+<p>最后，这里有一些关于如何编写优化良好的JavaScript的技巧和窍门。 你可以从上面的内容中轻松地推导出这些内容，下面是摘要：</p>
+<ul>
+<li><p>对象属性的顺序：始终以相同的顺序实例化对象属性，以便可以共享隐藏的类和随后优化的代码。</p>
+</li>
+<li><p>动态属性：在实例化后向对象添加属性将强制隐藏类更改并减慢为先前隐藏类优化的任何方法。 而是在其构造函数中分配所有对象的属性。</p>
+</li>
+<li><p>方法：重复执行相同方法的代码将比仅执行一次不同方法的代码运行得更快（由于内联缓存）。</p>
+</li>
+<li><p>数组：避免稀疏数组。 其中没有每个元素的稀疏数组是哈希表。 这种阵列中的元素访问起来更加昂贵。 </p>
+</li>
+<li></li>
+</ul>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2019/06/27/react-native/" title="纯react-native开发App的心酸😭">纯react-native开发App的心酸😭</a></h2>
+                <p class="excerpt">
+                
+                📱背景公司主要做toB的酒店业务，大量的业务是桌面web，当前一共有七名前端，大家都没有Native App的相关经验。有一个15年上线的只是用来展示数据的APP，那当时也是交给外包团队做的。
+📱起因从用户使用系统的便利性出发，公司层面决定将当前产品部分模块移动化。
+📱开始移动化我们会有好几个
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2019-06-27T22:14:16.000Z" class="post-list__meta--date date">2019-06-27</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/react-native/">react-native</a>
+</span><a class="btn-border-small" href="/2019/06/27/react-native/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/10/29/js-how-to-work/" title="[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述.">[转]JavaScript 如何工作：对引擎、运行时、调用堆栈的概述.</a></h2>
+                <p class="excerpt">
+                
+                1原文地址: https://juejin.im/post/5a05b4576fb9a04519690d42#comment
+随着JavaScript越来越流行，越来越多的团队广泛的把JavaScript应用到前端、后台、hybrid 应用、嵌入式等等领域。
+这篇文章旨在深入挖掘JavaScript
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-10-29T08:05:02.000Z" class="post-list__meta--date date">2018-10-29</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>
+</span><a class="btn-border-small" href="/2018/10/29/js-how-to-work/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2018/10/30/js-how-to-work-2/" data-title="JavaScript 如何工作：V8引擎内部+关于如何编写优化代码的5个技巧" data-url="http://yoursite.com/2018/10/30/js-how-to-work-2/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>

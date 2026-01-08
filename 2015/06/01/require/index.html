@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>require.js用法心得 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="require.js用法心得 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="require.js用法心得 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2015/06/01/require/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-06-01T21:14:09.000Z" class="post-list__meta--date date">2015-06-01</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/前端/">前端</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">require.js用法心得</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="require-js使用简介"><a href="#require-js使用简介" class="headerlink" title="require.js使用简介"></a>require.js使用简介</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在web刚开始发展的蛮荒时代，一个页面中只需要加载一个或少量的js文件，不存在模块，也不存在冲突之类的问题，但随着web项目的发展，它越来越大，js文件动辄几十个，怎么加载就成为了一个问题，要为浏览器的性能考虑，还有各个js文件（模块）的依赖关系。require.js的出现就是为了解决这样的问题。<br><a id="more"></a></p>
+<blockquote>
+<p>实现js文件的异步加载，避免网页失去响应。<br>管理模块之间的依赖性，便于代码的编写和维护。</p>
+</blockquote>
+<h3 id="require-js加载"><a href="#require-js加载" class="headerlink" title="require.js加载"></a>require.js加载</h3><p>使用require.js的第一步，是先去官方网站<a href="http://requirejs.org/docs/download.html" target="_blank" rel="noopener">下载</a>最新版本。<br>下载后，假定把它放在js子目录下面，就可以加载了。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;require.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>加载require.js以后，下一步就要加载我们自己的代码了。假定我们自己的代码文件是main.js，也放在js目录下面。那么，只需要写成下面这样就行了：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;require.js&quot; data-main=&quot;main.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>data-main属性的作用是，指定网页程序的主模块。在上例中，就是js目录下面的main.js，这个文件会第一个被require.js加载。由于require.js默认的文件后缀名是js，所以可以把main.js简写成main。</p>
+<h3 id="主模块的写法"><a href="#主模块的写法" class="headerlink" title="主模块的写法"></a>主模块的写法</h3><p>上一节的main.js，我把它称为”主模块”，意思是整个网页的入口代码。它有点像C语言的main()函数，所有代码都从这儿开始运行。<br>下面就来看，怎么写main.js。<br>如果我们的代码不依赖任何其他模块，那么可以直接写入javascript代码。</p>
+<pre><code>// main.js
+require([&apos;moduleA&apos;, &apos;moduleB&apos;, &apos;moduleC&apos;], function (moduleA, moduleB, moduleC){
+    // some code here
+});
+</code></pre><p>requier()函数接受两个参数。第一个参数是一个数组，表示所依赖的模块，就像上面例子中的[‘moduleA’, ‘moduleB’, ‘moduleC’]；第二个参数是一个回调函数，当前面模块加载成功，依赖的模块会以参数的形式传入该函数，从而在回调函数内部就可以使用依赖模块的方法了。<br>require()异步加载mouduleA，mouduleB,mouduleC,浏览器都不会失去响应，它指定的回调函数只有在模块加载完成后才会运行，解决了依赖性的问题。</p>
+<p>下面上一个实际一点的例子<br>假设主模块依赖jquery，和backbone这两个模块，main.js就应该这么写。</p>
+<pre><code>require([&quot;jquery&quot;,&quot;backbone&quot;],function($,backbone)
+{
+    //code
+})
+</code></pre><p>require会先加载jquery和backbone，然后在运行回调函数，回调函数中的参数是该函数使用依赖模块的假名。</p>
+<h3 id="模块加载"><a href="#模块加载" class="headerlink" title="模块加载"></a>模块加载</h3><p>在上面的例子汇总，主模块依赖模块是jquery和backbone默认的情况下，require.js嘉定这两个模块与main.js在同一个目录，文件名分别为jquery.js和backbone.js，然后你自动加载。</p>
+<p>使用require.config()方法，我们可以对模块的加载行为进行自定义。require.config()就写在主模块的头部，参数就是一个对象，这个对象的paths属性指定各个模块的加载路径。</p>
+<pre><code>require.config(
+    {
+        path:{
+            &quot;jquery&quot;:&quot;jquert.min&quot;,
+            &quot;backbone&quot;:&quot;backbone.min&quot;
+        }
+        })
+</code></pre><p>如果其他模块与主函数不在一个路径下，这些模块在js/assest目录，则会有两种写法，一种是逐一指定路径。</p>
+<pre><code>require.config({
+    path:{
+        &quot;jquery&quot;:&quot;assest/jquery.min&quot;,
+        &quot;backbone&quot;:&quot;assest/backbone.min&quot;
+    }
+    })
+</code></pre><p>另一种是直接改变基目录(baseUrl)</p>
+<pre><code>require.config({
+    baseUrl:&quot;js/assest&quot;,
+    path:{
+        &quot;jquery&quot;:&quot;jquert.min&quot;,
+         &quot;backbone&quot;:&quot;backbone.min&quot;
+    }
+    })
+</code></pre><p>如果使用的cdn服务</p>
+<pre><code>require.config(
+ {
+     path:{
+         &quot;jquery&quot;:&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min&quot;
+     }
+     })  
+</code></pre><h3 id="AMD模块的写法"><a href="#AMD模块的写法" class="headerlink" title="AMD模块的写法"></a>AMD模块的写法</h3><p>require.js加载的模块，采用AMD规范。所以自己写的模块必须按照AMD的规定来写。<br>模块在熟悉的时候必须采用特定的define()函数来定义。<br>假设现在有一个math.js文件，它是一个math模块，那么math.js就应该如下这么写。</p>
+<pre><code>//math.js
+
+define(functio()
+    {
+        var add = function (x,y)
+        {
+            return x+y;
+        };
+        return{
+            add:add
+        }
+})  
+</code></pre><p>使用该模块的方式</p>
+<pre><code>require([&quot;math&quot;],funciton(math)
+{
+    consolo.log(math.add(2,3))
+    })
+</code></pre><p>如果这个模块还依赖其他模块。</p>
+<pre><code>define([&quot;myLib&quot;],function(myLib)
+{
+    function foo(){
+    myLib.do();
+}
+return{
+    foo:foo
+}
+})
+</code></pre><p>require()函数加载上面这个模块的时候就会先加在myLib.js文件。</p>
+<h3 id="加载非AMD规范的模块"><a href="#加载非AMD规范的模块" class="headerlink" title="加载非AMD规范的模块"></a>加载非AMD规范的模块</h3><p>理论上，require.js加载的模块，必须是按照AMD规范、用define()函数定义的模块。但是实际上，虽然已经有一部分流行的函数库（比如jQuery）符合AMD规范，更多的库并不符合。那么，require.js是否能够加载非规范的模块呢？回答是可以的。这样的模块在用require()加载之前，要先用require.config()方法，定义它们的一些特征。举例来说，underscore和backbone这两个库，都没有采用AMD规范编写。如果要加载它们的话，必须先定义它们的特征。</p>
+<pre><code>require.config({
+    shim:{
+        &apos;underscore&apos;:{
+            exports:&quot;_&quot;
+        },
+        backbone:{
+            deps:[&quot;underscore&quot;,&quot;jquery&quot;],
+            exports:&quot;Backbone&quot;
+
+            }
+        }
+    }
+    })
+</code></pre><p>require.config()接受一个配置对象，这个对象除了有前面说过的paths属性之外，还有一个shim属性，专门用来配置不兼容的模块。具体来说，每个模块要定义（1）exports值（输出的变量名），表明这个模块外部调用时的名称；（2）deps数组，表明该模块的依赖性。</p>
+<p>比如，jQuery的插件可以这样定义：</p>
+<pre><code>require.config({
+    shim:{
+        Jquery.scroll:{
+            deps:[&quot;jquery&quot;],
+            exports: &apos;jQuery.fn.scroll&apos;
+        }
+    }
+    })
+</code></pre>
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/10/31/mongoose/" title="Mongoose简单上手学习">Mongoose简单上手学习</a></h2>
+                <p class="excerpt">
+                
+                Mongoose使用简介(转)在使用node.js进行web应用开发，MongoDB是对js非常友好的数据库，可以直接存储json对象。Mongoose是node.js操作MongoDB的一个模块，简单好用，便于上手。下面我们来看看Mongoose的具体使用方法。
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-10-31T13:46:30.000Z" class="post-list__meta--date date">2015-10-31</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/mongoDB/">mongoDB</a>, <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/数据库/">数据库</a>
+</span><a class="btn-border-small" href="/2015/10/31/mongoose/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/05/21/plan1/" title="学习计划">学习计划</a></h2>
+                <p class="excerpt">
+                
+                五月最后一周学习计划
+学习baidu-ife task0003中的”JavaScript深度学习”
+JavaScript作用域学习笔记JavaScript原型学习笔记JavaScript闭包学习笔记JavaScript构造函数学习笔记JavaScript面向对象编程学习笔记JavaScript设计模
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-05-21T16:40:47.000Z" class="post-list__meta--date date">2015-05-21</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/学习/">学习</a>, <a class="tag-link" href="/tags/计划/">计划</a>
+</span><a class="btn-border-small" href="/2015/05/21/plan1/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2015/06/01/require/" data-title="require.js用法心得" data-url="http://yoursite.com/2015/06/01/require/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>

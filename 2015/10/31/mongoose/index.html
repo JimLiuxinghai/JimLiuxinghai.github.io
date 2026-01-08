@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Mongoose简单上手学习 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mongoose简单上手学习 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Mongoose简单上手学习 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2015/10/31/mongoose/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2015-10-31T13:46:30.000Z" class="post-list__meta--date date">2015-10-31</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/mongoDB/">mongoDB</a>, <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/数据库/">数据库</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Mongoose简单上手学习</h1>
+  </header>
+
+  <section class="post">
+    <h3 id="Mongoose使用简介-转"><a href="#Mongoose使用简介-转" class="headerlink" title="Mongoose使用简介(转)"></a>Mongoose使用简介(转)</h3><p>在使用node.js进行web应用开发，MongoDB是对js非常友好的数据库，可以直接存储json对象。<br>Mongoose是node.js操作MongoDB的一个模块，简单好用，便于上手。<br>下面我们来看看Mongoose的具体使用方法。</p>
+<a id="more"></a>
+<h1 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h1><p>  Schema  ：  一种以文件形式存储的数据库模型骨架，不具备数据库的操作能力</p>
+<p>  Model   ：  由Schema发布生成的模型，具有抽象属性和行为的数据库操作对</p>
+<p>  Entity  ：  由Model创建的实体，他的操作也会影响数据库<br>1.需要注意的是在对变量命名的时候最好是能够体现出变量的属性<br> 例如：  </p>
+<pre><code>var PersonSchema;   //Person的文本属性
+var PersonModel;    //Person的数据库模型
+var PersonEntity;   //Person实体
+</code></pre><p>2.Schema、Model、Entity的关系请牢记，Schema生成Model，Model创造Entity，Model和Entity都可对数据库操作造成影响，但Model比Entity更具操作性。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.首先你必须安装MongoDB和NodeJS</p>
+<p>2.在项目只能够创建一个数据库连接，如下:</p>
+<pre><code>var mongoose = require(&apos;mongoose&apos;);    //引用mongoose模块
+var db = mongoose.createConnection(&apos;localhost&apos;,&apos;test&apos;); //创建一个数据库连接
+</code></pre><p>3.打开本机localhost的test数据库时，我们可以监测是否有异常</p>
+<pre><code>db.on(&apos;error&apos;,console.error.bind(console,&apos;连接错误:&apos;));
+db.once(&apos;open&apos;,function(){
+  console.log(&quot;连接成功&quot;);
+  //一次打开记录
+});
+</code></pre><p>注意：成功开启数据库后，就可以执行数据库相应操作，假设以下代码都在回调中处理<br>4.定义一个Schema</p>
+<pre><code>var PersonSchema = new mongoose.Schema({
+  name:String   //定义一个属性name，类型为String
+});
+</code></pre><p>5.将该Schema发布为Model</p>
+<pre><code>var PersonModel = db.model(&apos;Person&apos;,PersonSchema);
+//如果该Model已经发布，则可以直接通过名字索引到，如下：
+//var PersonModel = db.model(&apos;Person&apos;);
+//如果没有发布，上一段代码将会异常
+</code></pre><p>6.用Model创建Entity</p>
+<pre><code>var personEntity = new PersonModel({name:&apos;Krouky&apos;});
+//打印这个实体的名字看看
+console.log(personEntity.name); //Krouky
+</code></pre><p>7.我们甚至可以为此Schema创建方法</p>
+<pre><code>//为Schema模型追加speak方法
+PersonSchema.methos.speak = function(){
+  console.log(&apos;我的名字叫&apos;+this.name);
+}
+var PersonModel = db.model(&apos;Person&apos;,PersonSchema);
+var personEntity = new PersonModel({name:&apos;Krouky&apos;});
+personEntity.speak();//我的名字叫Krouky
+</code></pre><p>8.Entity是具有具体的数据库操作CRUD的</p>
+<pre><code>personEntity.save();  //执行完成后，数据库就有该数据了
+</code></pre><p>9.如果要执行查询，需要依赖Model，当然Entity也是可以做到的</p>
+<pre><code>PersonModel.find(function(err,persons){
+  //查询到的所有person
+});
+</code></pre><p>注意：</p>
+<ol>
+<li><p>具体的如何配置Schema、Model以及Model和Entity的相关操作，我们会在后面进行</p>
+</li>
+<li><p>Model和Entity都有能影响数据库的操作，但仍有区别，后面我们也会做解释</p>
+<h2 id="新手指引"><a href="#新手指引" class="headerlink" title="新手指引"></a>新手指引</h2></li>
+</ol>
+<p>如果您还不清楚Mongoose是如何工作的，请参看第一章快速通道快速浏览他的用法吧</p>
+<h3 id="1-Schema——纯洁的数据库原型"><a href="#1-Schema——纯洁的数据库原型" class="headerlink" title="1. Schema——纯洁的数据库原型"></a>1. Schema——纯洁的数据库原型</h3><h4 id="1-1-什么是Schema"><a href="#1-1-什么是Schema" class="headerlink" title="1.1 什么是Schema"></a>1.1 什么是Schema</h4><p>我理解Schema仅仅只是一断代码，他书写完成后程序依然无法使用，更无法通往数据库端<br>他仅仅只是数据库模型在程序片段中的一种表现，或者是数据属性模型</p>
+<h4 id="1-2-如何定义Schema"><a href="#1-2-如何定义Schema" class="headerlink" title="1.2 如何定义Schema"></a>1.2 如何定义Schema</h4><pre><code>var BlogSchema = new Schema({
+  title:String,
+  author:String
+  //new Schema()中传入一个JSON对象，该对象形如 xxx:yyyy ,
+  /xxx是一个字符串，定义了属性，yyy是一个Schema.Type，定义了属性类型
+});
+</code></pre><h4 id="1-3-什么是Schema-Type"><a href="#1-3-什么是Schema-Type" class="headerlink" title="1.3 什么是Schema.Type"></a>1.3 什么是Schema.Type</h4><p>Schema.Type是由Mongoose内定的一些数据类型，基本数据类型都在其中，他也内置了一些Mongoose特有的Schema.Type。当然，你也可以自定义Schema.Type，只有满足Schema.Type的类型才能定义在Schema内。</p>
+<h4 id="1-4-Schema-Types"><a href="#1-4-Schema-Types" class="headerlink" title="1.4 Schema.Types"></a>1.4 Schema.Types</h4><p>NodeJS中的基本数据类型都属于Schema.Type，另外Mongoose还定义了自己的类型</p>
+<pre><code>//举例：
+var ExampleSchema = new Schema({
+  name:String,
+  binary:Buffer,
+  living:Boolean,
+  updated:Date,
+  age:Number,
+  mixed:Schema.Types.Mixed, //该混合类型等同于nested
+  _id:Schema.Types.ObjectId,  //主键
+  _fk:Schema.Types.ObjectId,  //外键
+  array:[],
+  arrOfString:[String],
+  arrOfNumber:[Number],
+  arrOfDate:[Date],
+  arrOfBuffer:[Buffer],
+  arrOfBoolean:[Boolean],
+  arrOfMixed:[Schema.Types.Mixed],
+  arrOfObjectId:[Schema.Types.ObjectId]
+  nested:{
+    stuff:String,
+  }
+});
+</code></pre><p>####1.5 关于Buffer</p>
+<p>Buffer和ArrayBuffer是Nodejs两种隐藏的对象，相关内容请查看NodeJS-API</p>
+<p>####1.6 关于Mixed</p>
+<p>Schema.Types.Mixed是Mongoose定义个混合类型，该混合类型如果未定义具体形式。因此,如果定义具体内容，就直接使用{}来定义，以下两句等价</p>
+<pre><code>var AnySchema = new Schema({any:{}});
+var AnySchema = new Schema({any:Schema.Types.Mixed});
+</code></pre><p>混合类型因为没有特定约束，因此可以任意修改，一旦修改了原型，则必须调用markModified()</p>
+<pre><code>person.anything = {x:[3,4,{y:&apos;change&apos;}]}
+person.markModified(&apos;anything&apos;);//传入anything，表示该属性类型发生变化
+person.save();
+</code></pre><h4 id="1-7-关于ObjectId"><a href="#1-7-关于ObjectId" class="headerlink" title="1.7 关于ObjectId"></a>1.7 关于ObjectId</h4><p>主键，一种特殊而且非常重要的类型，每个Schema都会默认配置这个属性，属性名为_id，除非自己定义，方可覆盖</p>
+<pre><code>var mongoose = require(&apos;mongoose&apos;);
+var ObjectId = mongoose.Schema.Types.ObjectId;
+var StudentSchema = new Schema({}); //默认会有_id:ObjectId
+var TeacherSchema = new Schema({id:ObjectId});//只有id:ObjectId
+</code></pre><p>该类型的值由系统自己生成，从某种意义上几乎不会重复，生成过程比较复杂，有兴趣的朋友可以查看源码。</p>
+<h4 id="1-8-关于Array"><a href="#1-8-关于Array" class="headerlink" title="1.8 关于Array"></a>1.8 关于Array</h4><p>Array在JavaScript编程语言中并不是数组，而是集合，因此里面可以存入不同的值，以下代码等价：</p>
+<pre><code>var ExampleSchema1 = new Schema({array:[]});
+var ExampleSchema2 = new Schema({array:Array});
+var ExampleSchema3 = new Schema({array:[Schema.Types.Mixed]});
+var ExampleSchema4 = new Schema({array:[{}]});
+</code></pre><h4 id="1-9-附言"><a href="#1-9-附言" class="headerlink" title="1.9 附言"></a>1.9 附言</h4><p>Schema不仅定义了文档结构和使用性能，还可以有扩展插件、实例方法、静态方法、复合索引、文档生命周期钩子</p>
+<p>Schema可以定义插件，并且插件具有良好的可拔插性，请有兴趣的读者继续往后阅读或者查阅官方资料。</p>
+<h3 id="2-Schema的扩展"><a href="#2-Schema的扩展" class="headerlink" title="2. Schema的扩展"></a>2. Schema的扩展</h3><h4 id="2-1-实例方法"><a href="#2-1-实例方法" class="headerlink" title="2.1 实例方法"></a>2.1 实例方法</h4><p>有的时候，我们创造的Schema不仅要为后面的Model和Entity提供公共的属性，还要提供公共的方法。</p>
+<p>下面例子比快速通道的例子更加高级，可以进行高级扩展：</p>
+<pre><code>var PersonSchema = new Schema({name:String,type:String});
+//查询类似数据
+PersonSchema.methods.findSimilarTypes = function(cb){
+  return this.model(&apos;Person&apos;).find({type:this.type},cb);
+}
+</code></pre><p>使用如下：</p>
+<pre><code>var PersonModel = mongoose.model(&apos;Person&apos;,PersonSchema);
+var krouky = new PersonSchema({name:&apos;krouky&apos;,type:&apos;前端工程师&apos;});
+krouky.findSimilarTypes(function(err,persons){
+  //persons中就能查询到其他前端工程师
+});
+</code></pre><h4 id="2-2-静态方法"><a href="#2-2-静态方法" class="headerlink" title="2.2 静态方法"></a>2.2 静态方法</h4><p>静态方法在Model层就能使用，如下：</p>
+<p>  PersonSchema.statics.findByName = function(name,cb){<br>    this.find({name:new RegExp(name,’i’),cb});<br>  }<br>  var PersonModel = mongoose.model(‘Person’,PersonSchema);<br>  PersonModel.findByName(‘krouky’,function(err,persons){<br>    //找到所有名字叫krouky的人<br>  });</p>
+<h4 id="2-3-索引"><a href="#2-3-索引" class="headerlink" title="2.3 索引"></a>2.3 索引</h4><p>索引或者复合索引能让搜索更加高效，默认索引就是主键索引ObjectId，属性名为_id， 索引会作为一个专题来讲解</p>
+<h4 id="2-4-虚拟属性"><a href="#2-4-虚拟属性" class="headerlink" title="2.4 虚拟属性"></a>2.4 虚拟属性</h4><p>Schema中如果定义了虚拟属性，那么该属性将不写入数据库，例如：</p>
+<pre><code>var PersonSchema = new Schema({
+  name:{
+    first:String,
+    last:String
+  }
+});
+var PersonModel = mongoose.model(&apos;Person&apos;,PersonSchema);
+var krouky = new PersonModel({
+  name:{first:&apos;krouky&apos;,last:&apos;han&apos;}
+});
+</code></pre><p>如果每次想使用全名就得这样</p>
+<pre><code>console.log(krouky.name.first + &apos; &apos; + krouky.name.last);
+</code></pre><p>显然这是很麻烦的，我们可以定义虚拟属性：</p>
+<pre><code>PersonSchema.virtual(&apos;name.full&apos;).get(function(){
+  return this.name.first + &apos; &apos; + this.name.last;
+});
+</code></pre><p>那么就能用krouky.name.full来调用全名了，反之如果知道full，也可以反解first和last属性</p>
+<pre><code>PersonSchema.virtual(&apos;name.full&apos;).set(function(name){
+  var split = name.split(&apos; &apos;);
+  this.name.first = split[0];
+  this.name.last = split[1];
+});
+var PersonModel = mongoose.model(&apos;Person&apos;,PersonSchema);
+var krouky = new PersonModel({});
+krouky.name.full = &apos;krouky han&apos;;//会被自动分解
+console.log(krouky.name.first);//krouky
+</code></pre><h4 id="2-5-配置项"><a href="#2-5-配置项" class="headerlink" title="2.5 配置项"></a>2.5 配置项</h4><p>在使用new Schema(config)时，我们可以追加一个参数options来配置Schema的配置，形如：</p>
+<pre><code>var ExampleSchema = new Schema(config,options);
+</code></pre><p>或者使用</p>
+<pre><code>var ExampleSchema = new Schema(config);
+ExampleSchema.set(option,value);
+</code></pre><p>可供配置项有：safe、strict、capped、versionKey、autoIndex</p>
+<h5 id="2-5-1-safe——安全属性（默认安全）"><a href="#2-5-1-safe——安全属性（默认安全）" class="headerlink" title="2.5.1 safe——安全属性（默认安全）"></a>2.5.1 safe——安全属性（默认安全）</h5><p>一般可做如下配置：</p>
+<pre><code>new Schema({...},{safe:true});
+</code></pre><p>当然我们也可以这样</p>
+<pre><code>new Schema({...},{safe:{j:1,w:2,wtimeout:10000}});
+</code></pre><p>j表示做1份日志，w表示做2个副本（尚不明确），超时时间10秒</p>
+<h5 id="2-5-2-strict——严格配置（默认启用）"><a href="#2-5-2-strict——严格配置（默认启用）" class="headerlink" title="2.5.2 strict——严格配置（默认启用）"></a>2.5.2 strict——严格配置（默认启用）</h5><p>确保Entity的值存入数据库前会被自动验证，如果你没有充足的理由，请不要停用，例子：</p>
+<pre><code>var ThingSchema = new Schema({a:String});
+var ThingModel = db.model(&apos;Thing&apos;,SchemaSchema);
+var thing = new Thing({iAmNotInTheThingSchema:true});
+thing.save();//iAmNotInTheThingSchema这个属性将无法被存储
+</code></pre><p>如果取消严格选项，iAmNotInTheThingSchema将会被存入数据库</p>
+<p>该选项也可以在构造实例时使用，例如：</p>
+<pre><code>var ThingModel = db.model(&apos;Thing&apos;);
+var thing1 = new ThingModel(doc,true);  //启用严格
+var thing2 = new ThingModel(doc,false); //禁用严格
+</code></pre><p>注意：</p>
+<p>strict也可以设置为throw，表示出现问题将会抛出错误</p>
+<h5 id="2-5-3-shardKey"><a href="#2-5-3-shardKey" class="headerlink" title="2.5.3 shardKey"></a>2.5.3 shardKey</h5><p>需要mongodb做分布式，才会使用该属性</p>
+<h5 id="2-5-4-capped——上限设置"><a href="#2-5-4-capped——上限设置" class="headerlink" title="2.5.4 capped——上限设置"></a>2.5.4 capped——上限设置</h5><p>如果有数据库的批量操作，该属性能限制一次操作的量，例如：</p>
+<pre><code>new Schema({...},{capped:1024});  //一次操作上线1024条数据
+</code></pre><p>当然该参数也可是JSON对象，包含size、max、autiIndexId属性</p>
+<pre><code>new Schema({...},{capped:{size:1024,max:100,autoIndexId:true}});
+</code></pre><h5 id="2-5-5-versionKey——版本锁"><a href="#2-5-5-versionKey——版本锁" class="headerlink" title="2.5.5 versionKey——版本锁"></a>2.5.5 versionKey——版本锁</h5><p>版本锁是Mongoose默认配置（__v属性）的，如果你想自己定制，如下：</p>
+<pre><code>new Schema({...},{versionKey:&apos;__someElse&apos;});
+</code></pre><p>此时存入数据库的版本锁就不是<strong>v属性，而是</strong>someElse，相当于是给版本锁取名字。</p>
+<p>具体怎么存入都是由Mongoose和MongoDB自己决定，当然，这个属性你也可以去除</p>
+<p>  new Schema({…},{versionKey:false});<br>除非你知道你在做什么，并且你知道这样做的后果</p>
+<h5 id="2-5-6-autoIndex——自动索引"><a href="#2-5-6-autoIndex——自动索引" class="headerlink" title="2.5.6 autoIndex——自动索引"></a>2.5.6 autoIndex——自动索引</h5><p>该内容将在索引章节单独讲解</p>
+<h3 id="3-Documents"><a href="#3-Documents" class="headerlink" title="3. Documents"></a>3. Documents</h3><p>Document是与MongoDB文档一一对应的模型，Document可等同于Entity，具有属性和操作性</p>
+<p>注意：</p>
+<p>Document的`CRUD都必须经过严格验证的，参看2.5.2 Schema的strict严格配置</p>
+<h4 id="3-1-查询"><a href="#3-1-查询" class="headerlink" title="3.1 查询"></a>3.1 查询</h4><p>查询内容过多，专题讲解</p>
+<h4 id="3-2-更新"><a href="#3-2-更新" class="headerlink" title="3.2 更新"></a>3.2 更新</h4><p>有许多方式来更新文件，以下是常用的传统方式：</p>
+<pre><code>PersonModel.findById(id,function(err,person){
+  person.name = &apos;MDragon&apos;;
+  person.save(function(err){});
+});
+</code></pre><p>这里，利用Model模型查询到了person对象，该对象属于Entity，可以有save操作，如果使用Model`操作，需注意：</p>
+<pre><code>PersonModel.findById(id,function(err,person){
+  person.name = &apos;MDragon&apos;;
+  var _id = person._id; //需要取出主键_id
+  delete person._id;    //再将其删除
+  PersonModel.update({_id:_id},person,function(err){});
+  //此时才能用Model操作，否则报错
+});
+</code></pre><p>update第一个参数是查询条件，第二个参数是更新的对象，但不能更新主键，这就是为什么要删除主键的原因。</p>
+<p>当然这样的更新很麻烦，可以使用$set属性来配置，这样也不用先查询，如果更新的数据比较少，可用性还是很好的：</p>
+<pre><code>PersonModel.update({_id:_id},{$set:{name:&apos;MDragon&apos;}},function(err){});
+</code></pre><p>需要注意，Document的CRUD操作都是异步执行，callback第一个参数必须是err，而第二个参数各个方法不一样，update的callback第二个参数是更新的数量，如果要返回更新后的对象，则要使用如下方法</p>
+<pre><code>Person.findByIdAndUpdate(_id,{$set:{name:&apos;MDragon&apos;}},function(err,person){
+  console.log(person.name); //MDragon
+});
+</code></pre><p>类似的方法还有findByIdAndRemove，如同名字，只能根据id查询并作update/remove操作，操作的数据仅一条</p>
+<h4 id="3-3-新增"><a href="#3-3-新增" class="headerlink" title="3.3 新增"></a>3.3 新增</h4><p>如果是Entity，使用save方法，如果是Model，使用create方法</p>
+<pre><code>//使用Entity来增加一条数据
+var krouky = new PersonModel({name:&apos;krouky&apos;});
+krouky.save(callback);
+//使用Model来增加一条数据
+var MDragon = {name:&apos;MDragon&apos;};
+PersonModel.create(MDragon,callback);
+</code></pre><p>两种新增方法区别在于，如果使用Model新增时，传入的对象只能是纯净的JSON对象，不能是由Model创建的实体，原因是：由Model创建的实体krouky虽然打印是只有{name:’krouky’}，但是krouky属于Entity，包含有Schema属性和Model数据库行为模型。如果是使用Model创建的对象，传入时一定会将隐藏属性也存入数据库，虽然3.x追加了默认严格属性，但也不必要增加操作的报错</p>
+<h4 id="3-4-删除"><a href="#3-4-删除" class="headerlink" title="3.4 删除"></a>3.4 删除</h4><p>和新增一样，删除也有2种方式，但Entity和Model都使用remove方法</p>
+<h3 id="4-Sub-Docs"><a href="#4-Sub-Docs" class="headerlink" title="4.Sub Docs"></a>4.Sub Docs</h3><p>如同SQL数据库中2张表有主外关系，Mongoose将2个Document的嵌套叫做Sub-Docs（子文档）</p>
+<p>简单的说就是一个Document嵌套另外一个Document或者Documents:</p>
+<pre><code>var ChildSchema1 = new Schema({name:String});
+var ChildSchema2 = new Schema({name:String});
+var ParentSchema = new Schema({
+  children1:ChildSchema1,   //嵌套Document
+  children2:[ChildSchema2]  //嵌套Documents
+});
+</code></pre><p>Sub-Docs享受和Documents一样的操作，但是Sub-Docs的操作都由父类去执行</p>
+<pre><code>var ParentModel = db.model(&apos;Parent&apos;,parentSchema);
+var parent = new ParentModel({
+  children2:[{name:&apos;c1&apos;},{name:&apos;c2&apos;}]
+});
+parent.children2[0].name = &apos;d&apos;;
+parent.save(callback);
+</code></pre><p>parent在执行保存时，由于包含children2，他是一个数据库模型对象，因此会先保存chilren2[0]和chilren2[1]。</p>
+<p>如果子文档在更新时出现错误，将直接报在父类文档中，可以这样处理：</p>
+<pre><code>ChildrenSchema.pre(&apos;save&apos;,function(next){
+  if(&apos;x&apos; === this.name) return next(new Error(&apos;#err:not-x&apos;));
+  next();
+});
+var parent = new ParentModel({children1:{name:&apos;not-x&apos;}});
+parent.save(function(err){
+  console.log(err.message); //#err:not-x
+});
+</code></pre><h4 id="4-1-查询子文档"><a href="#4-1-查询子文档" class="headerlink" title="4.1 查询子文档"></a>4.1 查询子文档</h4><p>如果children是parent的子文档，可以通过如下方法查询到children</p>
+<pre><code>var child = parent.children.id(id);
+</code></pre><h4 id="4-2-新增、删除、更新"><a href="#4-2-新增、删除、更新" class="headerlink" title="4.2 新增、删除、更新"></a>4.2 新增、删除、更新</h4><p>子文档是父文档的一个属性，因此按照属性的操作即可，不同的是在新增父类的时候，子文档是会被先加入进去的。</p>
+<p>如果ChildrenSchema是临时的一个子文档，不作为数据库映射集合，可以这样：</p>
+<pre><code>var ParentSchema = new Schema({
+  children:{
+    name:String
+  }
+});
+//其实就是匿名混合模式
+</code></pre><h3 id="5-Model"><a href="#5-Model" class="headerlink" title="5.Model"></a>5.Model</h3><h4 id="5-1-什么是Model"><a href="#5-1-什么是Model" class="headerlink" title="5.1 什么是Model"></a>5.1 什么是Model</h4><p>Model模型，是经过Schema构造来的，除了Schema定义的数据库骨架以外，还具有数据库行为模型，他相当于管理数据库属性、行为的类</p>
+<h4 id="5-2-如何创建Model"><a href="#5-2-如何创建Model" class="headerlink" title="5.2 如何创建Model"></a>5.2 如何创建Model</h4><p>你必须通过Schema来创建，如下：</p>
+<pre><code>//先创建Schema
+var TankSchema = new Schema({
+  name:&apos;String&apos;,
+  size:&apos;String&apos;
+});
+//通过Schema创建Model
+var TankModel = mongoose.model(&apos;Tank&apos;,TankSchema);
+</code></pre><h4 id="5-2-操作Model"><a href="#5-2-操作Model" class="headerlink" title="5.2 操作Model"></a>5.2 操作Model</h4><p>该模型就能直接拿来操作，具体查看API，例如：</p>
+<pre><code>var tank = {&apos;something&apos;,size:&apos;small&apos;};
+TankModel.create(tank);
+</code></pre><p>注意：</p>
+<p>你可以使用Model来创建Entity，Entity实体是一个特有Model具体对象，但是他并不具备Model的方法，只能用自己的方法。</p>
+<p>  //通过Model创建Entity<br>  var tankEntity = new TankModel(‘someother’,’size:big’);<br>  tankEntity.save();</p>
+<h3 id="6-Query"><a href="#6-Query" class="headerlink" title="6.Query"></a>6.Query</h3><p>查询是数据库中运用最多也是最麻烦的地方，这里对Query解读的并不完善，仅仅是自己的一点领悟而已。</p>
+<h4 id="6-1-查询的方式"><a href="#6-1-查询的方式" class="headerlink" title="6.1 查询的方式"></a>6.1 查询的方式</h4><p>通常有2种查询方式，一种是直接查询，一种是链式查询（2种查询都是自己命名的）</p>
+<h5 id="6-1-1-直接查询"><a href="#6-1-1-直接查询" class="headerlink" title="6.1.1 直接查询"></a>6.1.1 直接查询</h5><p>在查询时带有回调函数的，称之为直接查询，查询的条件往往通过API来设定，例如：</p>
+<pre><code>PersonModel.findOne({&apos;name.last&apos;:&apos;dragon&apos;},&apos;some select&apos;,function(err,person){
+  //如果err==null，则person就能取到数据
+});
+</code></pre><p>具体的查询参数，请查询API</p>
+<h5 id="6-1-2-链式查询"><a href="#6-1-2-链式查询" class="headerlink" title="6.1.2 链式查询"></a>6.1.2 链式查询</h5><p>在查询时候，不带回调，而查询条件通过API函数来制定，例如：</p>
+<pre><code>var query = PersonModel.findOne({&apos;name.last&apos;:&apos;dragon&apos;});
+query.select(&apos;some select&apos;);
+query.exec(function(err,pserson){
+//如果err==null，则person就能取到数据
+</code></pre><p>  });<br>这种方式相对直接查询，分的比较明细，如果不带callback，则返回query，query没有执行的预编译查询语句，该query对象执行的方法都将返回自己，只有在执行exec方法时才执行查询，而且必须有回调。</p>
+<p>因为query的操作始终返回自身，我们可以采用更形象的链式写法</p>
+<pre><code>Person
+  .find({ occupation: /host/ })
+  .where(&apos;name.last&apos;).equals(&apos;Ghost&apos;)
+  .where(&apos;age&apos;).gt(17).lt(66)
+  .where(&apos;likes&apos;).in([&apos;vaporizing&apos;, &apos;talking&apos;])
+  .limit(10)
+  .sort(&apos;-occupation&apos;)
+  .select(&apos;name occupation&apos;)
+  .exec(callback);
+</code></pre><h3 id="7-Validation"><a href="#7-Validation" class="headerlink" title="7.Validation"></a>7.Validation</h3><p>数据的存储是需要验证的，不是什么数据都能往数据库里丢或者显示到客户端的，数据的验证需要记住以下规则：</p>
+<p>验证始终定义在SchemaType中<br>验证是一个内部中间件<br>验证是在一个Document被保存时默认启用的，除非你关闭验证<br>验证是异步递归的，如果你的SubDoc验证失败，Document也将无法保存<br>验证并不关心错误类型，而通过ValidationError这个对象可以访问</p>
+<h4 id="7-1-验证器"><a href="#7-1-验证器" class="headerlink" title="7.1 验证器"></a>7.1 验证器</h4><p>required 非空验证<br>min/max 范围验证（边值验证）<br>enum/match 枚举验证/匹配验证<br>validate 自定义验证规则<br>以下是综合案例：</p>
+<pre><code>var PersonSchema = new Schema({
+  name:{
+    type:&apos;String&apos;,
+    required:true //姓名非空
+  },
+  age:{
+    type:&apos;Nunmer&apos;,
+    min:18,       //年龄最小18
+    max:120     //年龄最大120
+  },
+  city:{
+    type:&apos;String&apos;,
+    enum:[&apos;北京&apos;,&apos;上海&apos;]  //只能是北京、上海人
+  },
+  other:{
+    type:&apos;String&apos;,
+    validate:[validator,err]  //validator是一个验证函数，err是验证失败的错误信息
+  }
+});
+</code></pre><h4 id="7-2-验证失败"><a href="#7-2-验证失败" class="headerlink" title="7.2 验证失败"></a>7.2 验证失败</h4><p>如果验证失败，则会返回err信息，err是一个对象该对象属性如下</p>
+<pre><code>err.errors                //错误集合（对象）
+err.errors.color          //错误属性(Schema的color属性)
+err.errors.color.message  //错误属性信息
+err.errors.path             //错误属性路径
+err.errors.type             //错误类型
+err.name                //错误名称
+err.message                 //错误消息
+</code></pre><p>一旦验证失败，Model和Entity都将具有和err一样的errors属性</p>
+<h3 id="8-Middleware中间件"><a href="#8-Middleware中间件" class="headerlink" title="8.Middleware中间件"></a>8.Middleware中间件</h3><h4 id="8-1-什么是中间件"><a href="#8-1-什么是中间件" class="headerlink" title="8.1 什么是中间件"></a>8.1 什么是中间件</h4><p>中间件是一种控制函数，类似插件，能控制流程中的init、validate、save、remove`方法</p>
+<h4 id="8-2-中间件的分类"><a href="#8-2-中间件的分类" class="headerlink" title="8.2 中间件的分类"></a>8.2 中间件的分类</h4><p>中间件分为两类</p>
+<h5 id="8-2-1-Serial串行"><a href="#8-2-1-Serial串行" class="headerlink" title="8.2.1 Serial串行"></a>8.2.1 Serial串行</h5><p>串行使用pre方法，执行下一个方法使用next调用</p>
+<pre><code>var schema = new Schema(...);
+schema.pre(&apos;save&apos;,function(next){
+  //做点什么
+  next();
+});
+</code></pre><h5 id="8-2-2-Parallel并行"><a href="#8-2-2-Parallel并行" class="headerlink" title="8.2.2 Parallel并行"></a>8.2.2 Parallel并行</h5><p>并行提供更细粒度的操作</p>
+<pre><code>var schema = new Schema(...);
+schema.pre(&apos;save&apos;,function(next,done){
+  //下一个要执行的中间件并行执行
+  next();
+  doAsync(done);
+});
+</code></pre><h4 id="8-3-中间件特点"><a href="#8-3-中间件特点" class="headerlink" title="8.3 中间件特点"></a>8.3 中间件特点</h4><p>一旦定义了中间件，就会在全部中间件执行完后执行其他操作，使用中间件可以雾化模型，避免异步操作的层层迭代嵌套</p>
+<h4 id="8-4-使用范畴"><a href="#8-4-使用范畴" class="headerlink" title="8.4 使用范畴"></a>8.4 使用范畴</h4><p>复杂的验证<br>删除有主外关联的doc<br>异步默认<br>某个特定动作触发异步任务，例如触发自定义事件和通知<br>例如，可以用来做自定义错误处理</p>
+<pre><code>schema.pre(&apos;save&apos;,function(next){
+  var err = new Eerror(&apos;some err&apos;);
+  next(err);
+});
+entity.save(function(err){
+  console.log(err.message); //some err
+});
+</code></pre>
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/11/22/heroku/" title="heroku部署">heroku部署</a></h2>
+                <p class="excerpt">
+                
+                在heroku服务器上面部署node程序两天写了个node的小程序，想要部署到线上（最好免费的），看到新浪云SAE已经开始进行node服务的公测了，可惜没有搞到邀请码。所以就部署到之前查到的heroku上。
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-11-22T20:38:24.000Z" class="post-list__meta--date date">2015-11-22</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/mongoDB/">mongoDB</a>, <a class="tag-link" href="/tags/node/">node</a>, <a class="tag-link" href="/tags/服务器部署/">服务器部署</a>
+</span><a class="btn-border-small" href="/2015/11/22/heroku/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/06/01/require/" title="require.js用法心得">require.js用法心得</a></h2>
+                <p class="excerpt">
+                
+                require.js使用简介简介在web刚开始发展的蛮荒时代，一个页面中只需要加载一个或少量的js文件，不存在模块，也不存在冲突之类的问题，但随着web项目的发展，它越来越大，js文件动辄几十个，怎么加载就成为了一个问题，要为浏览器的性能考虑，还有各个js文件（模块）的依赖关系。require.js的出现就是为了解决这样的问题。
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-06-01T21:14:09.000Z" class="post-list__meta--date date">2015-06-01</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/前端/">前端</a>
+</span><a class="btn-border-small" href="/2015/06/01/require/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2015/10/31/mongoose/" data-title="Mongoose简单上手学习" data-url="http://yoursite.com/2015/10/31/mongoose/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>
