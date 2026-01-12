@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-07-28T03:04:08.000Z" class="post-list__meta--date date">2017-07-28</time>
+      <time datetime="2017-07-28T11:04:08.000Z" class="post-list__meta--date date">2017-07-28</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/ELK/">ELK</a>, <a class="tag-link" href="/tags/linux/">linux</a>
  </span>
@@ -177,7 +177,7 @@
 <p>问题1：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">max</span> <span class="built_in">file</span> descriptors [<span class="number">4096</span>] <span class="keyword">for</span> elasticsearch <span class="built_in">process</span> likely too low, increase <span class="built_in">to</span> <span class="keyword">at</span> least [<span class="number">65536</span>]</span><br></pre></td></tr></table></figure></p>
 <p>解决办法： 修改/etc/security/limits.conf文件，添加或修改如下行：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>soft nofile 65536</span><br><span class="line"><span class="bullet">* </span>hard nofile 131072</span><br><span class="line"><span class="bullet">* </span>soft nproc 2048</span><br><span class="line"><span class="bullet">* </span>hard nproc 4096</span><br></pre></td></tr></table></figure></p>
 <p>问题2：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">max</span> <span class="selector-tag">virtual</span> <span class="selector-tag">memory</span> <span class="selector-tag">areas</span> <span class="selector-tag">vm</span><span class="selector-class">.max_map_count</span> <span class="selector-attr">[65530]</span> <span class="selector-tag">likely</span> <span class="selector-tag">too</span> <span class="selector-tag">low</span>, <span class="selector-tag">increase</span> <span class="selector-tag">to</span> <span class="selector-tag">at</span> <span class="selector-tag">least</span> <span class="selector-attr">[262144]</span></span><br></pre></td></tr></table></figure></p>
-<p>解决办法：修改 /etc/sysctl.conf 文件，添加 “vm.max_map_count”设置<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm<span class="selector-class">.max_map_count</span> = <span class="number">262144</span></span><br></pre></td></tr></table></figure></p>
+<p>解决办法：修改 /etc/sysctl.conf 文件，添加 “vm.max_map_count”设置<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">vm.max_map_count</span> = <span class="number">262144</span></span><br></pre></td></tr></table></figure></p>
 <p>这样就可以成功启动了。</p>
 <h2 id="安装logstash"><a href="#安装logstash" class="headerlink" title="安装logstash"></a>安装logstash</h2><p>安装步骤与Elasticsearch 基本相同，下载软件包，解压.</p>
 <h3 id="1-启动"><a href="#1-启动" class="headerlink" title="1. 启动"></a>1. 启动</h3><p>a. 新建配置文件  yourname.conf</p>
@@ -200,7 +200,7 @@
 1.配置nginx日志log format12345678910111213log_format json &#39;&amp;#123;&#34;@times
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-08-01T03:00:31.000Z" class="post-list__meta--date date">2017-08-01</time>
+                <div class="post-list__meta"><time datetime="2017-08-01T11:00:31.000Z" class="post-list__meta--date date">2017-08-01</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/ELK/">ELK</a>, <a class="tag-link" href="/tags/linux/">linux</a>
 </span><a class="btn-border-small" href="/2017/08/01/logstash解析nginx日志/">继续阅读</a></div>
@@ -218,7 +218,7 @@
 Error构造函数
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-06-12T07:07:25.000Z" class="post-list__meta--date date">2017-06-12</time>
+                <div class="post-list__meta"><time datetime="2017-06-12T15:07:25.000Z" class="post-list__meta--date date">2017-06-12</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>
 </span><a class="btn-border-small" href="/2017/06/12/error-type/">继续阅读</a></div>

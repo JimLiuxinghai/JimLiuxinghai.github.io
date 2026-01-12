@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-12-22T13:08:54.000Z" class="post-list__meta--date date">2016-12-22</time>
+      <time datetime="2016-12-22T21:08:54.000Z" class="post-list__meta--date date">2016-12-22</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/https/">https</a>, <a class="tag-link" href="/tags/翻译/">翻译</a>
  </span>
@@ -171,7 +171,7 @@
 <p><strong>解决域名解析到项目</strong></p>
 <p>将域名解析到本地最常用的方法是修改hosts，可是你却需要给每一个你正在开发的项目添加一条解析记录<br>先做一点小工作，我们就可以给我们所有的项目绑定域名而不去动我们的hosts。</p>
 <p><a href="http://www.thekelleys.org.uk/dnsmasq/doc.html" target="_blank" rel="noopener">Dnsmasq</a>一个轻量级的DNS转发器，可以帮我们完成这些工作。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">brew install dnsmasq</span><br><span class="line">mkdir -pv $(brew --prefix)/etc</span><br><span class="line">sudo cp -v $(brew --prefix dnsmasq)/homebrew<span class="selector-class">.mxcl</span><span class="selector-class">.dnsmasq</span><span class="selector-class">.plist</span> /Library/LaunchDaemons</span><br><span class="line">sudo launchctl load -w /Library/LaunchDaemons/homebrew<span class="selector-class">.mxcl</span><span class="selector-class">.dnsmasq</span><span class="selector-class">.plist</span></span><br><span class="line">sudo mkdir -pv /etc/resolver</span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">brew install dnsmasq</span><br><span class="line"><span class="built_in">mkdir</span> -<span class="built_in">pv</span> $(brew --<span class="built_in">prefix</span>)/etc</span><br><span class="line">sudo cp -v $(brew --<span class="built_in">prefix</span> dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons</span><br><span class="line">sudo launchctl <span class="built_in">load</span> -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist</span><br><span class="line">sudo <span class="built_in">mkdir</span> -<span class="built_in">pv</span> /etc/resolver</span><br></pre></td></tr></table></figure>
 <p>一旦安装并运行，我们需要选择我们想要解决的TLD到我们的本地。 OS X保留.local TLD，许多开发人员使用.dev，但我喜欢使用名称作为TLD的想法，以便在同一项目的其他开发人员的上下文中更容易地推理我的本地环境。所以我要让Dnsmasq在本地解析以我的OS X用户ID结尾的所有主机（也称为短名称，以及在终端中键入whoami时得到的结果）。因为我的用户id是jed，这意味着从apple.jed到zebras.jed到apple.zebras.jed的一切将解析为127.0.0.1。</p>
 <p>所有以下shell脚本假设您使用您的用户标识作为您的顶级域名，但感觉通过替换$（whoami）与您选择的TLD相应地更改它们。</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">"address=/.$(whoami)/127.0.0.1"</span> | sudo tee -a $<span class="params">(brew --prefix)</span><span class="string">/etc/dnsmasq.conf</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"nameserver 127.0.0.1"</span> | sudo tee <span class="string">/etc/resolver/</span>$<span class="params">(whoami)</span></span><br></pre></td></tr></table></figure>
@@ -220,7 +220,7 @@
                 2016过得好快感觉刚刚写完2015总结，年龄越大时间越快。(内附音乐)
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-01-10T09:07:58.000Z" class="post-list__meta--date date">2017-01-10</time>
+                <div class="post-list__meta"><time datetime="2017-01-10T17:07:58.000Z" class="post-list__meta--date date">2017-01-10</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/闲扯/">闲扯</a>, <a class="tag-link" href="/tags/随笔/">随笔</a>
 </span><a class="btn-border-small" href="/2017/01/10/2016/">继续阅读</a></div>
@@ -237,7 +237,7 @@
                 这两天一直在折腾服务器，给域名加https，升级http2。然后就手贱的重置了好几次服务器，每次都去配置shadowsocks。所以写下来记录一下配置。
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-12-15T13:40:06.000Z" class="post-list__meta--date date">2016-12-15</time>
+                <div class="post-list__meta"><time datetime="2016-12-15T21:40:06.000Z" class="post-list__meta--date date">2016-12-15</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/梯子/">梯子</a>
 </span><a class="btn-border-small" href="/2016/12/15/shadowsocks/">继续阅读</a></div>

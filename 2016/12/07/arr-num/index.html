@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-12-07T02:02:50.000Z" class="post-list__meta--date date">2016-12-07</time>
+      <time datetime="2016-12-07T10:02:50.000Z" class="post-list__meta--date date">2016-12-07</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/数组/">数组</a>
  </span>
@@ -161,7 +161,7 @@
     <h2 id="数组中重复的ID统计出总数"><a href="#数组中重复的ID统计出总数" class="headerlink" title="数组中重复的ID统计出总数"></a>数组中重复的ID统计出总数</h2><p>现在有一组字符串 ‘10,12,14,16,10,1,5,16’;</p>
 <p>想统计字符串中相同元素的个数。</p>
 <a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = <span class="string">'10,12,14,16,10,1,5,16'</span></span><br><span class="line"></span><br><span class="line">arr = arr.split(<span class="string">','</span>);<span class="comment">//拆分为数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> keys = &#123;&#125;;<span class="comment">//定义一个对象, 用于保存统计数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//遍历 数组</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=arr.length; i--;)&#123;</span><br><span class="line">    keys[arr[i]] = (keys[arr[i]] || <span class="number">0</span>) + <span class="number">1</span>;<span class="comment">//累计次数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> k <span class="keyword">in</span> keys)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(k, keys[k]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> arr = '<span class="number">10</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">10</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">16</span>'</span><br><span class="line"></span><br><span class="line">arr = arr.split(',');<span class="comment">//拆分为数组</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">var</span> <span class="built_in">keys</span> = &#123;&#125;;<span class="comment">//定义一个对象, 用于保存统计数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//遍历 数组</span></span><br><span class="line">for(<span class="built_in">var</span> i=arr.length; i--;)&#123;</span><br><span class="line">    <span class="built_in">keys</span>[arr[i]] = (<span class="built_in">keys</span>[arr[i]] || <span class="number">0</span>) + <span class="number">1</span>;<span class="comment">//累计次数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果</span></span><br><span class="line">for(<span class="built_in">var</span> k in <span class="built_in">keys</span>)&#123;</span><br><span class="line">    console.log(k, <span class="built_in">keys</span>[k]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>方法类似 <a href="http://blog.jimliu.xyz/2016/02/24/uniqueArr/" target="_blank" rel="noopener">数组去重</a> 中的使用对象去重。</p>
 <p>也利用了对象的相关特性处理。 （完。。</p>
 <audio autoplay src="http://ws.stream.qqmusic.qq.com/C400004NdfcT2OwLBY.m4a?vkey=2D71B4F1E28E6D65DCF87D01F83FC842B246F3EB6A2AC0B3666E360BA1F23B7DE11DE04DAF50220903FE8B8C16C518C34B50893ACB04C788&guid=4935046344&fromtag=30"></audio>
@@ -182,7 +182,7 @@
                 这两天一直在折腾服务器，给域名加https，升级http2。然后就手贱的重置了好几次服务器，每次都去配置shadowsocks。所以写下来记录一下配置。
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-12-15T13:40:06.000Z" class="post-list__meta--date date">2016-12-15</time>
+                <div class="post-list__meta"><time datetime="2016-12-15T21:40:06.000Z" class="post-list__meta--date date">2016-12-15</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/梯子/">梯子</a>
 </span><a class="btn-border-small" href="/2016/12/15/shadowsocks/">继续阅读</a></div>
@@ -199,7 +199,7 @@
                 之前想截图 都用qq或者微信 但是感觉太low了，所以今天查了一下。发现mac下系统截图相当方便，再此做个记录。
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-12-06T06:38:41.000Z" class="post-list__meta--date date">2016-12-06</time>
+                <div class="post-list__meta"><time datetime="2016-12-06T14:38:41.000Z" class="post-list__meta--date date">2016-12-06</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/工具/">工具</a>
 </span><a class="btn-border-small" href="/2016/12/06/screen/">继续阅读</a></div>

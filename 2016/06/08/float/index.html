@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-06-08T14:07:19.000Z" class="post-list__meta--date date">2016-06-08</time>
+      <time datetime="2016-06-08T22:07:19.000Z" class="post-list__meta--date date">2016-06-08</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/css/">css</a>
  </span>
@@ -158,7 +158,7 @@
   </header>
 
   <section class="post">
-    <h2 id="左侧固定右侧自适应布局"><a href="#左侧固定右侧自适应布局" class="headerlink" title="左侧固定右侧自适应布局"></a>左侧固定右侧自适应布局</h2><p>在web管理平台中左侧固定右侧自适应的布局非常常见。就像 这样。。。<br><img src="http://7xp1lq.com1.z0.glb.clouddn.com/bj.png" alt=""><br>（好吧我承认这样有点难看。）</p>
+    <h2 id="左侧固定右侧自适应布局"><a href="#左侧固定右侧自适应布局" class="headerlink" title="左侧固定右侧自适应布局"></a>左侧固定右侧自适应布局</h2><p>在web管理平台中左侧固定右侧自适应的布局非常常见。就像 这样。。。<br><img src="http://7xp1lq.com1.z0.glb.clouddn.com/bj.png" alt><br>（好吧我承认这样有点难看。）</p>
 <p>话不多说 直接上代码。</p>
 <p>html:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">class</span>=<span class="string">"content"</span>&gt;</span><br><span class="line">	&lt;<span class="keyword">div</span> <span class="built_in">class</span>=<span class="string">"left"</span>&gt;</span><br><span class="line">		&lt;p&gt;左侧定宽&lt;/p&gt;</span><br><span class="line">	&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">	&lt;<span class="keyword">div</span> <span class="built_in">class</span>=<span class="string">"right"</span>&gt;</span><br><span class="line">		&lt;<span class="keyword">div</span> <span class="built_in">class</span>=<span class="string">"right-con"</span>&gt;</span><br><span class="line">			&lt;p&gt;右侧自适应&lt;/p&gt;</span><br><span class="line">		&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">	&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure></p>
 <p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.left</span>&#123;</span><br><span class="line">	<span class="attribute">position</span>:relative;</span><br><span class="line">	<span class="attribute">float</span>:left;</span><br><span class="line">	<span class="attribute">width</span>:<span class="number">190px</span>;</span><br><span class="line">	<span class="attribute">margin-right</span>:-<span class="number">190px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">	<span class="attribute">float</span>: right;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right-con</span> &#123;</span><br><span class="line">	<span class="attribute">margin-left</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -180,7 +180,7 @@
                 使用git的时候，我们往往使用branch解决任务切换问题，例如，我们往往会建一个自己的分支去修改和调试代码, 如果别人或者自己发现原有的分支上有个不得不修改的bug，我们往往会把完成一半的代码 commit提交到本地仓库，然后切换分支去修改bug，改好之后再切换回来。这样的话往往log上会有大量不
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-06-12T14:47:36.000Z" class="post-list__meta--date date">2016-06-12</time>
+                <div class="post-list__meta"><time datetime="2016-06-12T22:47:36.000Z" class="post-list__meta--date date">2016-06-12</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/git/">git</a>
 </span><a class="btn-border-small" href="/2016/06/12/git-stash/">继续阅读</a></div>
@@ -197,7 +197,7 @@
                 真球迷的自我修养忙了一整天，中午也没有看比赛，去球场上致敬科比了。。
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-04-14T13:40:47.000Z" class="post-list__meta--date date">2016-04-14</time>
+                <div class="post-list__meta"><time datetime="2016-04-14T21:40:47.000Z" class="post-list__meta--date date">2016-04-14</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/篮球/">篮球</a>, <a class="tag-link" href="/tags/随笔/">随笔</a>
 </span><a class="btn-border-small" href="/2016/04/14/kobe/">继续阅读</a></div>

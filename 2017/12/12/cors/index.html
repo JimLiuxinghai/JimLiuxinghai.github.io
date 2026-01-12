@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-12-11T23:41:19.000Z" class="post-list__meta--date date">2017-12-12</time>
+      <time datetime="2017-12-12T07:41:19.000Z" class="post-list__meta--date date">2017-12-12</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/node/">node</a>
  </span>
@@ -229,7 +229,7 @@
 <p>注：<i>在洋葱架构的大多数例子中，“commandHandlers”通常是“应用程序”层的一部分。 但是，因为在我的情况下，处理命令是这个层目前唯一正在做的事情，所以我决定把它叫做什么（如果将来我需要更多的东西，我可能会重命名为“应用程序”）<br>如果您听说过“clean architecture”或“hexagonal architecture”（端口和适配器），请注意它们几乎与“onion architecture”相同。</i></p>
 <h2 id="Authentication-amp-formation-of-a-command"><a href="#Authentication-amp-formation-of-a-command" class="headerlink" title="Authentication &amp; formation of a command"></a>Authentication &amp; formation of a command</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*CDeC9_fwishjO0RfLHag2Q.png"></p>
 <p>命令是用户请求进行更改的一个对象。<br>它通常与结果事件“一对一”映射：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CreateJournal =&gt; JournalCreated</span><br><span class="line">AddJournalEditor =&gt; JournalEditorAdded</span><br><span class="line">ConfirmJournalEditor =&gt; JournalEdditorConfirmed</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CreateJournal =&gt; <span class="keyword">JournalCreated</span></span><br><span class="line"><span class="keyword">AddJournalEditor </span>=&gt; <span class="keyword">JournalEditorAdded</span></span><br><span class="line"><span class="keyword">ConfirmJournalEditor </span>=&gt; <span class="keyword">JournalEdditorConfirmed</span></span><br><span class="line"><span class="keyword">...</span></span><br></pre></td></tr></table></figure>
 <p>但是它有时会触发多个事件：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ReviewArticle</span> =&gt; [ArticleReviewed, ArticlePromoted, ArticleAccepted]</span><br><span class="line"><span class="attr">ReviewArticle</span> =&gt; [ArticleReviewed, ArticleRejected]</span><br></pre></td></tr></table></figure>
 <p>有很多方法可以生成和处理命令，但是对于这个项目，我使用了一个接受JSON对象的REST端点（/ command）：</p>
@@ -255,17 +255,17 @@
 <p>此时，命令处理程序必须执行第二个步骤：“根据聚合的当前状态验证命令”。</p>
 <p>换句话说，它必须决定应该存储哪个事件，或者是否应该通过抛出一个错误（如果一些业务规则被破坏）来拒绝一个命令。</p>
 <p>这个决定是在一个domain model(领域模型)的帮助下完成的。</p>
-<h2 id="使用领域模型来检查业务规则"><a href="#使用领域模型来检查业务规则" class="headerlink" title="使用领域模型来检查业务规则"></a>使用领域模型来检查业务规则</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*jyR4h_EhPpoekpiS-5Dgqg.png" alt=""></p>
+<h2 id="使用领域模型来检查业务规则"><a href="#使用领域模型来检查业务规则" class="headerlink" title="使用领域模型来检查业务规则"></a>使用领域模型来检查业务规则</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*jyR4h_EhPpoekpiS-5Dgqg.png" alt></p>
 <p>领域模型是定义业务规则的应用程序的一部分。 它的实现应该尽可能简单（即使是非程序员也可以理解），并与系统的其余部分（这是洋葱架构模式的要点）隔离。</p>
 <p>继续“addEditor”的例子，下面是一个命令处理程序（带有一个突出显示的部分，其中使用了来自领域模型的函数）：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*AJubgEjQr0b1d2yEdfql9Q.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*AJubgEjQr0b1d2yEdfql9Q.png" alt></p>
 <p>addEditor属于日志聚合，它被实现为一个简单的纯函数，它返回结果事件或抛出一个错误（如果任何业务规则被破坏）：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*KSoK80XTzsA0jv6ElOQOVA.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*KSoK80XTzsA0jv6ElOQOVA.png" alt></p>
 <p>参数userInfo和timestamp 源于命令对象。 “聚集的当前状态”由用户和日志对象表示，这些用户和日志对象使用系统中的另一个组件 - 一个Repository进行检索。</p>
 <p>注：如果你不喜欢看到硬编码的字符串，请记住，我正在使用TypeScript，如果没有以正确的方式使用你将抓狂：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*ho-1oX7gVLgonYBu-3ySGw.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ho-1oX7gVLgonYBu-3ySGw.png" alt></p>
 <p>除了编译时错误之外，使用“重命名符号特性”重命名任何属性或字符串，都可以在项目中的所有文件中使用（在vs code中进行测试）。</p>
-<h2 id="Retrieving-the-current-state-of-the-aggregate-with-a-repository"><a href="#Retrieving-the-current-state-of-the-aggregate-with-a-repository" class="headerlink" title="Retrieving the current state of the aggregate with a repository"></a>Retrieving the current state of the aggregate with a repository</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*xcygjRhIao5Tlp64GNgx_A.png" alt=""></p>
+<h2 id="Retrieving-the-current-state-of-the-aggregate-with-a-repository"><a href="#Retrieving-the-current-state-of-the-aggregate-with-a-repository" class="headerlink" title="Retrieving the current state of the aggregate with a repository"></a>Retrieving the current state of the aggregate with a repository</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*xcygjRhIao5Tlp64GNgx_A.png" alt></p>
 <p>userState和journalState使用注入的依赖关系检索：userRepository和journalRepository：</p>
 <p><img src="https://cdn-images-1.medium.com/max/1600/1*B0TbOK3BBzu2et4tQEqM4g.png" alt="AddJournalEditor command handler using user and journal repositories"></p>
 <p>这些存储库通常包含一个名为getById的方法。</p>
@@ -273,20 +273,20 @@
 <p>所以，在日志聚合的情况下，它应该返回这种类型的对象：</p>
 <p><img src="https://cdn-images-1.medium.com/max/1600/1*35xpCwYE47WG6wcTx0xl7A.png" alt="Type of Journal aggregate state"></p>
 <p>但是，Event store对日志聚合的格式一无所知，如前面所示，它只存储事件：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*wDs111exqVPtxhm16aoswQ.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*wDs111exqVPtxhm16aoswQ.png" alt></p>
 <p>这就是为什么我必须将这些事件转换为所需的状态，使用 - reducer。</p>
 <p>注意：请记住，为了获得当前的汇总状态，您不必使用事件采购。 有时更适合检索一个完整的对象（使用MongoDB或类似的），并跳过部分减少和保存事件。<br>但是，如果你和我一样，而且你希望你的模型是“灵活的”（所以你可以随时轻易地改变聚合状态的格式），你必须处理“reducer”。</p>
 <p>reducer只是一个（纯）功能（类似于Redux reducer），也是在领域模型中定义的：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*gT4wkkDDFSkUXAQyFV8-6g.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*gT4wkkDDFSkUXAQyFV8-6g.png" alt></p>
 <p>注：同样，对于TypeScript，您可以安全地使用硬编码的字符串，对于每种情况，应该推断出事件类型：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*JsjjKflR8AnIS5dTM5VIpQ.png" alt=""></p>
-<h2 id="Saving-events-in-the-Event-Store"><a href="#Saving-events-in-the-Event-Store" class="headerlink" title="Saving events in the Event Store"></a>Saving events in the Event Store</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*vil0nldaQ_4w1J7uh6VDoQ.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*JsjjKflR8AnIS5dTM5VIpQ.png" alt></p>
+<h2 id="Saving-events-in-the-Event-Store"><a href="#Saving-events-in-the-Event-Store" class="headerlink" title="Saving events in the Event Store"></a>Saving events in the Event Store</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*vil0nldaQ_4w1J7uh6VDoQ.png" alt></p>
 <p>命令处理程序的最后一步是：如果验证成功，则尝试保留新事件。 如果在此步骤中发生并发冲突，请放弃或重试。</p>
 <p>除了聚合状态之外，存储库还将返回用于保存事件的保存功能：</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*t-dSuhEM2JMfA1L-doD0Ow.png" alt=""></p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*t-dSuhEM2JMfA1L-doD0Ow.png" alt></p>
 <p>在hood下，使用optimistic concurrency 来保持事件以确保一致性（类似于mongoDB方法，但没有“自动重试”）。</p>
 <p>注意：我正在使用基于在写入端而不是读取端检索的事件版本的optimistic concurrency。 这是我为我的domain 做出的一个有意识的决定，如果您尝试为自己使用这个解决方案，请确保您了解权衡（这篇博客文章已经足够长了，我不会解释）<br>但是，如果您决定使用在读取端获取的版本，则可以传递如下版本号：save（events，expectedVersion）</p>
-<h2 id="Summary-of-the-application-flow-on-the-write-side"><a href="#Summary-of-the-application-flow-on-the-write-side" class="headerlink" title="Summary of the application flow on the write side"></a>Summary of the application flow on the write side</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*_nqEYX2VHvoB51DQbiwcpA.jpeg" alt=""></p>
+<h2 id="Summary-of-the-application-flow-on-the-write-side"><a href="#Summary-of-the-application-flow-on-the-write-side" class="headerlink" title="Summary of the application flow on the write side"></a>Summary of the application flow on the write side</h2><p><img src="https://cdn-images-1.medium.com/max/1600/1*_nqEYX2VHvoB51DQbiwcpA.jpeg" alt></p>
 <ol>
 <li>Commond是用户发送的对象（来自UI）</li>
 <li>REST API接收一个Commond并处理用户认证</li>
@@ -340,7 +340,7 @@
 函数防抖：如果有人进电梯（触发事件），那电梯将
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2018-02-01T23:20:15.000Z" class="post-list__meta--date date">2018-02-02</time>
+                <div class="post-list__meta"><time datetime="2018-02-02T07:20:15.000Z" class="post-list__meta--date date">2018-02-02</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/javascript/">javascript</a>
 </span><a class="btn-border-small" href="/2018/02/02/debounce/">继续阅读</a></div>
@@ -361,7 +361,7 @@
 
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-12-07T18:51:31.000Z" class="post-list__meta--date date">2017-12-08</time>
+                <div class="post-list__meta"><time datetime="2017-12-08T02:51:31.000Z" class="post-list__meta--date date">2017-12-08</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/前端/">前端</a>
 </span><a class="btn-border-small" href="/2017/12/08/wxapp/">继续阅读</a></div>

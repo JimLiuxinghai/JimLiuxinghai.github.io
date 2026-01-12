@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-06-12T07:07:25.000Z" class="post-list__meta--date date">2017-06-12</time>
+      <time datetime="2017-06-12T15:07:25.000Z" class="post-list__meta--date date">2017-06-12</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>
  </span>
@@ -173,7 +173,7 @@ stack：错误的堆栈（非标准属性）
 </ol>
 </li>
 <li><p>2.ReferenceError:<br>ReferenceError是引用一个不存在的变量时发生的错误。</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(aaa)</span><br><span class="line"><span class="regexp">//</span>ReferenceError: aaa <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br></pre></td></tr></table></figure>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.<span class="built_in">log</span>(aaa)</span><br><span class="line"><span class="comment">//ReferenceError: aaa is not defined</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>另一种触发场景是，将一个值分配给无法分配的对象，比如对函数的运行结果或者this赋值。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span> = aaa</span><br><span class="line"><span class="comment">//ReferenceError: Invalid left-hand side in assignment</span></span><br></pre></td></tr></table></figure></p>
@@ -182,7 +182,7 @@ stack：错误的堆栈（非标准属性）
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new Array(-1)</span><br><span class="line">//RangeError: Invalid<span class="built_in"> array </span>length</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>4.TypeError: TypeError是变量或参数不是预期类型时发生的错误。比如，对字符串、布尔值、数值等原始类型的值使用new命令，就会抛出这种错误，因为new命令的参数应该是一个构造函数。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'aaa'</span>.forEach(<span class="function"><span class="keyword">function</span><span class="params">(item)</span></span> &#123;</span><br><span class="line">    console.<span class="built_in">log</span>(item)</span><br><span class="line">&#125;)</span><br><span class="line">//TypeError: <span class="string">"aaa"</span>.forEach is <span class="keyword">not</span> a <span class="function"><span class="keyword">function</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'aaa'</span>.forEach(<span class="keyword">function</span>(<span class="type">item</span>) &#123;</span><br><span class="line">    console.log(<span class="type">item</span>)</span><br><span class="line">&#125;)</span><br><span class="line">//TypeError: <span class="string">"aaa"</span>.forEach <span class="literal">is</span><span class="built_in"> not</span> a <span class="keyword">function</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>5.URIError: URIError是URI相关函数的参数不正确时抛出的错误，主要涉及encodeURI()、decodeURI()、encodeURIComponent()、decodeURIComponent()、escape()和unescape()这六个函数。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">decodeURI</span><span class="params">(<span class="string">'%2'</span>)</span></span></span><br><span class="line"><span class="comment">// URIError: URI malformed</span></span><br></pre></td></tr></table></figure>
@@ -206,7 +206,7 @@ stack：错误的堆栈（非标准属性）
                 一.安装java环境由于Elasticsearch和Logstash的要求，在服务器首先安装jdk 1.8
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-07-28T03:04:08.000Z" class="post-list__meta--date date">2017-07-28</time>
+                <div class="post-list__meta"><time datetime="2017-07-28T11:04:08.000Z" class="post-list__meta--date date">2017-07-28</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/ELK/">ELK</a>, <a class="tag-link" href="/tags/linux/">linux</a>
 </span><a class="btn-border-small" href="/2017/07/28/install-elk/">继续阅读</a></div>
@@ -224,7 +224,7 @@ stack：错误的堆栈（非标准属性）
 1.try catch使用一个webpack的loader babel_try_catch_loader对js代码进行包裹。打包完成后，所有的函数块会被加上try catch 我们只需在全局空间定义catch的函数，然后进行收集。使用try catch 我们可以捕获到
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-06-08T02:17:04.000Z" class="post-list__meta--date date">2017-06-08</time>
+                <div class="post-list__meta"><time datetime="2017-06-08T10:17:04.000Z" class="post-list__meta--date date">2017-06-08</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>
 </span><a class="btn-border-small" href="/2017/06/08/feerr/">继续阅读</a></div>

@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2020-03-25T14:25:18.000Z" class="post-list__meta--date date">2020-03-25</time>
+      <time datetime="2020-03-25T22:25:18.000Z" class="post-list__meta--date date">2020-03-25</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/【webpack】/">【webpack】</a>
  </span>
@@ -168,7 +168,7 @@
 <h2 id="1-使用babel-loader替代ts-loader"><a href="#1-使用babel-loader替代ts-loader" class="headerlink" title="1.使用babel-loader替代ts-loader"></a>1.使用babel-loader替代ts-loader</h2><p>babel7中有包来解析ts,安装</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"@babel/preset-typescript"</span>: <span class="string">"^7.9.0"</span>,</span><br></pre></td></tr></table></figure>
 <p>使用的.babelrc如下</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"presets"</span>: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"corejs"</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="attr">"useBuiltIns"</span>: <span class="string">"usage"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"@babel/preset-typescript"</span>,  //解析ts</span><br><span class="line">    <span class="string">"@babel/preset-react"</span>  </span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"plugins"</span>: [</span><br><span class="line">    <span class="string">"@babel/plugin-transform-runtime"</span>,</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/plugin-proposal-decorators"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"legacy"</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/plugin-proposal-class-properties"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"loose"</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"@babel/plugin-syntax-dynamic-import"</span>,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"presets"</span>: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"corejs"</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="attr">"useBuiltIns"</span>: <span class="string">"usage"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"@babel/preset-typescript"</span>,  <span class="comment">//解析ts</span></span><br><span class="line">    <span class="string">"@babel/preset-react"</span>  </span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"plugins"</span>: [</span><br><span class="line">    <span class="string">"@babel/plugin-transform-runtime"</span>,</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/plugin-proposal-decorators"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"legacy"</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/plugin-proposal-class-properties"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"loose"</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"@babel/plugin-syntax-dynamic-import"</span>,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>webpack配置 修改为</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">test</span>: /\.(j|t)sx?$/,</span><br><span class="line">    include: SRC_PATH,</span><br><span class="line">    loader: <span class="string">'babel-loader'</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <p><img src="/images/webpack-babel.png" alt="img"></p>
@@ -178,7 +178,7 @@
 <p>安装</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"happypack"</span>: <span class="string">"^5.0.1"</span></span><br></pre></td></tr></table></figure>
 <p>webpack相关配置</p>
-<p>引入<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">const HappyPack</span> = require(<span class="string">'happypack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="attribute">const happyThreadPool</span> = HappyPack.ThreadPool(&#123; size: os.cpus().length &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>引入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HappyPack = <span class="built_in">require</span>(<span class="string">'happypack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> happyThreadPool = HappyPack.ThreadPool(&#123; <span class="attr">size</span>: os.cpus().length &#125;);</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">rules</span>:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attribute">test</span>: /\.(j|t)sx?$/,</span><br><span class="line">    include: SRC_PATH,</span><br><span class="line">    use: [<span class="string">'happypack/loader?id=babel'</span>]  //id为plugin中配置的 HappyPack的id</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">plugin</span>: </span><br><span class="line">new HappyPack(&#123;</span><br><span class="line">    <span class="attribute">id</span>: <span class="string">'babel'</span>,</span><br><span class="line">    <span class="attribute">loaders</span>: [&#123;</span><br><span class="line">        <span class="attribute">loader</span>: <span class="string">'babel-loader?cacheDirectory'</span></span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="attribute">threadPool</span>: happyThreadPool</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
 <p><img src="/images/webpack-happypack.png" alt="img"></p>
@@ -209,7 +209,7 @@
 因为与我们合作的PMS服务商数量有限，一部分使用我们系统的酒店用户采用的是其他
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2020-05-12T14:10:03.000Z" class="post-list__meta--date date">2020-05-12</time>
+                <div class="post-list__meta"><time datetime="2020-05-12T22:10:03.000Z" class="post-list__meta--date date">2020-05-12</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/node/">node</a>
 </span><a class="btn-border-small" href="/2020/05/12/summery/">继续阅读</a></div>
@@ -228,7 +228,7 @@
 解释SameSite详解SameSite Cookie，防止 CSRF 攻击因为 HTTP 协议是无状态的，所以很久以前的网站是没有登录这个
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2020-03-10T13:41:09.000Z" class="post-list__meta--date date">2020-03-10</time>
+                <div class="post-list__meta"><time datetime="2020-03-10T21:41:09.000Z" class="post-list__meta--date date">2020-03-10</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/chrome/">chrome</a>, <a class="tag-link" href="/tags/js/">js</a>
 </span><a class="btn-border-small" href="/2020/03/10/cookie/">继续阅读</a></div>

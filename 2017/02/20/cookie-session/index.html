@@ -55,12 +55,12 @@
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
 
-        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo"></a>
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
         <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
         
-        <hr class="panel-cover__divider">
+        <hr class="panel-cover__divider" />
         <p class="panel-cover__description">一只刚上路的前端程序猿</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
           <div>
@@ -79,7 +79,7 @@
   
   <li class="navigation__item">
     <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
-      <i class="social fa fa-weibo"></i>
+      <i class='social fa fa-weibo'></i>
       <span class="label">Weibo</span>
     </a>
   </li> 
@@ -89,7 +89,7 @@
   
   <li class="navigation__item">
     <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
-      <i class="social fa fa-github"></i>
+      <i class='social fa fa-github'></i>
       <span class="label">Github</span>
     </a>
   </li>
@@ -105,7 +105,7 @@
 
   <li class="navigation__item">
     <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
-      <i class="social fa fa-facebook"></i>
+      <i class='social fa fa-facebook'></i>
       <span class="label">Facebook</span>
     </a>
   </li>
@@ -115,7 +115,7 @@
 
   <li class="navigation__item">
     <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
-      <i class="social fa fa-twitter"></i>
+      <i class='social fa fa-twitter'></i>
       <span class="label">Twitter</span>
     </a>
   </li>
@@ -145,7 +145,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-02-20T07:16:13.000Z" class="post-list__meta--date date">2017-02-20</time>
+      <time datetime="2017-02-20T15:16:13.000Z" class="post-list__meta--date date">2017-02-20</time>
  &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/服务端/">服务端</a>
  </span>
@@ -178,7 +178,7 @@
 </ul>
 <h3 id="express-中的-cookie"><a href="#express-中的-cookie" class="headerlink" title="express 中的 cookie"></a>express 中的 cookie</h3><p>express 在 4.x 版本之后，session管理和cookies等许多模块都不再直接包含在express中，而是需要单独添加相应模块。</p>
 <p>express4 中操作 cookie 使用 cookie-parser 模块(<a href="https://github.com/expressjs/cookie-parser" target="_blank" rel="noopener">https://github.com/expressjs/cookie-parser</a> )。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">// 首先引入 cookie-parser 这个模块</span></span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 cookieParser 中间件，cookieParser(secret, options)</span></span><br><span class="line"><span class="comment">// 其中 secret 用来加密 cookie 字符串（下面会提到 signedCookies）</span></span><br><span class="line"><span class="comment">// options 传入上面介绍的 cookie 可选参数</span></span><br><span class="line">app.use(cookieParser());</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 如果请求中的 cookie 存在 isVisit, 则输出 cookie</span></span><br><span class="line">  <span class="comment">// 否则，设置 cookie 字段 isVisit, 并设置过期时间为1分钟</span></span><br><span class="line">  <span class="keyword">if</span> (req.cookies.isVisit) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(req.cookies);</span><br><span class="line">    res.send(<span class="string">"再次欢迎访问"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.cookie(<span class="string">'isVisit'</span>, <span class="number">1</span>, &#123;<span class="attr">maxAge</span>: <span class="number">60</span> * <span class="number">1000</span>&#125;); <span class="comment">//第一个值：cookie名 第二个值：cookie值 第三个cookie配置</span></span><br><span class="line">    res.send(<span class="string">"欢迎第一次访问"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="keyword">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">// 首先引入 cookie-parser 这个模块</span></span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="keyword">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 cookieParser 中间件，cookieParser(secret, options)</span></span><br><span class="line"><span class="comment">// 其中 secret 用来加密 cookie 字符串（下面会提到 signedCookies）</span></span><br><span class="line"><span class="comment">// options 传入上面介绍的 cookie 可选参数</span></span><br><span class="line">app.<span class="keyword">use</span>(<span class="title">cookieParser</span>());</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 如果请求中的 cookie 存在 isVisit, 则输出 cookie</span></span><br><span class="line">  <span class="comment">// 否则，设置 cookie 字段 isVisit, 并设置过期时间为1分钟</span></span><br><span class="line">  <span class="keyword">if</span> (req.cookies.isVisit) &#123;</span><br><span class="line">    console.log(req.cookies);</span><br><span class="line">    res.send(<span class="string">"再次欢迎访问"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.cookie(<span class="string">'isVisit'</span>, <span class="number">1</span>, &#123;maxAge: <span class="number">60</span> * <span class="number">1000</span>&#125;); <span class="comment">//第一个值：cookie名 第二个值：cookie值 第三个cookie配置</span></span><br><span class="line">    res.send(<span class="string">"欢迎第一次访问"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="session"><a href="#session" class="headerlink" title="session"></a>session</h2><p>cookie 虽然很方便，但是使用 cookie 有一个很大的弊端，cookie 中的所有数据在客户端就可以被修改，数据非常容易被伪造，那么一些重要的数据就不能存放在 cookie 中了，而且如果 cookie 中数据字段太多会影响传输效率。为了解决这些问题，就产生了 session，session 中的数据是保留在服务器端的。</p>
 <p>session 的运作通过一个 session_id 来进行。session_id 通常是存放在客户端的 cookie 中，比如在 express 中，默认是 connect.sid 这个字段，当请求到来时，服务端检查 cookie 中保存的 session_id 并通过这个 session_id 与服务器端的 session data 关联起来，进行数据的保存和修改。</p>
 <p>这意思就是说，当你浏览一个网页时，服务端随机产生一个 1024 比特长的字符串，然后存在你 cookie 中的 connect.sid 字段中。当你下次访问时，cookie 会带有这个字符串，然后浏览器就知道你是上次访问过的某某某，然后从服务器的存储中取出上次记录在你身上的数据。由于字符串是随机产生的，而且位数足够多，所以也不担心有人能够伪造。伪造成功的概率比坐在家里编程时被邻居家的狗突然闯入并咬死的几率还低。</p>
@@ -200,7 +200,7 @@
 <p>session 存放在内存中不方便进程间共享，因此可以使用 redis 等缓存来存储 session。</p>
 <p>假设你的机器是 4 核的，你使用了 4 个进程在跑同一个 node web 服务，当用户访问进程1时，他被设置了一些数据当做 session 存在内存中。而下一次访问时，他被负载均衡到了进程2，则此时进程2的内存中没有他的信息，认为他是个新用户。这就会导致用户在我们服务中的状态不一致。</p>
 <p>使用 redis 作为缓存，可以使用 connect-redis 模块(<a href="https://github.com/tj/connect-redis" target="_blank" rel="noopener">https://github.com/tj/connect-redis</a> )来得到 redis 连接实例，然后在 session 中设置存储方式为该实例。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="keyword">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> session = <span class="keyword">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"><span class="keyword">var</span> redisStore = <span class="keyword">require</span>(<span class="string">'connect-redis'</span>)(session);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.listen(<span class="number">5000</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="keyword">use</span>(session(&#123;</span><br><span class="line">  <span class="comment">// 假如你不想使用 redis 而想要使用 memcached 的话，代码改动也不会超过 5 行。</span></span><br><span class="line">  <span class="comment">// 这些 store 都遵循着统一的接口，凡是实现了那些接口的库，都可以作为 session 的 store 使用，比如都需要实现 .get(keyString) 和 .set(keyString, value) 方法。</span></span><br><span class="line">  <span class="comment">// 编写自己的 store 也很简单</span></span><br><span class="line">  store: <span class="keyword">new</span> redisStore(),</span><br><span class="line">  secret: <span class="string">'somesecrettoken'</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(req.session.isVisit) &#123;</span><br><span class="line">    req.session.isVisit++;</span><br><span class="line">    res.send(<span class="string">'&lt;p&gt;第 '</span> + req.session.isVisit + <span class="string">'次来到此页面&lt;/p&gt;'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    req.session.isVisit = <span class="number">1</span>;</span><br><span class="line">    res.send(<span class="string">'欢迎第一次来这里'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"><span class="keyword">var</span> redisStore = <span class="built_in">require</span>(<span class="string">'connect-redis'</span>)(session);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line">app.listen(<span class="number">5000</span>);</span><br><span class="line"></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  <span class="comment">// 假如你不想使用 redis 而想要使用 memcached 的话，代码改动也不会超过 5 行。</span></span><br><span class="line">  <span class="comment">// 这些 store 都遵循着统一的接口，凡是实现了那些接口的库，都可以作为 session 的 store 使用，比如都需要实现 .get(keyString) 和 .set(keyString, value) 方法。</span></span><br><span class="line">  <span class="comment">// 编写自己的 store 也很简单</span></span><br><span class="line">  store: <span class="keyword">new</span> redisStore(),</span><br><span class="line">  secret: <span class="string">'somesecrettoken'</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(req.session.isVisit) &#123;</span><br><span class="line">    req.session.isVisit++;</span><br><span class="line">    res.send(<span class="string">'&lt;p&gt;第 '</span> + req.session.isVisit + <span class="string">'次来到此页面&lt;/p&gt;'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    req.session.isVisit = <span class="number">1</span>;</span><br><span class="line">    res.send(<span class="string">'欢迎第一次来这里'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="各种存储的利弊"><a href="#各种存储的利弊" class="headerlink" title="各种存储的利弊"></a>各种存储的利弊</h3><p>上面我们说到，session 的 store 有四个常用选项：1）内存 2）cookie 3）缓存 4）数据库</p>
 <p>其中，开发环境存内存就好了。一般的小程序为了省事，如果不涉及状态共享的问题，用内存 session 也没问题。但内存 session 除了省事之外，没有别的好处。</p>
 <p>cookie session 我们下面会提到，现在说说利弊。用 cookie session 的话，是不用担心状态共享问题的，因为 session 的 data 不是由服务器来保存，而是保存在用户浏览器端，每次用户访问时，都会主动带上他自己的信息。当然在这里，安全性之类的，只要遵照最佳实践来，也是有保证的。它的弊端是增大了数据量传输，利端是方便。</p>
@@ -223,7 +223,7 @@
                 什么是跨域：1234567891011121314151617URL                      说明       是否允许通信http://www.a.com/a.jshttp://www.a.com/b.js     同一域名下   允许http://www.a.com/lab/a
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-02-21T01:55:51.000Z" class="post-list__meta--date date">2017-02-21</time>
+                <div class="post-list__meta"><time datetime="2017-02-21T09:55:51.000Z" class="post-list__meta--date date">2017-02-21</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>
 </span><a class="btn-border-small" href="/2017/02/21/跨域/">继续阅读</a></div>
@@ -243,7 +243,7 @@
 1. window.location.href  地址栏所有内容1htt
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-02-16T08:58:00.000Z" class="post-list__meta--date date">2017-02-16</time>
+                <div class="post-list__meta"><time datetime="2017-02-16T16:58:00.000Z" class="post-list__meta--date date">2017-02-16</time>
  &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/js/">js</a>
 </span><a class="btn-border-small" href="/2017/02/16/window-location/">继续阅读</a></div>
