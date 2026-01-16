@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异 | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异 | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异 | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2025/02/14/mcp-agent-skills-cursor-rules/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2025-02-14T10:00:00.000Z" class="post-list__meta--date date">2025-02-14</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AI/">AI</a>, <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/工程化/">工程化</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异</h1>
+  </header>
+
+  <section class="post">
+    <p>在 AI 辅助编程进入“智能体时代”后，前端开发者开始接触三个高频概念：MCP（模型上下文协议）、Agent Skills（智能体技能）与 Cursor Rules。它们分别解决“能做什么、怎么做、要按什么规范做”的问题，却又常被混为一谈。本文将从概念、场景应用、关键差异与选择策略四个角度，给出清晰的系统化对比，帮助你在实际项目中做出更好的选择。</p>
+<a id="more"></a>
+<h2 id="概念简介"><a href="#概念简介" class="headerlink" title="概念简介"></a>概念简介</h2><h3 id="MCP（Model-Context-Protocol）"><a href="#MCP（Model-Context-Protocol）" class="headerlink" title="MCP（Model Context Protocol）"></a>MCP（Model Context Protocol）</h3><p>MCP 是 Anthropic 在 2024 年提出的开放协议，用于标准化 AI 模型与外部工具、数据源、服务的交互方式。它像 AI 的“插件接口”：通过统一协议把模型连接到数据库、Slack、GitHub、浏览器、命令行等外部系统，让 AI 不只是生成文本，而是能调用工具、获取数据、执行操作。</p>
+<p><strong>一句话理解：</strong> MCP 让 AI “伸手”到模型之外，具备访问外部上下文与执行任务的能力。</p>
+<h3 id="Agent-Skills（智能体技能）"><a href="#Agent-Skills（智能体技能）" class="headerlink" title="Agent Skills（智能体技能）"></a>Agent Skills（智能体技能）</h3><p>Agent Skills 是 Anthropic 在 2025 年引入的技能封装机制。每个 Skill 通常以一个文件夹呈现，包含 SKILL.md（元数据与指令）以及相关资源或脚本。模型启动时先加载技能概览，需要时再读取完整内容，实现“渐进披露”，更高效地利用上下文。</p>
+<p><strong>一句话理解：</strong> Agent Skills 是给模型准备的“专业手册 + 可复用工具包”。</p>
+<h3 id="Cursor-Rules"><a href="#Cursor-Rules" class="headerlink" title="Cursor Rules"></a>Cursor Rules</h3><p>Cursor Rules 是 Cursor IDE 的规则机制，用于为项目设置 AI 生成代码时的约束与风格指南。规则以文本形式存放在 <code>.cursor/rules/</code> 目录下，可针对全局或子目录生效，起到“护栏（guardrails）”作用。</p>
+<p><strong>一句话理解：</strong> Cursor Rules 是 Cursor 环境里的“编码规范 + 自动化模板”。</p>
+<h2 id="前端开发场景中的应用与优势"><a href="#前端开发场景中的应用与优势" class="headerlink" title="前端开发场景中的应用与优势"></a>前端开发场景中的应用与优势</h2><p>下面从组件开发、样式处理、工程配置、调试定位、代码生成五个典型场景，分别看三者的定位与优势。</p>
+<h3 id="1-组件开发"><a href="#1-组件开发" class="headerlink" title="1) 组件开发"></a>1) 组件开发</h3><ul>
+<li><strong>MCP：</strong> 可连接 UI 生成服务、设计系统 API、脚手架 CLI 等，直接生成组件或调用工具安装依赖。</li>
+<li><strong>Agent Skills：</strong> 提供团队约定的组件结构与范式，帮助 AI 输出更贴合项目的组件模板。</li>
+<li><strong>Cursor Rules：</strong> 强制组件命名、目录结构、状态管理方式，确保产出一致性。</li>
+</ul>
+<h3 id="2-样式处理"><a href="#2-样式处理" class="headerlink" title="2) 样式处理"></a>2) 样式处理</h3><ul>
+<li><strong>MCP：</strong> 接入设计系统 API 或样式处理服务，实现自动提取配色/变量、生成预览图等。</li>
+<li><strong>Agent Skills：</strong> 沉淀 CSS 布局、响应式设计、BEM 规则等知识，提供示例与脚本支持。</li>
+<li><strong>Cursor Rules：</strong> 强制 CSS Modules、命名规范、禁止行内样式等风格约束。</li>
+</ul>
+<h3 id="3-工程配置"><a href="#3-工程配置" class="headerlink" title="3) 工程配置"></a>3) 工程配置</h3><ul>
+<li><strong>MCP：</strong> 直接调用构建工具 CLI、查询依赖版本、运行配置检查。</li>
+<li><strong>Agent Skills：</strong> 封装 ESLint/webpack/Vite 初始化步骤，提供配置模板与脚本。</li>
+<li><strong>Cursor Rules：</strong> 统一配置文件格式与规范，避免 AI 写出不符合团队约定的配置。</li>
+</ul>
+<h3 id="4-调试与定位"><a href="#4-调试与定位" class="headerlink" title="4) 调试与定位"></a>4) 调试与定位</h3><ul>
+<li><strong>MCP：</strong> 连接浏览器调试工具或测试框架，读取日志与网络请求，形成闭环分析。</li>
+<li><strong>Agent Skills：</strong> 作为“故障手册”，提供常见错误的排查路线与脚本。</li>
+<li><strong>Cursor Rules：</strong> 约束修复方式与日志规范，避免引入新问题。</li>
+</ul>
+<h3 id="5-代码生成"><a href="#5-代码生成" class="headerlink" title="5) 代码生成"></a>5) 代码生成</h3><ul>
+<li><strong>MCP：</strong> 结合外部文档/设计稿/API 定义，生成更准确的业务代码，并可链式调用格式化/测试工具。</li>
+<li><strong>Agent Skills：</strong> 提供领域知识与代码范式（如表单校验模板、注释规范），提升生成质量。</li>
+<li><strong>Cursor Rules：</strong> 强制 PropTypes/JSDoc/错误处理模板，让产出更一致且可控。</li>
+</ul>
+<h2 id="关键差异对比"><a href="#关键差异对比" class="headerlink" title="关键差异对比"></a>关键差异对比</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>MCP</th>
+<th>Agent Skills</th>
+<th>Cursor Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>能力边界</strong></td>
+<td>连接外部工具与服务，扩展模型执行能力</td>
+<td>提供领域知识与流程手册</td>
+<td>强化规范与模板，限制生成行为</td>
+</tr>
+<tr>
+<td><strong>任务适配</strong></td>
+<td>需要外部交互的任务（调用 API、查询系统状态）</td>
+<td>需要专门知识或流程指导的任务</td>
+<td>需要统一规范与模板的任务</td>
+</tr>
+<tr>
+<td><strong>接入方式</strong></td>
+<td>配置 MCP 客户端与服务器，需工具服务端支持</td>
+<td>部署技能文件夹，模型按需加载</td>
+<td>在 Cursor 中维护 <code>.cursor/rules/</code></td>
+</tr>
+<tr>
+<td><strong>开发者控制力</strong></td>
+<td>中等：通过可用工具范围控制</td>
+<td>高：技能内容可控</td>
+<td>极高：可强制规则生效</td>
+</tr>
+<tr>
+<td><strong>跨平台适配</strong></td>
+<td>开放标准，可跨平台复用</td>
+<td>开放标准，逐步普及</td>
+<td>Cursor 专属，跨平台性低</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>强能力但需注意权限隔离</td>
+<td>可控、易审查</td>
+<td>最安全但能力有限</td>
+</tr>
+</tbody>
+</table>
+<h2 id="场景选择建议"><a href="#场景选择建议" class="headerlink" title="场景选择建议"></a>场景选择建议</h2><ol>
+<li><strong>想要规范化流程与统一风格</strong> → <strong>优先 Cursor Rules</strong>。</li>
+<li><strong>需要访问外部资源或执行实际操作</strong> → <strong>使用 MCP</strong>。</li>
+<li><strong>希望 AI 具备特定领域知识</strong> → <strong>使用 Agent Skills</strong>。</li>
+<li><strong>追求完整体验</strong> → <strong>组合使用 MCP + Skills + Rules</strong>。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>MCP 负责“让 AI 能做事”，Agent Skills 负责“让 AI 会做事”，Cursor Rules 负责“让 AI 做得对”。它们并非竞争关系，而是构成现代前端 AI 工程化能力的三块拼图。</p>
+<p>当你理解了三者在能力边界与目标定位上的差异，就能更精准地将它们组合到项目中，从而打造一个既有执行力、又有专业性、还能遵守团队规范的 AI 助手。</p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2026/01/07/tweet-craft/" title="Tweet Craft：让 Twitter/X 内容整理效率翻倍的浏览器扩展">Tweet Craft：让 Twitter/X 内容整理效率翻倍的浏览器扩展</a></h2>
+                <p class="excerpt">
+                
+                在 Twitter/X 上找灵感很快，但整理内容很慢：线程太长、复制格式混乱、截图不美观、视频不好保存，想沉淀到知识库还要手动处理。Tweet Craft 就是为这些痛点而生的一款浏览器扩展，把“复制、整理、归档”这条链路一次性打通。
+如果你也在做内容创作、信息整理或产品研究，建议先看一眼官方介绍页
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2026-01-07T12:50:14.000Z" class="post-list__meta--date date">2026-01-07</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/notion/">notion</a>, <a class="tag-link" href="/tags/productivity/">productivity</a>, <a class="tag-link" href="/tags/twitter/">twitter</a>
+</span><a class="btn-border-small" href="/2026/01/07/tweet-craft/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2020/05/12/summery/" title="关于项目的一些总结(一)">关于项目的一些总结(一)</a></h2>
+                <p class="excerpt">
+                
+                在公司工作3年有余，主导经历的项目大大小小也有十几个，挑一些有代表性的项目来做一些总结。
+酒店收益–预测分析平台先上一个数据的流程图：
+
+数据来源系统数据来源有两个：
+
+酒店订房系统(PMS)直连数据
+酒店用户上传数据
+
+因为与我们合作的PMS服务商数量有限，一部分使用我们系统的酒店用户采用的是其他
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2020-05-12T22:10:03.000Z" class="post-list__meta--date date">2020-05-12</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/node/">node</a>
+</span><a class="btn-border-small" href="/2020/05/12/summery/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2025/02/14/mcp-agent-skills-cursor-rules/" data-title="MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异" data-url="http://yoursite.com/2025/02/14/mcp-agent-skills-cursor-rules/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>
