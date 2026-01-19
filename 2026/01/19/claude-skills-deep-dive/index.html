@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Claude Agent Skills：第一性原理深度解析（译） | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Claude Agent Skills：第一性原理深度解析（译） | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Claude Agent Skills：第一性原理深度解析（译） | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yoursite.com/2026/01/19/claude-skills-deep-dive/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2026-01-19T00:00:00.000Z" class="post-list__meta--date date">2026-01-19</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AI/">AI</a>, <a class="tag-link" href="/tags/Claude/">Claude</a>, <a class="tag-link" href="/tags/LLM/">LLM</a>, <a class="tag-link" href="/tags/译文/">译文</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Claude Agent Skills：第一性原理深度解析（译）</h1>
+  </header>
+
+  <section class="post">
+    <p><a href="https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/" target="_blank" rel="noopener">原文链接：Claude Agent Skills: A First Principles Deep Dive</a></p>
+<p>Claude 的 Agent Skills 系统是一套复杂的、基于提示词的“元工具”架构，通过注入专用指令来扩展 LLM 的能力。与传统的函数调用或代码执行不同，skills 通过<strong>提示词扩展</strong>与<strong>上下文修改</strong>来影响 Claude 处理后续请求的方式，而不是编写可执行代码。</p>
+<p>这篇深度解析从第一性原理拆解 Claude 的 Agent Skills 系统，记录了名为 “Skill” 的工具作为元工具、负责把领域提示词注入对话上下文的架构。我们会以 skill-creator 与 internal-comms 两个技能为案例，走完整生命周期，从文件解析、API 请求结构，一直到 Claude 的决策过程。</p>
+<h1 id="Claude-Agent-Skills-概览"><a href="#Claude-Agent-Skills-概览" class="headerlink" title="Claude Agent Skills 概览"></a>Claude Agent Skills 概览</h1><p>Claude 使用 Skills 来提升执行特定任务的效果。Skills 以文件夹形式定义，包含指令、脚本与资源，Claude 会按需加载。Claude 通过<strong>声明式、基于提示词的机制</strong>发现并调用技能。模型（Claude）会根据系统提示词中提供的技能文字描述来决定是否调用技能；在代码层面<strong>没有算法化的技能选择或 AI 意图检测</strong>。决策完全发生在 Claude 的推理过程中，依据技能描述做匹配。</p>
+<p>Skills 不是可执行代码。它们<strong>不会</strong>运行 Python 或 JavaScript，也没有隐藏的 HTTP 服务或函数调用。技能也不是硬编码进 Claude 的系统提示词里，而是存在于 API 请求结构的另一部分。</p>
+<p>那么 Skills 到底是什么？它们是专门的提示模板，用于向对话上下文注入领域指令。当技能被调用时，它会同时修改对话上下文（注入指令提示）与执行上下文（更改工具权限、可能切换模型）。技能不会直接执行动作，而是扩展成详细提示，引导 Claude 解决特定类型问题。每个技能会作为 Claude 看到的工具 schema 的动态补充出现。</p>
+<p>当用户发起请求时，Claude 会收到三样东西：用户消息、可用工具列表（Read、Write、Bash 等）以及 Skill 工具。Skill 工具的描述包含了所有可用技能的格式化清单（name、description 等字段组合在一起）。Claude 阅读这份清单，用自身语言理解将意图与技能描述匹配。例如你说“帮我创建一个写日志的 skill”，Claude 会看到 internal-comms 技能描述（“When user wants to write internal communications using format that his company likes to use”），识别到匹配，然后调用 Skill 工具并传入 <code>command: &quot;internal-comms&quot;</code>。</p>
+<blockquote>
+<p><strong>术语说明</strong>：</p>
+<ul>
+<li><strong>Skill 工具</strong>（S 大写）= 管理所有技能的元工具。它和 Read、Write、Bash 等并列出现在 Claude 的 tools 数组里。</li>
+<li><strong>skills</strong>（s 小写）= 具体技能，如 <code>pdf</code>、<code>skill-creator</code>、<code>internal-comms</code>。这些是由 Skill 工具加载的专用指令模板。</li>
+</ul>
+</blockquote>
+<p>下面是更直观的示意图：</p>
+<p><img src="https://leehanchung.github.io/assets/img/2025-10-26/01-claude-skill-1.png" alt="Claude Skill 流程图"></p>
+<p>技能选择机制在代码层面没有算法化的路由或意图分类。Claude Code 不使用 embedding、分类器或模式匹配来决定调用哪个技能。系统只是把可用技能格式化成文本描述，嵌入 Skill 工具提示中，让 Claude 的语言模型自己做决定。这是纯粹的 LLM 推理：没有正则、没有关键词匹配、没有基于 ML 的意图检测。决策发生在 transformer 的前向计算里，而非应用代码中。</p>
+<p>当 Claude 调用某个技能时，系统会执行一个简单流程：加载 <code>SKILL.md</code>、扩展为详细指令、把指令注入对话上下文作为新的 user message、修改执行上下文（允许的工具、模型选择），并在富化后的环境中继续对话。这与传统工具完全不同，后者执行并返回结果；skills 是<strong>准备 Claude</strong>去解决问题，而不是直接解决问题。</p>
+<p>下面的表格对比了 Tools 与 Skills 的差异：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统工具</th>
+<th>Skills</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行模型</td>
+<td>同步、直接</td>
+<td>提示词扩展</td>
+</tr>
+<tr>
+<td>目的</td>
+<td>执行具体操作</td>
+<td>引导复杂工作流</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>立即结果</td>
+<td>对话上下文 + 执行上下文变更</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>Read</code>、<code>Write</code>、<code>Bash</code></td>
+<td><code>internal-comms</code>、<code>skill-creator</code></td>
+</tr>
+<tr>
+<td>并发性</td>
+<td>一般安全</td>
+<td>并发不安全</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>多种</td>
+<td>始终为 <code>&quot;prompt&quot;</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="构建-Agent-Skills"><a href="#构建-Agent-Skills" class="headerlink" title="构建 Agent Skills"></a>构建 Agent Skills</h1><p>接下来以 Anthropic 技能仓库中的 <code>skill-creator</code> 为案例，深入看看如何构建 Skills。提醒一下：agent skills 是由指令、脚本、资源组织成的文件夹，agent 可以动态发现并加载，用来更好地完成特定任务。Skills 通过把你的专业知识打包成可组合资源，扩展 Claude 的能力，让通用 agent 变成更贴合需求的专用 agent。</p>
+<blockquote>
+<p><strong>关键结论</strong>：Skill = 提示模板 + 对话上下文注入 + 执行上下文修改 + 可选数据文件与 Python 脚本</p>
+</blockquote>
+<p>每个 Skill 都定义在名为 <code>SKILL.md</code>（大小写不敏感）的 Markdown 文件中，可选的附带文件位于 <code>/scripts</code>、<code>/references</code>、<code>/assets</code>。这些附带文件可以是 Python 脚本、Shell 脚本、字体定义、模板等。以 <code>skill-creator</code> 为例，它包含 <code>SKILL.md</code>、用于许可证的 <code>LICENSE.txt</code>，以及 <code>/scripts</code> 目录下的若干 Python 脚本；它不包含 <code>/references</code> 或 <code>/assets</code>。</p>
+<p><img src="https://leehanchung.github.io/assets/img/2025-10-26/03-claude-skill-package.png" alt="skill-creator 包结构"></p>
+<p>Skills 来自多个来源：Claude Code 会扫描用户设置（<code>~/.config/claude/skills/</code>）、项目设置（<code>.claude/skills/</code>）、插件提供的技能、内置技能，构建可用技能列表。对于 Claude Desktop，可以按如下方式上传自定义技能：</p>
+<p><img src="https://leehanchung.github.io/assets/img/2025-10-26/02-claude-desktop-skill.png" alt="Claude Desktop 技能上传"></p>
+<blockquote>
+<p><strong>注意</strong>：构建 Skills 最重要的概念是<strong>渐进披露（Progressive Disclosure）</strong>——先提供足够信息让 agent 做决策，再按需揭示更多细节。对于 agent skills：</p>
+<ol>
+<li>披露 Frontmatter：最小信息（name、description、license）</li>
+<li>选择某个 skill 后，加载 <code>SKILL.md</code>：完整但聚焦</li>
+<li>执行 skill 时，再加载辅助 assets、references、scripts</li>
+</ol>
+</blockquote>
+<h2 id="编写-SKILL-md"><a href="#编写-SKILL-md" class="headerlink" title="编写 SKILL.md"></a>编写 SKILL.md</h2><p><code>SKILL.md</code> 是 skill 提示词的核心。它遵循双段结构：frontmatter + 内容。frontmatter 配置<strong>如何运行</strong>（权限、模型、元数据），而正文则告诉 Claude <strong>做什么</strong>。frontmatter 是 Markdown 文件开头的 YAML 区块。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">┌─────────────────────────────────────┐</span></span><br><span class="line"><span class="string">│</span> <span class="number">1</span><span class="string">.</span> <span class="string">YAML</span> <span class="string">Frontmatter</span> <span class="string">(Metadata)</span>      <span class="string">│</span> <span class="string">←</span> <span class="string">Configuration</span></span><br><span class="line"><span class="string">│</span>    <span class="string">---</span>                              <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="attr">name:</span> <span class="string">skill-name</span>                 <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="attr">description:</span> <span class="string">Brief</span> <span class="string">overview</span>      <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="attr">allowed-tools:</span> <span class="string">"Bash, Read"</span>      <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="attr">version:</span> <span class="number">1.0</span><span class="number">.0</span>                   <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="string">---</span>                              <span class="string">│</span></span><br><span class="line"><span class="string">├─────────────────────────────────────┤</span></span><br><span class="line"><span class="string">│</span> <span class="number">2</span><span class="string">.</span> <span class="string">Markdown</span> <span class="string">Content</span> <span class="string">(Instructions)</span>  <span class="string">│</span> <span class="string">←</span> <span class="string">Prompt</span> <span class="string">for</span> <span class="string">Claude</span></span><br><span class="line"><span class="string">│</span>                                     <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="string">Purpose</span> <span class="string">explanation</span>              <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="string">Detailed</span> <span class="string">instructions</span>            <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="string">Examples</span> <span class="string">and</span> <span class="string">guidelines</span>          <span class="string">│</span></span><br><span class="line"><span class="string">│</span>    <span class="string">Step-by-step</span> <span class="string">procedures</span>          <span class="string">│</span></span><br><span class="line"><span class="string">└─────────────────────────────────────┘</span></span><br></pre></td></tr></table></figure>
+<h3 id="Frontmatter"><a href="#Frontmatter" class="headerlink" title="Frontmatter"></a>Frontmatter</h3><p>frontmatter 包含控制 Claude 发现与使用 skill 的元数据。以下是 <code>skill-creator</code> 的 frontmatter 示例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">skill-creator</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">Guide</span> <span class="string">for</span> <span class="string">creating</span> <span class="string">effective</span> <span class="string">skills.</span> <span class="string">This</span> <span class="string">skill</span> <span class="string">should</span> <span class="string">be</span> <span class="string">used</span> <span class="string">when</span> <span class="string">users</span> <span class="string">want</span> <span class="string">to</span> <span class="string">create</span> <span class="string">a</span> <span class="string">new</span> <span class="string">skill</span> <span class="string">(or</span> <span class="string">update</span> <span class="string">an</span> <span class="string">existing</span> <span class="string">skill)</span> <span class="string">that</span> <span class="string">extends</span> <span class="string">Claude's</span> <span class="string">capabilities</span> <span class="string">with</span> <span class="string">specialized</span> <span class="string">knowledge,</span> <span class="string">workflows,</span> <span class="string">or</span> <span class="string">tool</span> <span class="string">integrations.</span></span><br><span class="line"><span class="attr">license:</span> <span class="string">Complete</span> <span class="string">terms</span> <span class="string">in</span> <span class="string">LICENSE.txt</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<p>下面逐项解释 frontmatter 字段。</p>
+<p><img src="https://leehanchung.github.io/assets/img/2025-10-26/04-claude-skill-frontmatter.png" alt="Claude Skills Frontmatter"></p>
+<h4 id="name（必填）"><a href="#name（必填）" class="headerlink" title="name（必填）"></a><code>name</code>（必填）</h4><p>顾名思义：skill 的名称。skill 的 <code>name</code> 会作为 Skill 工具中的 <code>command</code>。</p>
+<blockquote>
+<p>skill 的 <code>name</code> 会作为 Skill 工具的 <code>command</code>。</p>
+</blockquote>
+<h4 id="description（必填）"><a href="#description（必填）" class="headerlink" title="description（必填）"></a><code>description</code>（必填）</h4><p><code>description</code> 提供 skill 的简要概述，这是 Claude 判断何时调用技能的首要信号。在示例里，它明确写道“当用户想创建新 skill 时使用”——这种清晰、以动作驱动的描述能帮助 Claude 将用户意图与 skill 能力匹配起来。</p>
+<p>系统会自动在描述中追加来源信息（例如 <code>(plugin:skills)</code>），这有助于在多来源技能同时加载时区分不同来源。</p>
+<h4 id="when-to-use（未文档化——可能已废弃或未来特性）"><a href="#when-to-use（未文档化——可能已废弃或未来特性）" class="headerlink" title="when_to_use（未文档化——可能已废弃或未来特性）"></a><code>when_to_use</code>（未文档化——可能已废弃或未来特性）</h4><blockquote>
+<p><strong>⚠️ 重要提示</strong>：<code>when_to_use</code> 字段在代码中大量出现，但<strong>未在任何官方 Anthropic 文档中记录</strong>。它可能是：</p>
+<ul>
+<li>正在废弃的旧功能</li>
+<li>仍未正式支持的内部/实验功能</li>
+<li>尚未发布的计划特性</li>
+</ul>
+<p><strong>建议</strong>：依赖更详细的 <code>description</code> 字段。官方文档出现之前，避免在生产技能中使用 <code>when_to_use</code>。</p>
+</blockquote>
+<p>尽管没文档，它在代码中的当前行为如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatSkill</span>(<span class="params">skill</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> description = skill.whenToUse</span><br><span class="line">    ? <span class="string">`<span class="subst">$&#123;skill.description&#125;</span> - <span class="subst">$&#123;skill.whenToUse&#125;</span>`</span></span><br><span class="line">    : skill.description;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="string">`"<span class="subst">$&#123;skill.name&#125;</span>": <span class="subst">$&#123;description&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 <code>when_to_use</code> 存在时，会以连字符追加到描述后，例如：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"skill-creator"</span>: Create well-structured, reusable skills<span class="built_in">..</span>. - When<span class="built_in"> user </span>wants <span class="keyword">to</span> build a custom skill package with scripts, references, <span class="keyword">or</span> assets</span><br></pre></td></tr></table></figure>
+<p>这条组合字符串就是 Claude 在 Skill 工具提示里看到的内容。但由于这一行为未被文档化，未来可能变更或移除。更安全的做法是把使用说明直接写入 <code>description</code> 字段（如上面 <code>skill-creator</code> 的示例）。</p>
+<h4 id="license（可选）"><a href="#license（可选）" class="headerlink" title="license（可选）"></a><code>license</code>（可选）</h4><p>顾名思义。</p>
+<h4 id="allowed-tools（可选）"><a href="#allowed-tools（可选）" class="headerlink" title="allowed-tools（可选）"></a><code>allowed-tools</code>（可选）</h4><p><code>allowed-tools</code> 定义该 skill 可以在<strong>无需用户批准</strong>情况下使用的工具，类似 Claude 的 allowed-tools。</p>
+<p>它是一个以逗号分隔的字符串，会解析成工具名数组。可以用通配符限制权限范围，例如 <code>Bash(git:*)</code> 仅允许 git 子命令，而 <code>Bash(npm:*)</code> 允许所有 npm 操作。<code>skill-creator</code> 使用 <code>&quot;Read,Write,Bash,Glob,Grep,Edit&quot;</code> 以获得广泛的文件与搜索能力。常见误区是列出所有工具，这会引入安全风险并破坏安全模型。</p>
+<blockquote>
+<p>只列出实际需要的工具——如果只是读写文件，<code>&quot;Read,Write&quot;</code> 就足够。</p>
+</blockquote>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># ✅ skill-creator allows multiple tools</span></span><br><span class="line">allowed-tools: <span class="string">"Read,Write,Bash,Glob,Grep,Edit"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># ✅ Specific git commands only</span></span><br><span class="line">allowed-tools: <span class="string">"Bash(git status:*),Bash(git diff:*),Bash(git log:*),Read,Grep"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># ✅ File operations only</span></span><br><span class="line">allowed-tools: <span class="string">"Read,Write,Edit,Glob,Grep"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># ❌ Unnecessary surface area</span></span><br><span class="line">allowed-tools: <span class="string">"Bash,Read,Write,Edit,Glob,Grep,WebSearch,Task,Agent"</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># ❌ Unnecessary surface area with all npm commands</span></span><br><span class="line">allowed-tools: <span class="string">"Bash(npm:*),Read,Write"</span></span><br></pre></td></tr></table></figure>
+<h4 id="model（可选）"><a href="#model（可选）" class="headerlink" title="model（可选）"></a><code>model</code>（可选）</h4><p><code>model</code> 定义 skill 可使用的模型。默认继承当前会话模型。对于复杂任务（如代码审查），skill 可以请求更强的模型，例如 Claude Opus 或其他 OSS 中文模型（懂的都懂）。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">model:</span> <span class="string">"claude-opus-4-20250514"</span>  <span class="meta"># Use specific model</span></span><br><span class="line"><span class="symbol">model:</span> <span class="string">"inherit"</span>                 <span class="meta"># Use session's current model (default)</span></span><br></pre></td></tr></table></figure>
+<h4 id="version、disable-model-invocation-与-mode（可选）"><a href="#version、disable-model-invocation-与-mode（可选）" class="headerlink" title="version、disable-model-invocation 与 mode（可选）"></a><code>version</code>、<code>disable-model-invocation</code> 与 <code>mode</code>（可选）</h4><p>Skills 支持三个可选 frontmatter 字段用于版本与调用控制。<code>version</code>（例如 <code>version: &quot;1.0.0&quot;</code>）是用于记录 skill 版本的元数据，解析后主要用于文档与管理。</p>
+<p><code>disable-model-invocation</code>（布尔值）会阻止 Claude 通过 Skill 工具自动调用该 skill。设置为 <code>true</code> 时，技能不会出现在 Claude 可见列表中，只能由用户通过 <code>/skill-name</code> 手动调用，适合危险操作、配置命令或需要明确用户控制的交互流程。</p>
+<p><code>mode</code>（布尔值）会把 skill 标记为“模式命令”，即修改 Claude 行为或上下文的技能。设为 <code>true</code> 时，这类 skill 会在技能列表顶部的 “Mode Commands” 区域单独显示，例如 debug-mode、expert-mode、review-mode 等，方便建立特定操作上下文或工作流。</p>
+<h3 id="SKILL-md-提示内容"><a href="#SKILL-md-提示内容" class="headerlink" title="SKILL.md 提示内容"></a>SKILL.md 提示内容</h3><p>frontmatter 之后是 Markdown 正文——这才是 skill 被调用时 Claude 收到的实际提示。这里定义技能的行为、指令与工作流。写好 skill 提示的关键是<strong>保持聚焦</strong>并使用渐进披露：核心指令放在 <code>SKILL.md</code>，详细内容引用外部文件。</p>
+<p>推荐的内容结构如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># Frontmatter here</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># [Brief Purpose Statement - 1-2 sentences]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Overview</span></span><br><span class="line"><span class="string">[What</span> <span class="string">this</span> <span class="string">skill</span> <span class="string">does,</span> <span class="string">when</span> <span class="string">to</span> <span class="string">use</span> <span class="string">it,</span> <span class="string">what</span> <span class="string">it</span> <span class="string">provides]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Prerequisites</span></span><br><span class="line"><span class="string">[Required</span> <span class="string">tools,</span> <span class="string">files,</span> <span class="string">or</span> <span class="string">context]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Instructions</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### Step 1: [First Action]</span></span><br><span class="line"><span class="string">[Imperative</span> <span class="string">instructions]</span></span><br><span class="line"><span class="string">[Examples</span> <span class="string">if</span> <span class="string">needed]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### Step 2: [Next Action]</span></span><br><span class="line"><span class="string">[Imperative</span> <span class="string">instructions]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### Step 3: [Final Action]</span></span><br><span class="line"><span class="string">[Imperative</span> <span class="string">instructions]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Output Format</span></span><br><span class="line"><span class="string">[How</span> <span class="string">to</span> <span class="string">structure</span> <span class="string">results]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Error Handling</span></span><br><span class="line"><span class="string">[What</span> <span class="string">to</span> <span class="string">do</span> <span class="string">when</span> <span class="string">things</span> <span class="string">fail]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Examples</span></span><br><span class="line"><span class="string">[Concrete</span> <span class="string">usage</span> <span class="string">examples]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Resources</span></span><br><span class="line"><span class="string">[Reference</span> <span class="string">scripts/,</span> <span class="string">references/,</span> <span class="string">assets/</span> <span class="string">if</span> <span class="string">bundled]</span></span><br></pre></td></tr></table></figure>
+<p>例如 <code>skill-creator</code> 的 <code>SKILL.md</code> 里包含如下步骤：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">## Skill Creation Process</span><br><span class="line"></span><br><span class="line">### Step <span class="number">1</span>: Understanding the Skill <span class="keyword">with</span> Concrete Examples</span><br><span class="line">### Step <span class="number">2</span>: Planning the Reusable Skill Contents</span><br><span class="line">### Step <span class="number">3</span>: Initializing the Skill</span><br><span class="line">### Step <span class="number">4</span>: Edit the Skill</span><br><span class="line">### Step <span class="number">5</span>: Packaging a Skill</span><br></pre></td></tr></table></figure>
+<p>当 Claude 调用该 skill 时，它会接收到完整提示，并在前面加上基础目录路径。<code>{baseDir}</code> 会解析为 skill 的安装目录，因此 Claude 可以用 Read 工具读取参考文件：<code>Read({baseDir}/scripts/init_skill.py)</code>。这种模式让主提示保持简洁，而详细文档可按需加载。</p>
+<p>提示内容最佳实践：</p>
+<ul>
+<li>控制在 5,000 字（约 800 行）以内，避免上下文过载</li>
+<li>使用祈使句（“Analyze code for …”），而不是第二人称（“You should analyze …”）</li>
+<li>详细内容放外部文件，不要把全部内容塞进主提示</li>
+<li>路径用 <code>{baseDir}</code>，不要硬编码绝对路径如 <code>/home/user/project/</code></li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❌ <span class="keyword">Read</span> <span class="regexp">/home/u</span>ser<span class="regexp">/project/</span>config.json</span><br><span class="line">✅ <span class="keyword">Read</span> &#123;baseDir&#125;<span class="regexp">/config.json</span></span><br></pre></td></tr></table></figure>
+<p>当技能被调用时，Claude 只会获得 <code>allowed-tools</code> 中指定的工具权限；frontmatter 若指定 <code>model</code>，也可能覆盖当前模型。同时系统会自动提供 skill 的基础目录路径，以访问打包资源。</p>
+<h3 id="为技能打包资源"><a href="#为技能打包资源" class="headerlink" title="为技能打包资源"></a>为技能打包资源</h3><p>当你在 <code>SKILL.md</code> 之外打包辅助资源时，技能会变得更强大。标准结构包含三个目录：</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my-<span class="built_in">skill</span>/</span><br><span class="line">├── <span class="built_in">SKILL</span>.md              <span class="meta"># Core prompt and instructions</span></span><br><span class="line">├── scripts/              <span class="meta"># Executable Python/Bash scripts</span></span><br><span class="line">├── references/           <span class="meta"># Documentation loaded into context</span></span><br><span class="line">└── assets/               <span class="meta"># Templates and binary files</span></span><br></pre></td></tr></table></figure>
+<p>为什么要打包资源？保持 <code>SKILL.md</code> 简洁（少于 5,000 字）可以避免 Claude 的上下文窗口被淹没。打包资源能让你提供详细文档、自动化脚本与模板，而不会撑大主提示。Claude 只在需要时通过渐进披露加载这些资源。</p>
+<h4 id="scripts-目录"><a href="#scripts-目录" class="headerlink" title="scripts/ 目录"></a><code>scripts/</code> 目录</h4><p><code>scripts/</code> 目录包含 Claude 通过 Bash 工具执行的代码——自动化脚本、数据处理器、校验器或代码生成器等确定性操作。</p>
+<p>例如 <code>skill-creator</code> 的 <code>SKILL.md</code> 会这样引用脚本：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">When creating a new skill <span class="keyword">from</span> scratch, always <span class="builtin-name">run</span> the `init_skill.py` script. The<span class="built_in"> script </span>conveniently generates a new template skill directory that automatically includes everything a skill requires, making the skill creation process much more efficient <span class="keyword">and</span> reliable.</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line"></span><br><span class="line">```scripts/init_skill.py &lt;skill-name&gt; --path &lt;output-directory&gt;</span><br></pre></td></tr></table></figure>
+<p>The script:</p>
+<ul>
+<li>Creates the skill directory at the specified path</li>
+<li>Generates a SKILL.md template with proper frontmatter and TODO placeholders</li>
+<li>Creates example resource directories: scripts/, references/, and assets/</li>
+<li>Adds example files in each directory that can be customized or deleted<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Claude 看到这个指令后，会执行 `python &#123;baseDir&#125;/scripts/init_skill.py`。`&#123;baseDir&#125;` 自动解析为 skill 安装路径，使技能可在不同环境下移植。</span><br><span class="line"></span><br><span class="line">对于复杂多步骤操作、数据转换、API 交互或逻辑更适合代码表达的任务，用 `scripts/` 最合适。</span><br><span class="line"></span><br><span class="line">#### `references/` 目录</span><br><span class="line"></span><br><span class="line">`references/` 存放 Claude 会读取进上下文的文档（文本内容）：Markdown、JSON schema、配置模板或任务所需的说明文档。</span><br><span class="line"></span><br><span class="line">例如 `mcp-creator` 的 `SKILL.md` 会这样引用 references：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="1-4-Study-Framework-Documentation"><a href="#1-4-Study-Framework-Documentation" class="headerlink" title="1.4 Study Framework Documentation"></a>1.4 Study Framework Documentation</h4><p><strong>Load and read the following reference files:</strong></p>
+<ul>
+<li><strong>MCP Best Practices</strong>: <a href="./reference/mcp_best_practices.md">📋 View Best Practices</a> - Core guidelines for all MCP servers</li>
+</ul>
+<p><strong>For Python implementations, also load:</strong></p>
+<ul>
+<li><strong>Python SDK Documentation</strong>: Use WebFetch to load <code>https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md</code></li>
+<li><a href="./reference/python_mcp_server.md">🐍 Python Implementation Guide</a> - Python-specific best practices and examples</li>
+</ul>
+<p><strong>For Node/TypeScript implementations, also load:</strong></p>
+<ul>
+<li><strong>TypeScript SDK Documentation</strong>: Use WebFetch to load <code>https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md</code></li>
+<li><a href="./reference/node_mcp_server.md">⚡ TypeScript Implementation Guide</a> - Node/TypeScript-specific best practices and examples<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">当 Claude 遇到这些指令时，会使用 Read 工具：`Read(&#123;baseDir&#125;/references/mcp_best_practices.md)`。内容会被加载到上下文，而不污染 `SKILL.md`。</span><br><span class="line"></span><br><span class="line">`references/` 适用于详细文档、大型模式库、检查清单、API schema 等过于冗长但任务需要的文本内容。</span><br><span class="line"></span><br><span class="line">#### `assets/` 目录</span><br><span class="line"></span><br><span class="line">`assets/` 目录包含模板与二进制文件，Claude 只通过路径引用它们，不会把内容读入上下文。它们是技能的静态资源——HTML 模板、CSS 文件、图片、配置样板或字体等。</span><br><span class="line"></span><br><span class="line">在 `SKILL.md` 中：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Use the template at {baseDir}/assets/report-template.html as the report structure.<br>Reference the architecture diagram at {baseDir}/assets/diagram.png.<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Claude 看到的是路径，但不会读取内容。它可能会复制模板到新位置、填充占位符或在输出中引用路径。</span><br><span class="line"></span><br><span class="line"><span class="code">`assets/`</span> 适用于 HTML/CSS 模板、图片、二进制文件、配置模板等仅通过路径操作而非读入上下文的文件。</span><br><span class="line"></span><br><span class="line"><span class="code">`references/`</span> 与 <span class="code">`assets/`</span> 的关键区别是：</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span><span class="code">`references/`</span>：文本内容通过 Read 工具读入 Claude 上下文</span><br><span class="line"><span class="bullet">- </span><span class="code">`assets/`</span>：文件仅以路径引用，不读入上下文</span><br><span class="line"></span><br><span class="line">这个区别很重要：<span class="code">`references/`</span> 中的 10KB Markdown 会占用上下文 token；<span class="code">`assets/`</span> 中的 10KB HTML 模板不会。Claude 只知道该路径存在。</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 最佳实践：路径永远使用 `&#123;baseDir&#125;`，不要硬编码绝对路径。这能让 skills 在不同用户环境、项目目录与安装路径中保持可移植性。</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 常见 Skill 模式</span></span><br><span class="line"></span><br><span class="line">在工程实践中，理解通用模式有助于设计更有效的 skills。以下是工具集成与工作流设计的常见模式。</span><br><span class="line"></span><br><span class="line"><span class="section">#### 模式 1：脚本自动化（Script Automation）</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**适用场景**</span>：需要多个命令或确定性逻辑的复杂操作。</span><br><span class="line"></span><br><span class="line">该模式把计算任务交给 <span class="code">`scripts/`</span> 中的 Python/Bash 脚本。skill 提示告诉 Claude 运行脚本并处理输出。</span><br><span class="line"></span><br><span class="line">![<span class="string">Claude Skill Script Automation</span>](<span class="link">https://leehanchung.github.io/assets/img/2025-10-26/09-script-automation.png</span>)</span><br><span class="line"></span><br><span class="line"><span class="code">`SKILL.md`</span> 示例：</span><br></pre></td></tr></table></figure></p>
+<p>Run scripts/analyzer.py on the target directory:</p>
+<p><code>python {baseDir}/scripts/analyzer.py --path &quot;$USER_PATH&quot; --output report.json</code></p>
+<p>Parse the generated <code>report.json</code> and present findings.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所需工具：</span><br></pre></td></tr></table></figure></p>
+<p>allowed-tools: “Bash(python {baseDir}/scripts/<em>:</em>), Read, Write”<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">#### 模式 2：读 - 处理 - 写（Read - Process - Write）</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**适用场景**</span>：文件转换与数据处理。</span><br><span class="line"></span><br><span class="line">这是最简单的模式：读取输入，按指令转换，写出结果。适用于格式转换、数据清洗或报告生成。</span><br><span class="line"></span><br><span class="line">![<span class="string">Claude Skill Read Process Write</span>](<span class="link">https://leehanchung.github.io/assets/img/2025-10-26/10-read-process-write.png</span>)</span><br><span class="line"></span><br><span class="line"><span class="code">`SKILL.md`</span> 示例：</span><br></pre></td></tr></table></figure></p>
+<h2 id="Processing-Workflow"><a href="#Processing-Workflow" class="headerlink" title="Processing Workflow"></a>Processing Workflow</h2><ol>
+<li>Read input file using Read tool</li>
+<li>Parse content according to format</li>
+<li>Transform data following specifications</li>
+<li>Write output using Write tool</li>
+<li>Report completion with summary<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所需工具：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>allowed-tools: “Read, Write”<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">#### 模式 3：搜索 - 分析 - 报告（Search - Analyze - Report）</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**适用场景**</span>：代码库分析与模式检测。</span><br><span class="line"></span><br><span class="line">使用 Grep 搜索代码库中的模式，读取匹配文件上下文，进行分析并生成结构化报告。也可用于检索企业数据并分析输出报告。</span><br><span class="line"></span><br><span class="line">![<span class="string">Claude Skill Search Analyze Report</span>](<span class="link">https://leehanchung.github.io/assets/img/2025-10-26/06-search-analyze-report.png</span>)</span><br><span class="line"></span><br><span class="line"><span class="code">`SKILL.md`</span> 示例：</span><br></pre></td></tr></table></figure></p>
+<h2 id="Analysis-Process"><a href="#Analysis-Process" class="headerlink" title="Analysis Process"></a>Analysis Process</h2><ol>
+<li>Use Grep to find relevant code patterns</li>
+<li>Read each matched file</li>
+<li>Analyze for vulnerabilities</li>
+<li>Generate structured report<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所需工具：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>allowed-tools: “Grep, Read”<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">#### 模式 4：命令链执行（Command Chain Execution）</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**适用场景**</span>：有依赖关系的多步骤操作。</span><br><span class="line"></span><br><span class="line">按顺序执行命令，每步依赖前一步成功，常用于 CI/CD 风格的流程。</span><br><span class="line"></span><br><span class="line">![<span class="string">Claude Skill Command Chain Execution</span>](<span class="link">https://leehanchung.github.io/assets/img/2025-10-26/05-command-chain-execution.png</span>)</span><br><span class="line"></span><br><span class="line"><span class="code">`SKILL.md`</span> 示例：</span><br></pre></td></tr></table></figure></p>
+<p>Execute analysis pipeline:<br>npm install &amp;&amp; npm run lint &amp;&amp; npm test</p>
+<p>Report results from each stage.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所需工具：</span><br></pre></td></tr></table></figure></p>
+<p>allowed-tools: “Bash(npm install:<em>), Bash(npm run:</em>), Read”<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 高级模式（Advanced Patterns）</span><br><span class="line"></span><br><span class="line">#### 向导式多步骤流程（Wizard-Style Multi-Step Workflows）</span><br><span class="line"></span><br><span class="line">**适用场景**：需要在每一步都获取用户输入的复杂流程。</span><br><span class="line"></span><br><span class="line">把复杂任务拆分为离散步骤，每一步都需要用户确认后继续。适合安装向导、配置工具或引导式流程。</span><br><span class="line"></span><br><span class="line">`SKILL.md` 示例：</span><br></pre></td></tr></table></figure></p>
+<h2 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h2><h3 id="Step-1-Initial-Setup"><a href="#Step-1-Initial-Setup" class="headerlink" title="Step 1: Initial Setup"></a>Step 1: Initial Setup</h3><ol>
+<li>Ask user for project type</li>
+<li>Validate prerequisites exist</li>
+<li>Create base configuration<br>Wait for user confirmation before proceeding.</li>
+</ol>
+<h3 id="Step-2-Configuration"><a href="#Step-2-Configuration" class="headerlink" title="Step 2: Configuration"></a>Step 2: Configuration</h3><ol>
+<li>Present configuration options</li>
+<li>Ask user to choose settings</li>
+<li>Generate config file<br>Wait for user confirmation before proceeding.</li>
+</ol>
+<h3 id="Step-3-Initialization"><a href="#Step-3-Initialization" class="headerlink" title="Step 3: Initialization"></a>Step 3: Initialization</h3><ol>
+<li>Run initialization scripts</li>
+<li>Verify setup successful</li>
+<li>Report results<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 模板驱动生成（Template-Based Generation）</span><br><span class="line"></span><br><span class="line">**适用场景**：从 `assets/` 中的模板生成结构化输出。</span><br><span class="line"></span><br><span class="line">加载模板，填充用户提供或生成的数据，然后写出结果。常用于报告生成、样板代码或文档。</span><br><span class="line"></span><br><span class="line">`SKILL.md` 示例：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Generation-Process"><a href="#Generation-Process" class="headerlink" title="Generation Process"></a>Generation Process</h2><ol>
+<li>Read template from {baseDir}/assets/template.html</li>
+<li>Parse user requirements</li>
+<li>Fill template placeholders:<ul>
+<li>→ user-provided name</li>
+<li>→ generated summary</li>
+<li>→ current date</li>
+</ul>
+</li>
+<li>Write filled template to output file</li>
+<li>Report completion<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 迭代精化（Iterative Refinement）</span><br><span class="line"></span><br><span class="line">**适用场景**：需要多轮、逐步深入的流程。</span><br><span class="line"></span><br><span class="line">先做广泛分析，再对发现的问题进行更深入的检查。适用于代码评审、安全审计或质量分析。</span><br><span class="line"></span><br><span class="line">`SKILL.md` 示例：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Iterative-Analysis"><a href="#Iterative-Analysis" class="headerlink" title="Iterative Analysis"></a>Iterative Analysis</h2><h3 id="Pass-1-Broad-Scan"><a href="#Pass-1-Broad-Scan" class="headerlink" title="Pass 1: Broad Scan"></a>Pass 1: Broad Scan</h3><ol>
+<li>Search entire codebase for patterns</li>
+<li>Identify high-level issues</li>
+<li>Categorize findings</li>
+</ol>
+<h3 id="Pass-2-Deep-Analysis"><a href="#Pass-2-Deep-Analysis" class="headerlink" title="Pass 2: Deep Analysis"></a>Pass 2: Deep Analysis</h3><p>For each high-level issue:</p>
+<ol>
+<li>Read full file context</li>
+<li>Analyze root cause</li>
+<li>Determine severity</li>
+</ol>
+<h3 id="Pass-3-Recommendation"><a href="#Pass-3-Recommendation" class="headerlink" title="Pass 3: Recommendation"></a>Pass 3: Recommendation</h3><p>For each finding:</p>
+<ol>
+<li>Research best practices</li>
+<li>Generate specific fix</li>
+<li>Estimate effort</li>
+</ol>
+<p>Present final report with all findings and recommendations.<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 上下文聚合（Context Aggregation）</span><br><span class="line"></span><br><span class="line">**适用场景**：从多来源汇总信息以形成完整理解。</span><br><span class="line"></span><br><span class="line">从不同文件与工具收集数据，综合成连贯结论。适合项目总结、依赖分析或影响评估。</span><br><span class="line"></span><br><span class="line">`SKILL.md` 示例：</span><br></pre></td></tr></table></figure></p>
+<h2 id="Context-Gathering"><a href="#Context-Gathering" class="headerlink" title="Context Gathering"></a>Context Gathering</h2><ol>
+<li>Read project README.md for overview</li>
+<li>Analyze package.json for dependencies</li>
+<li>Grep codebase for specific patterns</li>
+<li>Check git history for recent changes</li>
+<li>Synthesize findings into coherent summary<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Agent Skills 内部架构</span></span><br><span class="line"></span><br><span class="line">有了概览与构建流程后，我们再深入技能系统的内部。Skill 系统是一个元工具架构：名为 Skill 的工具充当容器与调度器，管理所有具体技能。这个设计在实现与目的上都与传统工具截然不同。</span><br><span class="line"></span><br><span class="line">&gt; Skill 工具是管理所有技能的元工具。</span><br><span class="line"></span><br><span class="line"><span class="comment">## Skills 对象设计</span></span><br><span class="line"></span><br><span class="line">传统工具（Read、Bash、Write）执行离散动作并返回即时结果；skills 则不同。它们不直接执行动作，而是<span class="symbol">*</span><span class="symbol">*</span>向对话历史注入专门指令<span class="symbol">*</span><span class="symbol">*</span>，并动态修改 Claude 的执行环境。具体做法是：注入两条 user message（一条可见的元数据消息，另一条隐藏但发送给 Claude 的完整技能提示），同时调整 agent 的上下文（修改权限、切换模型、调整思考 token 参数），作用范围仅限技能执行期间。</span><br><span class="line"></span><br><span class="line">![Claude Skill 执行流程](https://leehanchung.github.io/assets/img/2025-10-26/08-claude-skill-execution-flow.png)</span><br><span class="line"></span><br><span class="line">|<span class="string"> 特性 </span>|<span class="string"> 普通工具 </span>|<span class="string"> Skill 工具 </span>|</span><br><span class="line">|<span class="string"> --- </span>|<span class="string"> --- </span>|<span class="string"> --- </span>|</span><br><span class="line">|<span class="string"> 本质 </span>|<span class="string"> 直接执行动作 </span>|<span class="string"> 提示词注入 + 上下文修改 </span>|</span><br><span class="line">|<span class="string"> 消息角色 </span>|<span class="string"> assistant → tool_use；user → tool_result </span>|<span class="string"> assistant → tool_use Skill；user → tool_result；user → skill prompt（注入） </span>|</span><br><span class="line">|<span class="string"> 复杂度 </span>|<span class="string"> 简单（3-4 条消息） </span>|<span class="string"> 复杂（5-10+ 条消息） </span>|</span><br><span class="line">|<span class="string"> 上下文 </span>|<span class="string"> 静态 </span>|<span class="string"> 动态（每轮修改） </span>|</span><br><span class="line">|<span class="string"> 持久性 </span>|<span class="string"> 仅工具交互 </span>|<span class="string"> 工具交互 + skill prompts </span>|</span><br><span class="line">|<span class="string"> token 开销 </span>|<span class="string"> 低（~100 tokens） </span>|<span class="string"> 高（~1,500+ tokens/轮） </span>|</span><br><span class="line">|<span class="string"> 使用场景 </span>|<span class="string"> 简单直接任务 </span>|<span class="string"> 复杂引导工作流 </span>|</span><br><span class="line"></span><br><span class="line">复杂度显著提升：普通工具只产生“assistant 工具调用 + user 返回结果”的简单交互；skills 会注入多条消息，在动态上下文中运行，并带来可观 token 开销，以提供引导 Claude 行为的专用指令。</span><br><span class="line"></span><br><span class="line">理解 Skill 元工具的运作机制尤为关键。其结构如下：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Pd = {<br>  name: “Skill”,  // The tool name constant: $N = “Skill”</p>
+<p>  inputSchema: {<br>    command: string  // E.g., “pdf”, “skill-creator”<br>  },</p>
+<p>  outputSchema: {<br>    success: boolean,<br>    commandName: string<br>  },</p>
+<p>  // 🔑 KEY FIELD: This generates the skills list<br>  prompt: async () =&gt; fN2(),</p>
+<p>  // Validation and execution<br>  validateInput: async (input, context) =&gt; { /<em> 5 error codes </em>/ },<br>  checkPermissions: async (input, context) =&gt; { /<em> allow/deny/ask </em>/ },<br>  call: async <em>(input, context) =&gt; { /</em> yields messages + context modifier */ }<br>}<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`prompt` 字段让 <span class="built_in">Skill</span> 工具区别于 Read/Bash 之类的普通工具。普通工具的描述是固定字符串，而 <span class="built_in">Skill</span> 工具会在运行时**动态生成描述**，把所有可用技能的 <span class="built_in">name</span> 与 description 汇总起来。这就是渐进披露：系统只把最小元数据（skills 名称与描述）放入 Claude 初始上下文，让模型决定匹配的技能；完整 <span class="built_in">skill</span> prompt 只有在选择后才加载，既保证可发现性，又避免上下文膨胀。</span><br></pre></td></tr></table></figure></p>
+<p>async function fN2() {<br>  let A = await atA(),<br>    {<br>      modeCommands: B,<br>      limitedRegularCommands: Q<br>    } = vN2(A),<br>    G = […B, …Q].map((W) =&gt; W.userFacingName()).join(“, “);<br>  l(<code>Skills and commands included in Skill tool: ${G}</code>);<br>  let Z = A.length - B.length,<br>    Y = nS6(B),<br>    J = aS6(Q, Z);<br>  return `Execute a skill within the main conversation</p>
+&lt;skills_instructions&gt;<br>When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.<br><br>How to use skills:<br>- Invoke skills using this tool with the skill name only (no arguments)<br>- When you invoke a skill, you will see <command-message>The “{name}” skill is loading</command-message><br>- The skill’s prompt will expand and provide detailed instructions on how to complete the task<br>- Examples:<br>  - `command: “pdf”` - invoke the pdf skill<br>  - `command: “xlsx”` - invoke the xlsx skill<br>  - `command: “ms-office-suite:pdf”` - invoke using fully qualified name<br><br>Important:<br>- Only use skills listed in &lt;available_skills&gt; below<br>- Do not invoke a skill that is already running<br>- Do not use this tool for built-in CLI commands (like /help, /clear, etc.)<br>&lt;/skills_instructions&gt;
+
+<p>&lt;available_skills&gt;<br>${Y}${J}<br>&lt;/available_skills&gt;<br>`;<br>}<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">不同于某些工具（如 ChatGPT）把工具列表写在系统提示词中，Claude 的 agent skills 并不在<span class="built_in"> system </span>prompt 里，而是在 tools 数组中，以 Skill 工具描述的一部分呈现。每个 skill 名称对应 Skill 元工具输入 schema 的 `command` 字段。为了更直观地理解，以下是 API 请求结构：</span><br></pre></td></tr></table></figure></p>
+<p>{<br>  “model”: “claude-sonnet-4-5-20250929”,<br>  “system”: “You are Claude Code, Anthropic’s official CLI…”,  // ← System prompt<br>  “messages”: [<br>    {“role”: “user”, “content”: “Help me create a new skill”},<br>    // … conversation history<br>  ],<br>  “tools”: [  // ← Tools array sent to Claude<br>    {<br>      “name”: “Skill”,  // ← The meta-tool<br>      “description”: “Execute a skill…\n\n&lt;skills_instructions&gt;…\n\n&lt;available_skills&gt;\n…”,<br>      “input_schema”: {<br>        “type”: “object”,<br>        “properties”: {<br>          “command”: {<br>            “type”: “string”,<br>            “description”: “The skill name (no arguments)”  // ← Name of individual skill<br>          }<br>        }<br>      }<br>    },<br>    {<br>      “name”: “Bash”,<br>      “description”: “Execute bash commands…”,<br>      // …<br>    },<br>    {<br>      “name”: “Read”,<br>      // …<br>    }<br>    // … other tools<br>  ]<br>}<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`&lt;available_skills&gt;` 位于 Skill 工具描述中，每次 API 请求都会重生成。系统会汇总当前已加载的技能（用户/项目配置、插件技能、内置技能），并受默认 15,000 字符的 token 预算限制。这迫使作者写出简洁的技能描述，也确保工具描述不会淹没模型上下文。</span><br><span class="line"></span><br><span class="line"><span class="comment">## Skill 的对话与执行上下文注入设计</span></span><br><span class="line"></span><br><span class="line">多数 LLM API 支持 `role: <span class="string">"system"</span>` 消息，可承载系统提示词。实际上，OpenAI 的 ChatGPT 会把默认工具写在系统提示词里，包括 bio（记忆）、automations（任务调度）、canmore（控制 canvas）、img_gen（图像生成）、file_search、python、web（联网搜索）等。而且工具提示占据系统提示词约 90% 的 token。对于有大量工具或技能的场景，这种方式并不高效。</span><br><span class="line"></span><br><span class="line">但<span class="built_in"> system </span>message 的语义不同，导致它不适合作为技能载体：system message 设置的是**全局上下文**，在整个对话中持续生效，权限高于用户指令。</span><br><span class="line"></span><br><span class="line">Skills 需要临时、范围限定的行为。`skill-creator` 只应影响技能创建任务，而不该把 Claude 永久变成 PDF 专家。使用 `role: <span class="string">"user"</span>` 且 `isMeta: <span class="literal">true</span>` 的方式，使 skill prompt 以“用户输入”的形式注入 Claude，从而保持临时性与局部性；技能完成后，对话上下文与执行上下文会回归正常，不留下残留影响。</span><br><span class="line"></span><br><span class="line">普通工具如 Read/Write/Bash 通信模式简单：Claude 调用 Read，发送文件路径，拿到文件内容即可。用户在聊天记录中看到“Claude 使用了 Read 工具”，这就够了。但 skills 不是执行离散动作，而是注入完整指令集，改变 Claude 处理任务的方式。因此出现新的设计挑战：用户需要知道正在运行哪个 skill 以及它在做什么，而 Claude 需要详细（可能很长）的指令。如果用户看到完整 skill prompt，UI 会被成千上万字的内部指令淹没；如果完全隐藏 skill 激活，用户又会失去可见性。解决方案是分离两个沟通通道：不同可见性规则的消息。</span><br><span class="line"></span><br><span class="line">Skills 系统通过 `isMeta` 标记控制消息是否出现在 UI 中：`isMeta: <span class="literal">false</span>`（或省略时默认 <span class="literal">false</span>）会显示在用户对话记录；`isMeta: <span class="literal">true</span>` 会发送给 API 但不显示在 UI。这个简单的布尔标记实现了双通道通信：一条给人类，一条给 AI。</span><br><span class="line"></span><br><span class="line">当 skill 执行时，系统会注入两条<span class="built_in"> user </span>message：第一条携带元数据（`isMeta: <span class="literal">false</span>`，对用户可见，作为状态指示）；第二条携带完整 skill prompt（`isMeta: <span class="literal">true</span>`，对 UI 隐藏，但 Claude 可见）。这样在不淹没用户的前提下，仍然保证透明度。</span><br><span class="line"></span><br><span class="line">元数据消息使用简洁 XML 结构，前端可解析并展示：</span><br></pre></td></tr></table></figure></p>
+<p>let metadata = [<br>  <code>&lt;command-message&gt;${statusMessage}&lt;/command-message&gt;</code>,<br>  <code>&lt;command-name&gt;${skillName}&lt;/command-name&gt;</code>,<br>  args ? <code>&lt;command-args&gt;${args}&lt;/command-args&gt;</code> : null<br>].filter(Boolean).join(‘\n’);</p>
+<p>// Message 1: NO isMeta flag → defaults to false → VISIBLE<br>messages.push({<br>  content: metadata,<br>  autocheckpoint: checkpointFlag<br>});<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">例如 <span class="keyword">PDF</span> 技能激活时，用户会看到：</span><br></pre></td></tr></table></figure></p>
+<p><command-message>The “pdf” skill is loading</command-message></p>
+<p><command-name>pdf</command-name></p>
+<p><command-args>report.pdf</command-args><br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这条消息刻意保持简短（约 <span class="number">50</span>-<span class="number">200</span> 字符）。XML 标签让前端可用特殊样式渲染、校验 `&lt;command-message&gt;` 标签存在，并为会话中的技能执行维护审计轨迹。由于 `isMeta` 默认 <span class="literal">false</span>，这条元数据会自动出现在 UI。</span><br><span class="line"></span><br><span class="line"><span class="title">skill prompt 消息则相反：它加载 `SKILL.md` 的完整内容，可能附加上下文，显式设置 `isMeta:</span> <span class="literal">true</span>`：</span><br></pre></td></tr></table></figure></p>
+<p>let skillPrompt = await skill.getPromptForCommand(args, context);</p>
+<p>// Augment with prepend/append content if needed<br>let fullPrompt = prependContent.length &gt; 0 || appendContent.length &gt; 0<br>  ? […prependContent, …appendContent, …skillPrompt]<br>  : skillPrompt;</p>
+<p>// Message 2: Explicit isMeta: true → HIDDEN<br>messages.push({<br>  content: fullPrompt,<br>  isMeta: true  // HIDDEN FROM UI, SENT TO API<br>});<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">典型 skill prompt 长度 <span class="number">500</span><span class="number">-5</span>,<span class="number">000</span> 词，为改变 Claude 行为提供完整指导。例如 PDF skill prompt 可能是：</span><br></pre></td></tr></table></figure></p>
+<p>You are a PDF processing specialist.</p>
+<p>Your task is to extract text from PDF documents using the pdftotext tool.</p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><ol>
+<li>Validate the PDF file exists</li>
+<li>Run pdftotext command to extract text</li>
+<li>Read the output file</li>
+<li>Present the extracted text to the user</li>
+</ol>
+<h2 id="Tools-Available"><a href="#Tools-Available" class="headerlink" title="Tools Available"></a>Tools Available</h2><p>You have access to:</p>
+<ul>
+<li>Bash(pdftotext:*) - For running pdftotext command</li>
+<li>Read - For reading extracted text</li>
+<li>Write - For saving results if needed</li>
+</ul>
+<h2 id="Output-Format"><a href="#Output-Format" class="headerlink" title="Output Format"></a>Output Format</h2><p>Present the extracted text clearly formatted.</p>
+<p>Base directory: /path/to/skill<br>User arguments: report.pdf<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这个提示建立任务上下文、列出工作流、指定可用工具、定义输出格式，并提供环境路径。通过标题、列表、代码块的 Markdown 结构，Claude 更容易解析并遵循指令。`isMeta: <span class="literal">true</span>` 让完整提示发送给 API，却不会污染用户对话记录。</span><br><span class="line"></span><br><span class="line">除了元数据与 <span class="built_in">skill</span> prompt 之外，<span class="built_in">skill</span> 还可注入附加消息（附件、权限等）：</span><br></pre></td></tr></table></figure></p>
+<p>let allMessages = [<br>  createMessage({ content: metadata, autocheckpoint: flag }),  // 1. Metadata<br>  createMessage({ content: skillPrompt, isMeta: true }),       // 2. Skill prompt<br>  …attachmentMessages,                                       // 3. Attachments (conditional)<br>  …(allowedTools.length || skill.model ? [<br>    createPermissionsMessage({                                 // 4. Permissions (conditional)<br>      type: “command_permissions”,<br>      allowedTools: allowedTools,<br>      model: skill.useSmallFastModel ? getFastModel() : skill.model<br>    })<br>  ] : [])<br>];<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">附件消息可以携带诊断信息、文件引用或补充上下文。权限消息只有在 frontmatter 指定 `allowed-tools` 或请求模型覆盖时才出现，提供修改运行时环境的元数据。模块化组合让每条消息都有清晰职责，基于 skill 配置可选拼装，在保持 `isMeta` 可见性控制的同时扩展两消息模式以适配更复杂场景。</span><br><span class="line"></span><br><span class="line">### 为什么要两条消息，而不是一条？</span><br><span class="line"></span><br><span class="line"><span class="title">如果只用一条消息，就必须在可见性上做不可能的取舍：设置 `isMeta:</span> <span class="literal">false</span>` 会把整条消息显示出来，数千字的 AI 指令会淹没聊天记录；用户会看到：</span><br></pre></td></tr></table></figure></p>
+<p>┌─────────────────────────────────────────────┐<br>│ The “pdf” skill is loading                  │<br>│                                             │<br>│ You are a PDF processing specialist.        │<br>│                                             │<br>│ Your task is to extract text from PDF       │<br>│ documents using the pdftotext tool.         │<br>│                                             │<br>│ ## Process                                  │<br>│                                             │<br>│ 1. Validate the PDF file exists             │<br>│ 2. Run pdftotext command to extract text    │<br>│ 3. Read the output file                     │<br>│ … [500 more lines] …                    │<br>└─────────────────────────────────────────────┘<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">UI 会变得不可用，因为内部实现细节充斥其中。如果设置 `isMeta: true`，则所有内容都被隐藏，用户看不到哪个技能被激活、传入了什么参数。系统对用户完全不透明。</span><br><span class="line"></span><br><span class="line">两条消息的分拆正好解决这个矛盾：第一条 `isMeta: false` 提供用户透明度；第二条 `isMeta: true` 为 Claude 提供详细指令。精细化控制让透明度与清晰度兼得。</span><br><span class="line"></span><br><span class="line">两类消息服务的对象与目的也不同：</span><br><span class="line"></span><br><span class="line">|<span class="string"> 维度 </span>|<span class="string"> 元数据消息 </span>|<span class="string"> Skill Prompt 消息 </span>|</span><br><span class="line">|<span class="string"> --- </span>|<span class="string"> --- </span>|<span class="string"> --- </span>|</span><br><span class="line">|<span class="string"> 受众 </span>|<span class="string"> 人类用户 </span>|<span class="string"> Claude（AI） </span>|</span><br><span class="line">|<span class="string"> 目的 </span>|<span class="string"> 状态/透明度 </span>|<span class="string"> 指令/引导 </span>|</span><br><span class="line">|<span class="string"> 长度 </span>|<span class="string"> ~50-200 字符 </span>|<span class="string"> ~500-5,000 词 </span>|</span><br><span class="line">|<span class="string"> 格式 </span>|<span class="string"> 结构化 XML </span>|<span class="string"> 自然语言 Markdown </span>|</span><br><span class="line">|<span class="string"> 可见性 </span>|<span class="string"> 应可见 </span>|<span class="string"> 应隐藏 </span>|</span><br><span class="line">|<span class="string"> 内容 </span>|<span class="string"> “发生了什么？” </span>|<span class="string"> “如何完成？” </span>|</span><br><span class="line"></span><br><span class="line">代码库对这两类消息走不同处理路径：元数据消息会解析 `<span class="variable">&lt;command-message&gt;</span>` 标签、校验并格式化后展示；skill prompt 直接发给 API，不解析不校验——它是纯粹的指令内容。把两者合并会违反单一职责原则，让一条消息承担两种受众与两种处理流程。</span><br><span class="line"></span><br><span class="line"><span class="comment">## 案例：执行生命周期</span></span><br><span class="line"></span><br><span class="line">在理解 Agent Skills 内部架构后，我们以“Extract text from report.pdf”这个请求为例，完整走一遍假设的 pdf skill 执行流程。</span><br><span class="line"></span><br><span class="line">![Claude Skill 执行时序图](https://leehanchung.github.io/assets/img/2025-10-26/07-claude-skill-sequence-diagram.png)</span><br><span class="line"></span><br><span class="line"><span class="comment">### Phase 1：发现与加载（启动）</span></span><br><span class="line"></span><br><span class="line">Claude Code 启动时会扫描 skills：</span><br></pre></td></tr></table></figure></p>
+<p>async function getAllCommands() {<br>  // Load from all sources in parallel<br>  let [userCommands, skillsAndPlugins, pluginCommands, builtins] =<br>    await Promise.all([<br>      loadUserCommands(),      // ~/.claude/commands/<br>      loadSkills(),            // .claude/skills/ + plugins<br>      loadPluginCommands(),    // Plugin-defined commands<br>      getBuiltinCommands()     // Hardcoded commands<br>    ]);</p>
+<p>  return […userCommands, …skillsAndPlugins, …pluginCommands, …builtins]<br>    .filter(cmd =&gt; cmd.isEnabled());<br>}</p>
+<p>// Specific skill loading<br>async function loadPluginSkills(plugin) {<br>  // Check if plugin has skills<br>  if (!plugin.skillsPath) return [];</p>
+<p>  // Two patterns supported:<br>  // 1. Root SKILL.md in skillsPath<br>  // 2. Subdirectories with SKILL.md</p>
+<p>  const skillFiles = findSkillMdFiles(plugin.skillsPath);<br>  const skills = [];</p>
+<p>  for (const file of skillFiles) {<br>    const content = readFile(file);<br>    const { frontmatter, markdown } = parseFrontmatter(content);</p>
+<pre><code>skills.push({
+  type: &quot;prompt&quot;,
+  name: `${plugin.name}:${getSkillName(file)}`,
+  description: `${frontmatter.description} (plugin:${plugin.name})`,
+  whenToUse: frontmatter.when_to_use,  // ← Note: underscores!
+  allowedTools: parseTools(frontmatter[&apos;allowed-tools&apos;]),
+  model: frontmatter.model === &quot;inherit&quot; ? undefined : frontmatter.model,
+  isSkill: true,
+  promptContent: markdown,
+  // ... other fields
+});
+</code></pre><p>  }</p>
+<p>  return skills;<br>}<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">对于 pdf <span class="built_in">skill</span>，最终会生成：</span><br></pre></td></tr></table></figure></p>
+<p>{<br>  type: “prompt”,<br>  name: “pdf”,<br>  description: “Extract text from PDF documents (plugin:document-tools)”,<br>  whenToUse: “When user wants to extract or process text from PDF files”,<br>  allowedTools: [“Bash(pdftotext:*)”, “Read”, “Write”],<br>  model: undefined,  // Uses session model<br>  isSkill: true,<br>  disableModelInvocation: false,<br>  promptContent: “You are a PDF processing specialist…”,<br>  // … other fields<br>}<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### Phase <span class="number">2</span>：第 <span class="number">1</span> 轮用户请求与技能选择</span><br><span class="line"></span><br><span class="line">用户请求：“Extract text <span class="keyword">from</span> report.pdf”。Claude 收到消息以及 tools 数组中的 Skill 工具。在 Claude 决定调用 pdf skill 前，系统必须在 Skill 工具描述中列出可用技能。</span><br><span class="line"></span><br><span class="line">#### 技能过滤与呈现</span><br><span class="line"></span><br><span class="line">并非所有技能都显示在 Skill 工具中。一个技能必须在 frontmatter 中包含 `description` 或 `when_to_use`，否则会被过滤。过滤条件如下：</span><br></pre></td></tr></table></figure></p>
+<p>async function getSkillsForSkillTool() {<br>  const allCommands = await getAllCommands();</p>
+<p>  return allCommands.filter(cmd =&gt;<br>    cmd.type === “prompt” &amp;&amp;<br>    cmd.isSkill === true &amp;&amp;<br>    !cmd.disableModelInvocation &amp;&amp;<br>    (cmd.source !== “builtin” || cmd.isModeCommand === true) &amp;&amp;<br>    (cmd.hasUserSpecifiedDescription || cmd.whenToUse)  // ← Must have one!<br>  );<br>}<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 技能格式化</span><br><span class="line"></span><br><span class="line">每个技能都会被格式化进 `&lt;available_skills&gt;`。例如 pdf skill 可能呈现为：</span><br></pre></td></tr></table></figure></p>
+<p>“pdf”: Extract text from PDF documents - When user wants to extract or process text from PDF files<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">对应格式函数：</span><br></pre></td></tr></table></figure></p>
+<p>function formatSkill(skill) {<br>  let name = skill.name;<br>  let description = skill.whenToUse<br>    ? <code>${skill.description} - ${skill.whenToUse}</code><br>    : skill.description;</p>
+<p>  return <code>&quot;${name}&quot;: ${description}</code>;<br>}<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### Claude 的决策过程</span><br><span class="line"></span><br><span class="line">当用户提示“Extract text <span class="keyword">from</span> report.pdf”时，Claude 会在 API 请求里看到 Skill 工具与 `&lt;available_skills&gt;`，然后进行推理（这里是合理的假设，因为我们看不到真实推理轨迹）：</span><br></pre></td></tr></table></figure></p>
+<p>Internal reasoning:</p>
+<ul>
+<li>User wants to “extract text from report.pdf”</li>
+<li>This is a PDF processing task</li>
+<li>Looking at available skills…</li>
+<li>“pdf”: Extract text from PDF documents - When user wants to extract or process text from PDF files</li>
+<li>This matches! The user wants to extract text from a PDF</li>
+<li>Decision: Invoke Skill tool with command=”pdf”<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意：这里没有任何算法匹配，没有词法匹配、语义匹配或搜索。完全是 <span class="keyword">LLM </span>的推理决策。完成后，Claude 会返回工具调用：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>{<br>  “type”: “tool_use”,<br>  “id”: “toolu_123abc”,<br>  “name”: “Skill”,<br>  “input”: {<br>    “command”: “pdf”<br>  }<br>}<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### Phase 3：Skill 工具执行</span></span><br><span class="line"></span><br><span class="line">Skill 工具开始执行，对应时序图中黄色的 “SKILL<span class="built_in"> TOOL </span>EXECUTION” 盒子，包含验证、权限检查、文件加载、上下文修改等步骤。</span><br><span class="line"></span><br><span class="line"><span class="comment">#### Step 1：验证</span></span><br></pre></td></tr></table></figure></p>
+<p>async validateInput({ command }, context) {<br>  let skillName = command.trim().replace(/^\//, “”);</p>
+<p>  // Error 1: Empty<br>  if (!skillName) return { result: false, errorCode: 1 };</p>
+<p>  // Error 2: Unknown skill<br>  const allSkills = await getAllCommands();<br>  if (!skillExists(skillName, allSkills)) {<br>    return { result: false, errorCode: 2 };<br>  }</p>
+<p>  // Error 3: Can’t load<br>  const skill = getSkill(skillName, allSkills);<br>  if (!skill) return { result: false, errorCode: 3 };</p>
+<p>  // Error 4: Model invocation disabled<br>  if (skill.disableModelInvocation) {<br>    return { result: false, errorCode: 4 };<br>  }</p>
+<p>  // Error 5: Not prompt-based<br>  if (skill.type !== “prompt”) {<br>    return { result: false, errorCode: 5 };<br>  }</p>
+<p>  return { result: true };<br>}<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">pdf skill 通过全部校验 ✓</span><br><span class="line"></span><br><span class="line">#### Step <span class="number">2</span>：权限检查</span><br></pre></td></tr></table></figure></p>
+<p>async checkPermissions({ command }, context) {<br>  const skillName = command.trim().replace(/^\//, “”);<br>  const permContext = (await context.getAppState()).toolPermissionContext;</p>
+<p>  // Check deny rules<br>  for (const [pattern, rule] of getDenyRules(permContext)) {<br>    if (matches(skillName, pattern)) {<br>      return { behavior: “deny”, message: “Blocked by permission rules” };<br>    }<br>  }</p>
+<p>  // Check allow rules<br>  for (const [pattern, rule] of getAllowRules(permContext)) {<br>    if (matches(skillName, pattern)) {<br>      return { behavior: “allow” };<br>    }<br>  }</p>
+<p>  // Default: ask user<br>  return { behavior: “ask”, message: <code>Execute skill: ${skillName}</code> };<br>}<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">若无规则限制，用户会看到提示：“Execute skill: pdf?”，用户批准 ✓</span><br><span class="line"></span><br><span class="line">#### Step <span class="number">3</span>：加载 Skill 文件并生成执行上下文修改</span><br><span class="line"></span><br><span class="line">完成验证与权限审批后，Skill 工具加载 skill 文件并准备执行上下文修改：</span><br></pre></td></tr></table></figure></p>
+<p>async *call({ command }, context) {<br>  const skillName = command.trim().replace(/^\//, “”);<br>  const allSkills = await getAllCommands();<br>  const skill = getSkill(skillName, allSkills);</p>
+<p>  // Load the skill prompt<br>  const promptContent = await skill.getPromptForCommand(“”, context);</p>
+<p>  // Generate metadata tags<br>  const metadata = [<br>    <code>&lt;command-message&gt;The &quot;${skill.userFacingName()}&quot; skill is loading&lt;/command-message&gt;</code>,<br>    <code>&lt;command-name&gt;${skill.userFacingName()}&lt;/command-name&gt;</code><br>  ].join(‘\n’);</p>
+<p>  // Create messages<br>  const messages = [<br>    { type: “user”, content: metadata },  // Visible to user<br>    { type: “user”, content: promptContent, isMeta: true },  // Hidden from user, visible to Claude<br>    // … attachments, permissions<br>  ];</p>
+<p>  // Extract configuration<br>  const allowedTools = skill.allowedTools || [];<br>  const modelOverride = skill.model;</p>
+<p>  // Yield result with execution context modifier<br>  yield {<br>    type: “result”,<br>    data: { success: true, commandName: skillName },<br>    newMessages: messages,</p>
+<pre><code>// 🔑 Execution context modification function
+contextModifier(context) {
+  let modified = context;
+
+  // Inject allowed tools
+  if (allowedTools.length &gt; 0) {
+    modified = {
+      ...modified,
+      async getAppState() {
+        const state = await context.getAppState();
+        return {
+          ...state,
+          toolPermissionContext: {
+            ...state.toolPermissionContext,
+            alwaysAllowRules: {
+              ...state.toolPermissionContext.alwaysAllowRules,
+              command: [
+                ...state.toolPermissionContext.alwaysAllowRules.command || [],
+                ...allowedTools  // ← Pre-approve these tools
+              ]
+            }
+          }
+        };
+      }
+    };
+  }
+
+  // Override model
+  if (modelOverride) {
+    modified = {
+      ...modified,
+      options: {
+        ...modified.options,
+        mainLoopModel: modelOverride
+      }
+    };
+  }
+
+  return modified;
+}
+</code></pre><p>  };<br>}<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Skill 工具返回结果，包含 `newMessages`（元数据 + skill prompt + 权限消息，用于对话上下文注入）和 `contextModifier`（工具权限 + 模型覆盖，用于执行上下文修改）。这对应时序图中黄色的 “SKILL<span class="built_in"> TOOL </span>EXECUTION” 盒子。</span><br><span class="line"></span><br><span class="line"><span class="comment">### Phase 4：发送到 API（第 1 轮完成）</span></span><br><span class="line"></span><br><span class="line">系统组装完整消息数组发送给 Anthropic API：包括对话历史 + 新注入的 skill 消息。</span><br></pre></td></tr></table></figure></p>
+<p>// Complete message array sent to API for Turn 1<br>{<br>  model: “claude-sonnet-4-5-20250929”,<br>  messages: [<br>    {<br>      role: “user”,<br>      content: “Extract text from report.pdf”<br>    },<br>    {<br>      role: “assistant”,<br>      content: [<br>        {<br>          type: “tool_use”,<br>          id: “toolu_123abc”,<br>          name: “Skill”,<br>          input: { command: “pdf” }<br>        }<br>      ]<br>    },<br>    {<br>      role: “user”,<br>      content: “<command-message>The \”pdf\” skill is loading</command-message>\n<command-name>pdf</command-name>“<br>      // isMeta: false (default) - VISIBLE to user in UI<br>    },<br>    {<br>      role: “user”,<br>      content: “You are a PDF processing specialist…\n\n## Process\n1. Validate PDF exists\n2. Run pdftotext…”,<br>      isMeta: true  // HIDDEN from UI, sent to API<br>    },<br>    {<br>      role: “user”,<br>      content: {<br>        type: “command_permissions”,<br>        allowedTools: [“Bash(pdftotext:*)”, “Read”, “Write”],<br>        model: undefined<br>      }<br>    }<br>  ]<br>}<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![<span class="string">Turn 1 Completion</span>](<span class="link">https://leehanchung.github.io/assets/img/2025-10-26/11-turn-1-completion.png</span>)</span><br><span class="line"></span><br><span class="line">这里展示了到此为止发生的事情：执行上下文修改器被应用，预先批准 <span class="code">`Bash(pdftotext:*)`</span>、<span class="code">`Read`</span>、<span class="code">`Write`</span>；请求被发送到 Anthropic API。至此 skill 工具执行结束。如果这是普通工具就结束了，但 skills 不同——它们只注入了对话与执行上下文，所以还需要在这些上下文下再次调用 Claude 来完成用户请求。</span><br><span class="line"></span><br><span class="line"><span class="section">### Phase 5：Bash 工具执行（带 Skill 上下文）</span></span><br><span class="line"></span><br><span class="line">Claude 接收带注入上下文的 API 响应，skill prompt 改变了 Claude 的行为，提供：</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>专门的 PDF 处理指令（对话上下文）</span><br><span class="line"><span class="bullet">- </span>预批准的 <span class="code">`Bash(pdftotext:*)`</span>、<span class="code">`Read`</span>、<span class="code">`Write`</span> 权限（执行上下文）</span><br><span class="line"><span class="bullet">- </span>清晰的执行流程（对话上下文）</span><br><span class="line"></span><br><span class="line">Claude 按 pdf skill 的流程执行：</span><br></pre></td></tr></table></figure></p>
+<p>I’ll extract text from report.pdf. Let me process the file.</p>
+<p>[Following pdf skill’s instructions]</p>
+<ol>
+<li>Validate that report.pdf exists</li>
+<li>Run pdftotext command to extract text</li>
+<li>Read the output file</li>
+<li>Present the extracted text to you<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="symbol">Claude</span> 使用 <span class="keyword">Bash </span>工具（已预批准，无需用户确认）：</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>{<br>  “type”: “tool_use”,<br>  “id”: “toolu_456def”,<br>  “name”: “Bash”,<br>  “input”: {<br>    “command”: “pdftotext report.pdf output.txt”,<br>    “description”: “Extract text from PDF using pdftotext”<br>  }<br>}<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Bash 成功执行，返回结果。Claude 再用 Read 读取输出文件并把提取文本呈现给用户。通过注入指令与修改工具权限，skill 成功引导 Claude 完成专业的 PDF 提取流程。</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结论：心智模型总结</span></span><br><span class="line"></span><br><span class="line">Claude Code 中的 skills 是基于提示词的对话与执行上下文修改器，通过元工具架构运行：</span><br><span class="line"></span><br><span class="line">**关键要点**：</span><br><span class="line"></span><br><span class="line">1. Skills 是 `SKILL.md` 中的提示模板，而非可执行代码</span><br><span class="line">2. Skill 工具（S 大写）是工具数组中的元工具，用于管理各个 skill，不在<span class="built_in"> system </span>prompt 中</span><br><span class="line">3. Skills 通过注入指令提示（`isMeta: <span class="literal">true</span>`）修改对话上下文</span><br><span class="line">4. Skills 通过更改工具权限与模型选择修改执行上下文</span><br><span class="line">5. 选择 skill 的过程由 LLM 推理完成，而非算法匹配</span><br><span class="line">6. 工具权限通过执行上下文修改进行范围限定</span><br><span class="line">7. 每次调用 skill 会注入两条用户消息：一条用户可见元数据，一条隐藏指令发给 API</span><br><span class="line"></span><br><span class="line">**优雅的设计**：把专用知识作为“修改对话上下文的提示词”，把权限作为“修改执行上下文的元信息”，而不是执行代码，使 Claude Code 获得了传统函数调用难以兼得的灵活性、安全性与可组合性。</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参考资料</span></span><br><span class="line"></span><br><span class="line">- Introducing Agent Skills</span><br><span class="line">- Equipping Agents <span class="keyword">for</span> the Real World with Agent Skills</span><br><span class="line">- Claude Code Documentation</span><br><span class="line">- Anthropic API Reference</span><br><span class="line">- Official Documented Frontmatter Fields</span><br><span class="line">- Internal Comms Skill</span><br><span class="line">- Skill Creator Skill</span><br><span class="line">- ChatGPT 5<span class="built_in"> System </span>Prompt (leaked, <span class="keyword">not</span> official)</span><br></pre></td></tr></table></figure></p>
+<p>@article{<br>    leehanchung_bullshit_jobs,<br>    author = {Lee, Hanchung},<br>    title = {Claude Agent Skills: A First Principles Deep Dive},<br>    year = {2025},<br>    month = {10},<br>    day = {26},<br>    howpublished = {\url{<a href="https://leehanchung.github.io}}" target="_blank" rel="noopener">https://leehanchung.github.io}}</a>,<br>    url = {<a href="https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/}" target="_blank" rel="noopener">https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/}</a><br>}<br><code>`</code></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2026/01/16/mcp-agent-skills-cursor-rules/" title="MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异">MCP、Agent Skills 与 Cursor Rules：前端开发中的作用与差异</a></h2>
+                <p class="excerpt">
+                
+                在 AI 辅助编程进入“智能体时代”后，前端开发者开始接触三个高频概念：MCP（模型上下文协议）、Agent Skills（智能体技能）与 Cursor Rules。它们分别解决“能做什么、怎么做、要按什么规范做”的问题，却又常被混为一谈。本文将从概念、场景应用、关键差异与选择策略四个角度，给出清晰的系统化对比，帮助你在实际项目中做出更好的选择。
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2026-01-16T10:00:00.000Z" class="post-list__meta--date date">2026-01-16</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/AI/">AI</a>, <a class="tag-link" href="/tags/前端/">前端</a>, <a class="tag-link" href="/tags/工程化/">工程化</a>
+</span><a class="btn-border-small" href="/2026/01/16/mcp-agent-skills-cursor-rules/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://yoursite.com/2026/01/19/claude-skills-deep-dive/" data-title="Claude Agent Skills：第一性原理深度解析（译）" data-url="http://yoursite.com/2026/01/19/claude-skills-deep-dive/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>
