@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <style>
+      .title { font: 700 32px 'Arial', sans-serif; fill: #111827; }
+      .card { fill: #ffffff; stroke: #e5e7eb; stroke-width: 2; rx: 20; }
+      .item { font: 600 22px 'Arial', sans-serif; fill: #1f2937; }
+      .note { font: 400 18px 'Arial', sans-serif; fill: #4b5563; }
+      .check { fill: #10b981; }
+      .warn { fill: #f59e0b; }
+    </style>
+  </defs>
+  <rect width="1200" height="520" fill="#f9fafb" />
+  <text x="60" y="70" class="title">跨境收款前的准备清单</text>
+
+  <rect x="60" y="110" width="520" height="320" class="card" />
+  <circle cx="110" cy="165" r="16" class="check" />
+  <text x="150" y="172" class="item">可接收外币的银行卡</text>
+  <text x="150" y="205" class="note">优先选择可结汇的借记卡</text>
+
+  <circle cx="110" cy="245" r="16" class="check" />
+  <text x="150" y="252" class="item">有效身份证件与营业执照</text>
+  <text x="150" y="285" class="note">企业账户需法人信息一致</text>
+
+  <circle cx="110" cy="325" r="16" class="check" />
+  <text x="150" y="332" class="item">清晰的商品/服务说明</text>
+  <text x="150" y="365" class="note">有助于审核与争议处理</text>
+
+  <rect x="640" y="110" width="500" height="320" class="card" />
+  <circle cx="690" cy="165" r="16" class="warn" />
+  <text x="730" y="172" class="item">核对费率与结算周期</text>
+  <text x="730" y="205" class="note">不同地区费率可能不同</text>
+
+  <circle cx="690" cy="245" r="16" class="warn" />
+  <text x="730" y="252" class="item">准备客服与退款流程</text>
+  <text x="730" y="285" class="note">降低拒付与纠纷风险</text>
+
+  <circle cx="690" cy="325" r="16" class="warn" />
+  <text x="730" y="332" class="item">开启双重验证</text>
+  <text x="730" y="365" class="note">账户安全优先</text>
+</svg>

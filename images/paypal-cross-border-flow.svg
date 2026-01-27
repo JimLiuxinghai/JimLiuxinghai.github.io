@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <style>
+      .title { font: 700 32px 'Arial', sans-serif; fill: #1a1a1a; }
+      .box { fill: #f5f9ff; stroke: #3b82f6; stroke-width: 2; rx: 16; }
+      .text { font: 600 22px 'Arial', sans-serif; fill: #1f2937; }
+      .sub { font: 400 18px 'Arial', sans-serif; fill: #374151; }
+      .arrow { stroke: #2563eb; stroke-width: 4; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb" />
+    </marker>
+  </defs>
+  <rect width="1200" height="520" fill="#ffffff" />
+  <text x="60" y="60" class="title">PayPal 跨境收款全流程（中国境内开户）</text>
+
+  <rect x="60" y="110" width="310" height="130" class="box" />
+  <text x="90" y="160" class="text">1. 注册账户</text>
+  <text x="90" y="195" class="sub">选择个人/企业</text>
+  <text x="90" y="225" class="sub">填写大陆信息</text>
+
+  <rect x="445" y="110" width="310" height="130" class="box" />
+  <text x="475" y="160" class="text">2. 完成验证</text>
+  <text x="475" y="195" class="sub">绑定邮箱/手机</text>
+  <text x="475" y="225" class="sub">上传证件</text>
+
+  <rect x="830" y="110" width="310" height="130" class="box" />
+  <text x="860" y="160" class="text">3. 连接收款方式</text>
+  <text x="860" y="195" class="sub">绑定银行卡</text>
+  <text x="860" y="225" class="sub">设置币种</text>
+
+  <rect x="60" y="300" width="310" height="130" class="box" />
+  <text x="90" y="350" class="text">4. 向海外客户</text>
+  <text x="90" y="385" class="sub">发送收款链接</text>
+  <text x="90" y="415" class="sub">配置付款按钮</text>
+
+  <rect x="445" y="300" width="310" height="130" class="box" />
+  <text x="475" y="350" class="text">5. 资金到账</text>
+  <text x="475" y="385" class="sub">多币种余额</text>
+  <text x="475" y="415" class="sub">对账导出</text>
+
+  <rect x="830" y="300" width="310" height="130" class="box" />
+  <text x="860" y="350" class="text">6. 提现结汇</text>
+  <text x="860" y="385" class="sub">绑定结算账户</text>
+  <text x="860" y="415" class="sub">关注手续费</text>
+
+  <line x1="370" y1="175" x2="445" y2="175" class="arrow" />
+  <line x1="755" y1="175" x2="830" y2="175" class="arrow" />
+  <line x1="215" y1="240" x2="215" y2="300" class="arrow" />
+  <line x1="600" y1="240" x2="600" y2="300" class="arrow" />
+  <line x1="985" y1="240" x2="985" y2="300" class="arrow" />
+  <line x1="370" y1="365" x2="445" y2="365" class="arrow" />
+  <line x1="755" y1="365" x2="830" y2="365" class="arrow" />
+</svg>
