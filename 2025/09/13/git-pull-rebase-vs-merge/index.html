@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>git pull 的 merge 与 rebase 有什么区别？ | Jimliu</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="一只刚上路的前端程序猿">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="git pull 的 merge 与 rebase 有什么区别？ | Jimliu">
+    <meta name="twitter:description" content="一只刚上路的前端程序猿">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="git pull 的 merge 与 rebase 有什么区别？ | Jimliu">
+    <meta property="og:description" content="一只刚上路的前端程序猿">
+
+    
+    <meta name="author" content="刘星海">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="http://img-storage.qiniudn.com/15-10-30/53317439.jpg">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="https://blog.concitech.org/2025/09/13/git-pull-rebase-vs-merge/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/back.webp)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Jimliu 的主页"><img src="/images/me.png" width="80" alt="Jimliu logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Jimliu">Jimliu</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">一只刚上路的前端程序猿</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+  <li class="navigation__item">
+    <a href="http://weibo.com/jimliuxinghai" title="我的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li> 
+
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/jimliuxinghai" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  <li class="navigation__item">
+    <a href="https://www.facebook.com/profile.php?id=100005161982868" title="上Facebook找我" target="_blank">
+      <i class='social fa fa-facebook'></i>
+      <span class="label">Facebook</span>
+    </a>
+  </li>
+
+  
+<!-- Twitter -->
+
+  <li class="navigation__item">
+    <a href="https://twitter.com/liu7193" title="上Twitter找我" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2025-09-13T12:00:00.000Z" class="post-list__meta--date date">2025-09-13</time>
+ &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/git/">git</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">git pull 的 merge 与 rebase 有什么区别？</h1>
+  </header>
+
+  <section class="post">
+    <p>git 在执行 <code>git pull</code> 时会先 <code>fetch</code> 远端，再把远端分支合到当前分支。你看到的提示：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hint:   git<span class="built_in"> config </span>pull.rebase <span class="literal">false</span>  # merge</span><br><span class="line">hint:   git<span class="built_in"> config </span>pull.rebase <span class="literal">true</span>   # rebase</span><br></pre></td></tr></table></figure>
+<p>本质是在告诉你：<strong>pull 到底是“合并”（merge）还是“变基”（rebase）</strong>。这两者结果都能拿到最新代码，但历史形态与冲突处理方式完全不同。</p>
+<h2 id="1-merge：保留历史分叉，产生合并提交"><a href="#1-merge：保留历史分叉，产生合并提交" class="headerlink" title="1. merge：保留历史分叉，产生合并提交"></a>1. merge：保留历史分叉，产生合并提交</h2><p>当 <code>pull.rebase=false</code>（默认）时：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">A</span>--<span class="literal">-</span><span class="comment">B</span>--<span class="literal">-</span><span class="comment">C</span> <span class="comment">(main</span><span class="string">,</span> <span class="comment">本地)</span></span><br><span class="line"><span class="comment"></span>     <span class="comment">\</span></span><br><span class="line"><span class="comment"></span>      <span class="comment">D</span>--<span class="literal">-</span><span class="comment">E</span> <span class="comment">(origin/main</span><span class="string">,</span> <span class="comment">远端)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#</span> <span class="comment">git</span> <span class="comment">pull</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">A</span>--<span class="literal">-</span><span class="comment">B</span>--<span class="literal">-</span><span class="comment">C</span>--<span class="literal">-</span><span class="comment">M</span> <span class="comment">(main)</span></span><br><span class="line"><span class="comment"></span>     <span class="comment">\</span>   <span class="comment">/</span></span><br><span class="line"><span class="comment"></span>      <span class="comment">D</span><span class="literal">-</span><span class="comment">E</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>git pull</code> 会产生一个 <strong>merge commit（合并提交）</strong>。</li>
+<li>保留“分叉—合并”的真实历史。</li>
+<li>对团队追踪历史很清晰，但提交图会更“复杂”。</li>
+</ul>
+<h3 id="适合场景"><a href="#适合场景" class="headerlink" title="适合场景"></a>适合场景</h3><ul>
+<li>想保留真实分支演进历史。</li>
+<li>团队习惯显式 merge commit。</li>
+<li>你不介意日志里出现合并点。</li>
+</ul>
+<h2 id="2-rebase：改写本地提交，历史更线性"><a href="#2-rebase：改写本地提交，历史更线性" class="headerlink" title="2. rebase：改写本地提交，历史更线性"></a>2. rebase：改写本地提交，历史更线性</h2><p>当 <code>pull.rebase=true</code> 时：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">A</span>--<span class="literal">-</span><span class="comment">B</span>--<span class="literal">-</span><span class="comment">C</span> <span class="comment">(main</span><span class="string">,</span> <span class="comment">本地)</span></span><br><span class="line"><span class="comment"></span>     <span class="comment">\</span></span><br><span class="line"><span class="comment"></span>      <span class="comment">D</span>--<span class="literal">-</span><span class="comment">E</span> <span class="comment">(origin/main</span><span class="string">,</span> <span class="comment">远端)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#</span> <span class="comment">git</span> <span class="comment">pull</span> --<span class="comment">rebase</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">A</span>--<span class="literal">-</span><span class="comment">B</span>--<span class="literal">-</span><span class="comment">D</span>--<span class="literal">-</span><span class="comment">E</span>--<span class="literal">-</span><span class="comment">C'</span> <span class="comment">(main)</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>本地未推送的提交（C）会被“摘下来”，先应用远端 D/E，再把 C 重新放上去。</li>
+<li>历史变成一条直线，更干净。</li>
+<li><strong>会改写本地提交哈希</strong>（C 变成 C’）。</li>
+</ul>
+<h3 id="适合场景-1"><a href="#适合场景-1" class="headerlink" title="适合场景"></a>适合场景</h3><ul>
+<li>喜欢干净、线性的提交历史。</li>
+<li>本地提交还没推送到远端。</li>
+<li>常用 <code>rebase</code> 保持主干“无合并点”。</li>
+</ul>
+<h2 id="3-冲突处理的差异"><a href="#3-冲突处理的差异" class="headerlink" title="3. 冲突处理的差异"></a>3. 冲突处理的差异</h2><ul>
+<li><strong>merge 冲突</strong>：一次性解决冲突，提交一个 merge commit。</li>
+<li><strong>rebase 冲突</strong>：每个提交逐个 rebase，可能多次冲突，需要多次 <code>git rebase --continue</code>。</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li>merge 冲突一次性解决，但历史更乱；</li>
+<li>rebase 冲突可能多次解决，但历史更清晰。</li>
+</ul>
+<h2 id="4-常用配置方式"><a href="#4-常用配置方式" class="headerlink" title="4. 常用配置方式"></a>4. 常用配置方式</h2><p>只想对当前仓库生效：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>pull.rebase <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>想全局生效：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global pull.rebase <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>当然你也可以临时指定：</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">git </span><span class="string">pull </span><span class="built_in">--rebase</span>      <span class="comment"># 本次使用 rebase</span></span><br><span class="line"></span><br><span class="line"><span class="string">git </span><span class="string">pull </span><span class="built_in">--no-rebase</span>   <span class="comment"># 本次使用 merge</span></span><br></pre></td></tr></table></figure>
+<h2 id="5-简单结论"><a href="#5-简单结论" class="headerlink" title="5. 简单结论"></a>5. 简单结论</h2><ul>
+<li><strong>协作分支/公开历史</strong>：倾向 merge，避免重写公共历史。</li>
+<li><strong>个人分支/保持主干整洁</strong>：倾向 rebase。</li>
+</ul>
+<p>一句话总结：</p>
+<blockquote>
+<p>merge 保留真实历史；rebase 改写历史换来线性日志。</p>
+</blockquote>
+<p>如果你习惯干净的日志，推荐开启 <code>pull.rebase=true</code>；如果更重视历史真实，就保持默认的 merge 更稳妥。</p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2026/01/07/tweet-craft/" title="Tweet Craft：让 Twitter/X 内容整理效率翻倍的浏览器扩展">Tweet Craft：让 Twitter/X 内容整理效率翻倍的浏览器扩展</a></h2>
+                <p class="excerpt">
+                
+                在 Twitter/X 上找灵感很快，但整理内容很慢：线程太长、复制格式混乱、截图不美观、视频不好保存，想沉淀到知识库还要手动处理。Tweet Craft 就是为这些痛点而生的一款浏览器扩展，把“复制、整理、归档”这条链路一次性打通。
+如果你也在做内容创作、信息整理或产品研究，建议先看一眼官方介绍页
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2026-01-07T12:50:14.000Z" class="post-list__meta--date date">2026-01-07</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/notion/">notion</a>, <a class="tag-link" href="/tags/productivity/">productivity</a>, <a class="tag-link" href="/tags/twitter/">twitter</a>
+</span><a class="btn-border-small" href="/2026/01/07/tweet-craft/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2020/05/12/summery/" title="关于项目的一些总结(一)">关于项目的一些总结(一)</a></h2>
+                <p class="excerpt">
+                
+                在公司工作3年有余，主导经历的项目大大小小也有十几个，挑一些有代表性的项目来做一些总结。
+酒店收益–预测分析平台先上一个数据的流程图：
+
+数据来源系统数据来源有两个：
+
+酒店订房系统(PMS)直连数据
+酒店用户上传数据
+
+因为与我们合作的PMS服务商数量有限，一部分使用我们系统的酒店用户采用的是其他
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2020-05-12T22:10:03.000Z" class="post-list__meta--date date">2020-05-12</time>
+ &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/js/">js</a>, <a class="tag-link" href="/tags/node/">node</a>
+</span><a class="btn-border-small" href="/2020/05/12/summery/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="https://blog.concitech.org/2025/09/13/git-pull-rebase-vs-merge/" data-title="git pull 的 merge 与 rebase 有什么区别？" data-url="https://blog.concitech.org/2025/09/13/git-pull-rebase-vs-merge/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"jimliublog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+	<span id="busuanzi_container_site_pv">
+	    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span>
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+
+
+     
+    
+
+</body>
+</html>
