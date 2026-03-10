@@ -1,0 +1,41 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Karpathy 新研究范式头图</title>
+  <desc id="desc">异步大规模协作：从一个AI博士生到整个AI研究社区</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1026"/>
+      <stop offset="55%" stop-color="#1d2d6b"/>
+      <stop offset="100%" stop-color="#3a7bd5"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7cf7ff"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <g opacity="0.25" stroke="url(#line)" stroke-width="2" fill="none">
+    <path d="M0 180 C300 90 500 250 820 180 C1080 120 1310 220 1600 140"/>
+    <path d="M0 360 C240 280 520 460 800 360 C1060 280 1340 430 1600 320"/>
+    <path d="M0 540 C280 470 540 650 820 560 C1070 480 1310 650 1600 520"/>
+    <path d="M0 720 C260 650 560 840 840 740 C1100 650 1380 830 1600 720"/>
+  </g>
+
+  <g>
+    <text x="110" y="260" fill="#7cf7ff" font-size="44" font-family="'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-weight="700">
+      Andrej Karpathy · autoresearch
+    </text>
+    <text x="110" y="370" fill="#ffffff" font-size="76" font-family="'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-weight="800">
+      异步大规模协作
+    </text>
+    <text x="110" y="460" fill="#dbeafe" font-size="42" font-family="'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-weight="600">
+      从“一个AI博士生”到“整个AI研究社区”
+    </text>
+    <text x="110" y="550" fill="#bfdbfe" font-size="30" font-family="'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+      Asynchronously Massively Collaborative · SETI@home Style
+    </text>
+  </g>
+
+  <rect x="106" y="610" width="640" height="10" rx="5" fill="url(#line)"/>
+</svg>
